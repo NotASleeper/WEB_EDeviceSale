@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    outline: none;
+    border: none;
 }
 
 :root {
@@ -15,6 +17,18 @@
     --blue: #4a90e2;
     --purple: #9b59b6;
     --pink: #ff7eb9;
+}
+
+::-webkit-scrollbar {
+    width: 1.5rem;
+}
+
+::-webkit-scrollbar-track {
+    background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--green);
 }
 
 html {
@@ -313,6 +327,7 @@ select {
     cursor: pointer;
     width: 15rem;
     height: 15rem;
+    color: var(--black);
 }
 
 .preview-categories .container .cate-box:hover {
@@ -506,6 +521,12 @@ select {
 
 }
 
+/* 11-14-2024 */
+.create-gadget input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+
 /* 28/10/2024 */
 .create-gadget form .div-container {
     width: 60%;
@@ -571,6 +592,9 @@ select {
 .hidden {
     display: none !important;
 }
+
+
+
 
 
 
@@ -678,7 +702,7 @@ select {
         height: 36px;
         font-size: 16px;
         padding: 0.5rem 1.5rem;
-        border: var(--yellow) solid 2px;
+        border: var(--white) solid 2px;
         margin: 0.5rem 0;
     }
 
@@ -753,6 +777,7 @@ select {
         width: 7rem;
         height: 7rem;
         padding: 5rem 5rem;
+        text-decoration: none !important;
     }
 
     .preview-categories .container .cate-box:hover {
@@ -771,6 +796,8 @@ select {
         padding-top: 5px;
         font-size: 13px;
         text-transform: capitalize;
+        text-decoration: none;
+        color: var(--black);
     }
 
     .products .container .product-box {
