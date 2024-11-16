@@ -83,7 +83,7 @@ if (isset($_SESSION['user_id'])) {
             <a class="btn-add" href="create_gadget.php">+ Add New</a>
         </div>
         <div class="container">
-            <div class="product-box">
+            <form class="product-box" action="" method="POST">
                 <div>
                     <a><i class="fa-solid fa-pen-to-square"></i></a>
                     <a><i class="fa-solid fa-trash"></i></a>
@@ -92,28 +92,30 @@ if (isset($_SESSION['user_id'])) {
                 <h2 class="gadget_title">Laptop HP Pavilion 15 eg3098TU i3 1315U/8GB/256GB/Win11 (8C5L9PA)</h2>
                 <p>Smartphone</p>
                 <h2 class="gadget_price">1,000,000</h2>
-            </div>
-
-            <!-- <div class="product-box">
-                <div>
-                    <a><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a><i class="fa-solid fa-trash"></i></a>
-                </div>
-                <img src="images/lenovo.png">
-                <h2 class="gadget_title">Laptop HP Pavilion 15 eg3098TU i3 1315U/8GB/256GB/Win11 (8C5L9PA)</h2>
-                <p>efwe</p>
-                <h2 class="gadget_price">1,000,000</h2>
-            </div>
-            <div class="product-box">
-                <div>
-                    <a><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a><i class="fa-solid fa-trash"></i></a>
-                </div>
-                <img src="images/lenovo.png">
-                <h2 class="gadget_title">Laptop HP Pavilion 15 eg3098TU i3 1315U/8GB/256GB/Win11 (8C5L9PA)</h2>
-                <p>efwe</p>
-                <h2 class="gadget_price">1,000,000</h2>
-            </div> -->
+            </form>
+            <!-- 11-15-2024 -->
+            <?php
+            $select_products = $conn->prepare("SELECT * FROM `gadget`");
+            $select_products->execute();
+            if ($select_products->rowCount() > 0) {
+                while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+                    <form class="product-box" action="" method="POST">
+                        <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
+                        <div>
+                            <a><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                        <img src="pictures/<?= $fetch_products['pic_gadget']; ?>">
+                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
+                        <p><?= $fetch_products['category']; ?></p>
+                        <h2 class="gadget_price"><?= $fetch_products['exp_gadget']; ?></h2>
+                    </form>
+            <?php
+                }
+            } else {
+            }
+            ?>
         </div>
     </section>
     <!-- section products ends -->

@@ -67,3 +67,12 @@ let addgg_clear = document.querySelector('.addgg-clear')
         })
     }
 }
+
+
+// document.querySelectorAll('input[type="number"]').forEach(input => {
+//     input.addEventListener('input', () => {
+//         if (input.value.length > input.maxLength) {
+//             input.value = input.value.slice(0, input.maxLength);
+//         }
+//     });
+// });
