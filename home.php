@@ -104,7 +104,7 @@ if (isset($_SESSION['user_id'])) {
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
                         <div>
                             <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class=" fa-solid fa-pen-to-square"></i></a>
-                            <a><i class="fa-solid fa-trash"></i></a>
+                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
                         </div>
 
                         <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
@@ -130,6 +130,15 @@ if (isset($_SESSION['user_id'])) {
     <!-- ends footer -->
 
     <script src="js/index.js"></script>
+    <script>
+        function confirmDelete(gadgetId) {
+            //confirmation
+            if (confirm("Are you sure you want to delete this gadget?")) {
+                // Redirect to PHP file with the ID to delete
+                window.location.href = 'delete_gadget.php?id=' + gadgetId;
+            }
+        }
+    </script>
 </body>
 
 </html>

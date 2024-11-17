@@ -57,6 +57,7 @@ section {
 .btn-danger,
 .btn-warning,
 .btn-success {
+    text-decoration: none;
     font-size: 16px;
     font-weight: bold;
     display: inline-block;
@@ -686,17 +687,21 @@ select {
     width: 70%;
 }
 
-/* .tbl-detail th,
-.tbl-detail td {
-    width: 30%;
+.sec-delete-gadget {
+    margin-top: 5rem;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5rem;
+    border: var(--black) solid 2px;
 }
 
-.tbl-detail td:last-child,
-.tbl-detail th:last-child {
-    width: 70%;
-} */
-
-
+.sec-delete-gadget h2 {
+    padding-bottom: 2rem;
+    font-size: 24px;
+}
 
 
 
@@ -756,6 +761,17 @@ select {
     body {
         height: auto;
     }
+
+    .sec-delete-gadget {
+        width: 80%;
+        padding: 2rem;
+        border: var(--black) solid 2px;
+    }
+
+    .sec-delete-gadget h2 {
+        padding-bottom: 2rem;
+        font-size: 20px;
+    }
 }
 
 @media (max-width: 850px) {
@@ -797,6 +813,17 @@ select {
         padding: 1rem 0;
         font-size: 27px;
         color: var(--black);
+    }
+
+    .sec-delete-gadget {
+        width: 80%;
+        padding: 2rem;
+        border: var(--black) solid 2px;
+    }
+
+    .sec-delete-gadget h2 {
+        padding-bottom: 2rem;
+        font-size: 20px;
     }
 }
 
@@ -1055,6 +1082,16 @@ select {
         font-size: 16px;
     }
 
+    .sec-delete-gadget {
+        width: 80%;
+        padding: 2rem;
+        border: var(--black) solid 2px;
+    }
+
+    .sec-delete-gadget h2 {
+        padding-bottom: 2rem;
+        font-size: 20px;
+    }
 
 }
 
