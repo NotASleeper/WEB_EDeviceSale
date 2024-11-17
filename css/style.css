@@ -618,6 +618,90 @@ select {
     display: none !important;
 }
 
+.view-gadget {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../images/bg1laptop.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding-bottom: 10rem;
+}
+
+.view-gadget h1 {
+    padding: 1rem 0;
+    font-size: 30px;
+    color: var(--black);
+}
+
+.view-gadget .header {
+    font-size: 28px;
+    color: yellow;
+}
+
+.view-gadget table {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    /* margin-bottom: 3rem; */
+    padding: 2rem 1rem;
+}
+
+.view-gadget table thead tr th,
+.view-gadget table tbody tr td {
+    padding: 1.2rem 2rem;
+    font-size: 20px;
+    vertical-align: top;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.tbl-general th,
+.tbl-general td {
+    width: 30%;
+}
+
+.tbl-general td:last-child,
+.tbl-general th:last-child {
+    width: 70%;
+}
+
+/* .tbl-detail th,
+.tbl-detail td {
+    width: 30%;
+}
+
+.tbl-detail td:last-child,
+.tbl-detail th:last-child {
+    width: 70%;
+} */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -943,6 +1027,25 @@ select {
     .create-gadget form .gadget-buttons {
         margin-bottom: 7rem;
         width: 100%;
+    }
+
+    .view-gadget h1 {
+        padding: 1rem 0;
+        font-size: 20px;
+    }
+
+    .view-gadget .header {
+        font-size: 18px;
+    }
+
+    .view-gadget table {
+        padding: 2rem 1rem;
+    }
+
+    .view-gadget table thead tr th,
+    .view-gadget table tbody tr td {
+        padding: 0.75rem 0rem;
+        font-size: 16px;
     }
 
 
