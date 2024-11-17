@@ -106,10 +106,12 @@ if (isset($_SESSION['user_id'])) {
                             <a><i class="fa-solid fa-pen-to-square"></i></a>
                             <a><i class="fa-solid fa-trash"></i></a>
                         </div>
-                        <img src="pictures/<?= $fetch_products['pic_gadget']; ?>">
+                        <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                        <!-- <img src="images/img_gadget/1731763200.jpg"> -->
+
                         <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
                         <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= $fetch_products['exp_gadget']; ?></h2>
+                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
                     </form>
             <?php
                 }

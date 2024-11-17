@@ -906,7 +906,7 @@ select {
         height: 36px;
         font-size: 14px;
         padding: 0.5rem 1.5rem;
-        border: var(--yellow) solid 2px;
+        /* border: var(--yellow) solid 2px; */
         margin: 0.5rem 0;
     }
 
