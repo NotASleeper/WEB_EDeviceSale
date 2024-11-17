@@ -350,7 +350,6 @@ select {
     /* border: #222 solid 2px; */
     box-shadow: 2px 4px 8px rgba(0, 2, 34, 0.7);
     margin: 1rem 2rem;
-    cursor: pointer;
     width: 15rem;
     height: 15rem;
     color: var(--black);
@@ -360,12 +359,12 @@ select {
     color: var(--green);
 }
 
-.preview-categories .container .cate-box:hover img {
-    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
-}
-
 .preview-categories .container .cate-box img {
     width: 8rem;
+}
+
+.preview-categories .container .cate-box img:hover {
+    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
 }
 
 .preview-categories .container .cate-box h3 {
@@ -373,6 +372,36 @@ select {
     font-size: 16px;
     text-transform: capitalize;
 }
+
+
+
+/* Style cho button bình thường */
+.cate-box button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    color: black;
+    cursor: pointer;
+
+}
+
+.cate-box button img {}
+
+/* Hover effect */
+.cate-box button:hover {
+    color: #009D60;
+    /* Màu chữ khi hover (màu xanh) */
+}
+
+.cate-box button:hover img {
+    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
+    /* Tạo hiệu ứng thay đổi màu cho hình ảnh */
+}
+
+
 
 .products {
     margin-bottom: 5rem;
@@ -935,6 +964,11 @@ select {
         color: var(--green);
     }
 
+    .preview-categories .container .cate-box button:hover {
+        color: var(--green);
+        filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
+    }
+
     .preview-categories .container .cate-box:hover img {
         filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
     }
@@ -950,6 +984,7 @@ select {
         text-decoration: none;
         color: var(--black);
     }
+
 
     .products .container .product-box {
         display: flex;

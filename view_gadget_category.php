@@ -10,6 +10,20 @@ if (isset($_SESSION['user_id'])) {
     $user_id = '';
 }
 
+if (isset($_GET['category'])) {
+    $category = $_GET['category'];
+    //check if category exits;
+
+    if ($category !== 'laptop' && $category !== 'smartphone' && $category !== 'smartwatch' && $category !== 'accessory') {
+        header('Location: home.php');
+        exit();
+    }
+} else {
+    header('Location: home.php');
+    exit();
+}
+
+
 //find var -> empty
 $search_query = '';
 
@@ -20,11 +34,13 @@ if (isset($_GET['txt_input'])) {
 
 //find var not empty -> $select_products LIKE
 if ($search_query != '') {
-    $select_products = $conn->prepare("SELECT * FROM `gadget` WHERE `name_gadget` LIKE :search_query");
+    $select_products = $conn->prepare("SELECT * FROM `gadget` WHERE `name_gadget` LIKE :search_query AND `category` = :category");
     $select_products->bindValue(':search_query', '%' . $search_query . '%');
+    $select_products->bindValue(':category', $category);
 } else {
     //else ->load all
-    $select_products = $conn->prepare("SELECT * FROM `gadget`");
+    $select_products = $conn->prepare("SELECT * FROM `gadget` WHERE `category` = :category");
+    $select_products->bindValue(':category', $category);
 }
 
 $select_products->execute();
@@ -55,57 +71,20 @@ $select_products->execute();
 
     <!-- section title starts -->
     <section class="section-title">
-        <a href="home.php">home</a>
+        <a href="home.php">home</a><a style="color: black; text-transform: capitalize;">/<?= $category ?></a>
     </section>
     <!-- section title ends -->
 
     <!-- section search starts -->
     <section class="search-section">
-        <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Search by name..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+        <form class="search-div" action="view_gadget_category.php" method="GET" enctype="multipart/form-data">
+            <!-- Hidden input to retain the category parameter -->
+            <input type="hidden" name="category" value="<?= htmlspecialchars($category); ?>">
+            <input name="txt_input" placeholder="Search by name..." value="<?= isset($_GET['txt_input']) ? htmlspecialchars($_GET['txt_input']) : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </section>
     <!-- section search ends -->
-
-    <!-- section preview-categories starts -->
-    <section class="preview-categories">
-        <h2>categories</h2>
-        <div class="container">
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
-                <input type="hidden" name="category" value="smartphone">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_cellphone.png">
-                    <h3>smartphone</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
-                <input type="hidden" name="category" value="laptop">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_laptop.png">
-                    <h3>laptop</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
-                <input type="hidden" name="category" value="smartwatch">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_smartwatch.png">
-                    <h3>smartwatch</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
-                <input type="hidden" name="category" value="accessory">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_accessory.png">
-                    <h3>accessory</h3>
-                </button>
-            </form>
-        </div>
-    </section>
-    <!-- section preview-categories ends -->
 
     <!-- section products starts -->
     <section class="products">
@@ -114,16 +93,6 @@ $select_products->execute();
             <a class="btn-add" href="create_gadget.php">+ Add New</a>
         </div>
         <div class="container">
-            <form class="product-box" action="" method="POST">
-                <div>
-                    <a><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a><i class="fa-solid fa-trash"></i></a>
-                </div>
-                <img src="images/lenovo.png">
-                <h2 class="gadget_title">Laptop HP Pavilion 15 eg3098TU i3 1315U/8GB/256GB/Win11 (8C5L9PA)</h2>
-                <p>Smartphone</p>
-                <h2 class="gadget_price">1,000,000</h2>
-            </form>
             <!-- 11-15-2024 -->
             <?php
             // $select_products = $conn->prepare("SELECT * FROM `gadget`");
@@ -151,10 +120,12 @@ $select_products->execute();
                 }
             } else {
                 echo "
-                <section class='sec-delete-gadget'>
-                    <h2>NO PRODUCT FOUND</h2>
-                </section>
-            ";
+                    <section class='sec-delete-gadget'>
+                        <h2>NO PRODUCT AVAILABLE</h2>
+                        <h2>Go back to home</h2>
+                        <a href='home.php' class='btn-success'>Home</a>
+                    </section>
+                ";
             }
             ?>
         </div>
@@ -178,28 +149,3 @@ $select_products->execute();
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <a class="cate-box" style="text-decoration: none;" href="view_gadget_category.php?category=smartwatch">
-                <img src=" images/icon_tablet.png">
-                <h3>tablet</h3>
-            </a> -->
