@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 
             if ($category === 'laptop') {
                 $lap_cpu = $_POST['lap_cpu'];   //lap_cpu
-                $lap_cpu = filter_var($lap_cpu, FILTER_VALIDATE_INT);
+                $lap_cpu = filter_var($lap_cpu, FILTER_SANITIZE_STRING);
                 if ($lap_cpu === '')
                     $lap_cpu = null;
 
@@ -322,7 +322,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CreateGadget</title>
+    <title>Create Gadget</title>
 
     <!-- 28/10/2024 -->
     <link rel="icon" href="images/logocart.png" type="image/png">

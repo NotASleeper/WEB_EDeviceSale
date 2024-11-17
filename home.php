@@ -100,14 +100,17 @@ if (isset($_SESSION['user_id'])) {
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="" method="POST">
+                    <form class="product-box" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
                         <div>
                             <a><i class="fa-solid fa-pen-to-square"></i></a>
                             <a><i class="fa-solid fa-trash"></i></a>
                         </div>
-                        <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                        <!-- <img src="images/img_gadget/1731763200.jpg"> -->
+
+                        <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
+                            <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                            <!-- <img src="images/img_gadget/1731763200.jpg"> -->
+                        </a>
 
                         <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
                         <p><?= $fetch_products['category']; ?></p>
