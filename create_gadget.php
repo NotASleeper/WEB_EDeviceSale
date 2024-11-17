@@ -343,9 +343,9 @@ if (isset($_POST['submit'])) {
         <h1 style="color: yellow">CREATE A NEW GADGET</h1>
         <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
             <input name="name" placeholder="Name" value="" required>
-            <input name="im_price" placeholder="Import Price" value="" type="number" onkeydown="return event.keyCode !== 69" required>
-            <input name="ex_price" placeholder="Export Price" type="number" onkeydown="return event.keyCode !== 69" required>
-            <input name="description" placeholder="Description" maxlength="99" required>
+            <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value="" type="number" onkeydown="return event.keyCode !== 69" required>
+            <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" type="number" onkeydown="return event.keyCode !== 69" required>
+            <input name="description" placeholder="Description" maxlength="499" required>
 
             <input name="image" type="file" accept="image/*" required>
             <div class="div-container">

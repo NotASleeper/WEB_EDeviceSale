@@ -59,20 +59,23 @@ if (gadget_select) {
     })
 }
 
-let addgg_clear = document.querySelector('.addgg-clear')
-{
-    if (addgg_clear) {
-        addgg_clear.addEventListener('click', () => {
-            document.id('.form-c-gadget').reset();
-        })
-    }
+let clear_btn = document.querySelector('.addgg-clear')
+if (clear_btn) {
+    clear_btn.addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent the default behavior
+
+        // Reset all input fields
+        document.querySelectorAll('input').forEach(input => {
+            if (input.type === 'file') {
+                input.value = ''; // Clear file input
+            } else if (input.type === 'number' || input.type === 'text' || input.type === 'date') {
+                input.value = ''; // Clear text, number, and date inputs
+            }
+        });
+
+        // Reset select options
+        document.querySelectorAll('select').forEach(select => {
+            select.selectedIndex = 0; // Set to the first option
+        });
+    });
 }
-
-
-// document.querySelectorAll('input[type="number"]').forEach(input => {
-//     input.addEventListener('input', () => {
-//         if (input.value.length > input.maxLength) {
-//             input.value = input.value.slice(0, input.maxLength);
-//         }
-//     });
-// });

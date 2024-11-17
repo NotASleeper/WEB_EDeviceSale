@@ -103,7 +103,7 @@ if (isset($_SESSION['user_id'])) {
                     <form class="product-box" action="" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
                         <div>
-                            <a><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class=" fa-solid fa-pen-to-square"></i></a>
                             <a><i class="fa-solid fa-trash"></i></a>
                         </div>
 

@@ -580,6 +580,13 @@ select {
     padding: 0 2rem;
 }
 
+.create-gadget form .div-container span {
+    font-size: 18px;
+    padding: 0 2rem;
+    color: var(--white);
+    text-transform: capitalize;
+}
+
 .create-gadget form .div-con-type {
     padding: 2rem;
     padding-top: 4rem;
