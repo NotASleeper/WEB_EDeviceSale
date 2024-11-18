@@ -90,7 +90,7 @@ $select_emp->execute();
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td>1</td>
                         <td>Joey</td>
                         <td>10/10/2000</td>
@@ -102,7 +102,7 @@ $select_emp->execute();
                             <a href="update_employee.php?id="><i class="fa-solid fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
                         </td>
-                    </tr>
+                    </tr> -->
 
                     <?php
                     // $select_products = $conn->prepare("SELECT * FROM `gadget`");
@@ -111,7 +111,10 @@ $select_emp->execute();
                         while ($fetch_emp = $select_emp->fetch(PDO::FETCH_ASSOC)) {
                     ?>
                             <tr>
-                                <td><?= $fetch_emp['id_employee']; ?></td>
+                                <td>
+                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_employee']; ?>">
+                                    <?= $fetch_emp['id_employee']; ?>
+                                </td>
                                 <td><?= $fetch_emp['name_employee']; ?></td>
                                 <td><?= $fetch_emp['date_of_birth']; ?></td>
                                 <td><?= $fetch_emp['citizen_card']; ?></td>
@@ -153,10 +156,9 @@ $select_emp->execute();
     <script src="js/index.js"></script>
     <script>
         function confirmDelete(gadgetId) {
-            //confirmation
-            if (confirm("Are you sure you want to delete this gadget?")) {
-                // Redirect to PHP file with the ID to delete
-                window.location.href = 'delete_gadget.php?id=' + gadgetId;
+            console.log(gadgetId); // For debugging
+            if (confirm("Are you sure you want to delete this employee?")) {
+                window.location.href = 'delete_employee.php?emp_id=' + gadgetId;
             }
         }
     </script>

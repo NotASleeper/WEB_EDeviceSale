@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $find_gadget_import->execute([$gadget_id]);
     if ($find_gadget_import->rowCount() > 0) {
         $message[] = "Cannot delete";
-        exit();
+        // exit();
     } else {
         //khong can kt export, vi can import truoc export
 
@@ -54,7 +54,7 @@ if (isset($_GET['id'])) {
             header("Location: home.php"); // Replace with your page
         } else {
             $message[] = "Cannot delete";
-            exit();
+            // exit();
         }
     }
 }
