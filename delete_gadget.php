@@ -21,8 +21,8 @@ if (isset($_GET['id'])) {
 
         //find category -> delete detail
         $select_gadget = $conn->prepare("SELECT * FROM `gadget` WHERE id_gadget = ?");
-        $find_gadget_import->execute([$gadget_id]);
-        $row = $find_gadget_import->fetch(PDO::FETCH_ASSOC);
+        $select_gadget->execute([$gadget_id]);
+        $row = $select_gadget->fetch(PDO::FETCH_ASSOC);
         $category = $row['category'];
         $pic = $row['pic_gadget'];
 
@@ -30,9 +30,12 @@ if (isset($_GET['id'])) {
         $delete_gadget = $conn->prepare("DELETE FROM `gadget` WHERE id_gadget = ?");
         $delete_gadget->execute([$gadget_id]);
 
-        if ($delete_gadget->rowCount() > 0) {
+        $confirm_delete  = $conn->prepare("SELECT * FROM `gadget` WHERE id_gadget = ?");
+        $confirm_delete->execute([$gadget_id]);
+
+        if ($confirm_delete->rowCount() == 0) {
             if (file_exists('images/img_gadget/' . $pic)) {
-                // unlink('images/img_gadget/' . $pic);
+                unlink('images/img_gadget/' . $pic);
             }
 
             if ($category === 'laptop') {
@@ -53,10 +56,6 @@ if (isset($_GET['id'])) {
             $message[] = "Cannot delete";
             exit();
         }
-
-        // // Redirect to a success page or reload the current page
-        // header("Location: home.php"); // Replace with your page
-        // exit();
     }
 }
 ?>
@@ -83,8 +82,9 @@ if (isset($_GET['id'])) {
     <!-- ends header -->
 
     <section class="sec-delete-gadget">
-        <h2>GO BACK TO HOME</h2>
-        <a href="home.php" class="btn-success">Home</a>
+        <h2 style='padding-bottom: 0.5rem'>CANNOT DELETE THÍ GADGET</h2>
+        <h2>Go back to home</h2>
+        <a href="home.php" class="btn-success" style="margin-top: 1rem; padding-top: 1rem">Home</a>
     </section>
 </body>
 

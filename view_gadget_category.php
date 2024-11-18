@@ -121,9 +121,9 @@ $select_products->execute();
             } else {
                 echo "
                     <section class='sec-delete-gadget'>
-                        <h2>NO PRODUCT AVAILABLE</h2>
+                        <h2 style='padding-bottom: 0.5rem'>NO PRODUCT AVAILABLE</h2>
                         <h2>Go back to home</h2>
-                        <a href='home.php' class='btn-success'>Home</a>
+                        <a href='home.php' class='btn-success' style='margin-top: 1rem; padding-top: 1rem'>Home</a>
                     </section>
                 ";
             }

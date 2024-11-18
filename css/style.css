@@ -388,17 +388,13 @@ select {
 
 }
 
-.cate-box button img {}
-
 /* Hover effect */
 .cate-box button:hover {
     color: #009D60;
-    /* Màu chữ khi hover (màu xanh) */
 }
 
 .cate-box button:hover img {
     filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
-    /* Tạo hiệu ứng thay đổi màu cho hình ảnh */
 }
 
 
@@ -1124,8 +1120,8 @@ select {
     }
 
     .sec-delete-gadget h2 {
-        padding-bottom: 2rem;
-        font-size: 20px;
+        padding-bottom: 0rem;
+        font-size: 16px;
     }
 
 }

@@ -114,7 +114,7 @@ $select_products->execute();
             <a class="btn-add" href="create_gadget.php">+ Add New</a>
         </div>
         <div class="container">
-            <form class="product-box" action="" method="POST">
+            <!-- <form class="product-box" action="" method="POST">
                 <div>
                     <a><i class="fa-solid fa-pen-to-square"></i></a>
                     <a><i class="fa-solid fa-trash"></i></a>
@@ -123,7 +123,7 @@ $select_products->execute();
                 <h2 class="gadget_title">Laptop HP Pavilion 15 eg3098TU i3 1315U/8GB/256GB/Win11 (8C5L9PA)</h2>
                 <p>Smartphone</p>
                 <h2 class="gadget_price">1,000,000</h2>
-            </form>
+            </form> -->
             <!-- 11-15-2024 -->
             <?php
             // $select_products = $conn->prepare("SELECT * FROM `gadget`");
