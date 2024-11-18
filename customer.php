@@ -20,11 +20,11 @@ if (isset($_GET['txt_input'])) {
 
 //find var not empty -> $select_emp LIKE
 if ($search_query != '') {
-    $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE `name_employee` LIKE :search_query OR `phone_to` LIKE :search_query");
+    $select_emp = $conn->prepare("SELECT * FROM `customer` WHERE `name_customer` LIKE :search_query OR `phone_no` LIKE :search_query");
     $select_emp->bindValue(':search_query', '%' . $search_query . '%');
 } else {
     //else ->load all
-    $select_emp = $conn->prepare("SELECT * FROM `employee`");
+    $select_emp = $conn->prepare("SELECT * FROM `customer`");
 }
 
 $select_emp->execute();
@@ -55,7 +55,7 @@ $select_emp->execute();
 
     <!-- section title starts -->
     <section class="section-title">
-        <a href="employee.php">employee</a>
+        <a href="employee.php">customer</a>
     </section>
     <!-- section title ends -->
 
@@ -72,37 +72,22 @@ $select_emp->execute();
     <!-- section products starts -->
     <section class="products">
         <div class="product-title">
-            <h2>employees</h2>
-            <a class="btn-add" href="create_employee.php">+ Add New</a>
+            <h2>Customers</h2>
+            <a class="btn-add" href="create_customer.php">+ Add New</a>
         </div>
         <div class="container-employee" style="overflow-x: auto; overflow-y: auto;">
             <table class="tbl-employee">
                 <thead>
                     <tr>
-                        <th>Employee ID</th>
-                        <th>Employee Name</th>
+                        <th>Customer ID</th>
+                        <th>Customer Name</th>
                         <th>Date of Birth</th>
-                        <th>Citizen Card</th>
-                        <th>Gender</th>
                         <th>Phone Number</th>
-                        <th>Role</th>
+                        <th>Total Spending</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_employee.php?id="><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr> -->
 
                     <?php
                     // $select_products = $conn->prepare("SELECT * FROM `gadget`");
@@ -112,18 +97,16 @@ $select_emp->execute();
                     ?>
                             <tr>
                                 <td>
-                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_employee']; ?>">
-                                    <?= $fetch_emp['id_employee']; ?>
+                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_customer']; ?>">
+                                    <?= $fetch_emp['id_customer']; ?>
                                 </td>
-                                <td><?= $fetch_emp['name_employee']; ?></td>
+                                <td><?= $fetch_emp['name_customer']; ?></td>
                                 <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
-                                <td><?= $fetch_emp['citizen_card']; ?></td>
-                                <td><?= $fetch_emp['gender']; ?></td>
-                                <td><?= $fetch_emp['phone_to']; ?></td>
-                                <td><?= $fetch_emp['role']; ?></td>
+                                <td><?= $fetch_emp['phone_no']; ?></td>
+                                <td><?= $fetch_emp['total_spending']; ?></td>
                                 <td>
-                                    <a href="update_employee.php?id_employee=<?= $fetch_emp['id_employee']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_employee']; ?>)"><i class="fa-solid fa-trash"></i></a>
+                                    <a href="update_employee.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php
@@ -157,8 +140,8 @@ $select_emp->execute();
     <script>
         function confirmDelete(gadgetId) {
             console.log(gadgetId); // For debugging
-            if (confirm("Are you sure you want to delete this employee?")) {
-                window.location.href = 'delete_employee.php?emp_id=' + gadgetId;
+            if (confirm("Are you sure you want to delete this customer?")) {
+                window.location.href = 'delete_employee.php?cus_id=' + gadgetId;
             }
         }
     </script>

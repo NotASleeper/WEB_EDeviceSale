@@ -23,7 +23,6 @@ if (isset($_POST['submit'])) {
     //if existed
     if ($select_gadget->rowCount() > 0) {
         $message[] = "Name has already existed!";
-        exit();
     } else {
         //if new, not exists
         ///save img to folder
@@ -39,7 +38,6 @@ if (isset($_POST['submit'])) {
             // $message[] = "File copied successfully as: " . $new_file_name;
         } else {
             $message[] = "Failed to copy file.";
-            exit();
         }
 
         //insert to db

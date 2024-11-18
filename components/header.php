@@ -11,7 +11,7 @@ include 'components/message.php';
             <!-- <a>search</a> -->
             <a>import</a>
             <a>export</a>
-            <a>customer</a>
+            <a href="customer.php">customer</a>
             <a href="employee.php">employee</a>
             <a>report</a>
         </nav>
