@@ -728,8 +728,67 @@ select {
     font-size: 24px;
 }
 
+.products .container-employee .tbl-employee {
+    margin-top: 2rem;
+    width: 100%;
+    /* background-color: blue; */
+    color: #009D60;
+    font-size: 16px;
+    margin-bottom: 7rem;
+}
+
+.products .container-employee .tbl-employee tbody tr td,
+.products .container-employee .tbl-employee thead tr th {
+    padding: 2rem 1.5rem;
+}
+
+.products .container-employee .tbl-employee thead tr {
+    background-color: #BBD9BA;
+}
+
+/* Remove borders from the entire table */
+.products .container-employee .tbl-employee,
+.products .container-employee .tbl-employee th,
+.products .container-employee .tbl-employee td {
+    border: none;
+    border-collapse: collapse;
+}
 
 
+.products .container-employee .tbl-employee tbody tr td {
+    text-align: center;
+    color: var(--black);
+}
+
+/* Style for even rows */
+.products .container-employee .tbl-employee tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Light gray color for even rows */
+}
+
+/* Style for odd rows */
+.products .container-employee .tbl-employee tbody tr:nth-child(odd) {
+    background-color: var(--white);
+    /* White color for odd rows */
+}
+
+
+.products .container-employee .tbl-employee tbody tr td a {
+    padding-top: 0.5rem;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+}
+
+.products .container-employee .tbl-employee tbody tr td a i {
+    font-size: 20px;
+    color: var(--black);
+    transition: color linear 0.1s;
+    cursor: pointer;
+}
+
+.products .container-employee .tbl-employee tbody tr td a i:hover {
+    color: var(--green);
+}
 
 
 

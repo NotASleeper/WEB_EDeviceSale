@@ -12,7 +12,7 @@ include 'components/message.php';
             <a>import</a>
             <a>export</a>
             <a>customer</a>
-            <a>employee</a>
+            <a href="employee.php">employee</a>
             <a>report</a>
         </nav>
         <div class="icon">

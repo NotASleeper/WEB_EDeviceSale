@@ -62,7 +62,7 @@ $select_products->execute();
     <!-- section search starts -->
     <section class="search-section">
         <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Search by name..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+            <input name="txt_input" placeholder="Enter name..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </section>
