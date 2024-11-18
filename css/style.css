@@ -518,6 +518,7 @@ select {
     bottom: 1rem;
 }
 
+
 /* 27/10/2024 */
 /* 30/10/2024 */
 .create-gadget {
@@ -526,6 +527,7 @@ select {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 90vh;
     background-image: url(../images/bg1laptop.jpg);
     background-repeat: no-repeat;
     background-position: center;
@@ -559,6 +561,16 @@ select {
     border: var(--white) solid 2px;
     margin: 1rem 0;
     color: var(--white);
+}
+
+.create-gadget form h3 {
+    width: 60%;
+    padding-top: 0.5rem;
+    font-size: 18px;
+    color: var(--white);
+    text-align: left;
+    font-weight: normal;
+    padding-left: 1.5rem;
 }
 
 .create-gadget form input::placeholder {
@@ -603,7 +615,7 @@ select {
 
 .create-gadget form .div-container label {
     font-size: 18px;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
 }
 
 .create-gadget form .div-container span {
@@ -734,7 +746,6 @@ select {
     /* background-color: blue; */
     color: #009D60;
     font-size: 16px;
-    margin-bottom: 7rem;
 }
 
 .products .container-employee .tbl-employee tbody tr td,
@@ -937,6 +948,12 @@ select {
         margin: 0.5rem 0;
     }
 
+    .create-gadget form h3 {
+        width: 70%;
+        font-size: 16px;
+        padding-left: 1.5rem;
+    }
+
     /* 28/10/2024 */
     .create-gadget form .div-container {
         width: 70%;
@@ -986,6 +1003,12 @@ select {
         border: none;
         padding: 5px 1rem;
         font-size: 16px;
+    }
+
+    .create-gadget form h3 {
+        width: 90%;
+        font-size: 14px;
+        padding-left: 0rem;
     }
 
     .search-section .search-div i {

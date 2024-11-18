@@ -10,24 +10,24 @@ if (isset($_SESSION['user_id'])) {
     $user_id = '';
 }
 
-// //find var -> empty
-// $search_query = '';
+//find var -> empty
+$search_query = '';
 
-// //if choose to find -> find var not empty
-// if (isset($_GET['txt_input'])) {
-//     $search_query = $_GET['txt_input'];
-// }
+//if choose to find -> find var not empty
+if (isset($_GET['txt_input'])) {
+    $search_query = $_GET['txt_input'];
+}
 
-// //find var not empty -> $select_products LIKE
-// if ($search_query != '') {
-//     $select_products = $conn->prepare("SELECT * FROM `gadget` WHERE `name_gadget` LIKE :search_query");
-//     $select_products->bindValue(':search_query', '%' . $search_query . '%');
-// } else {
-//     //else ->load all
-//     $select_products = $conn->prepare("SELECT * FROM `gadget`");
-// }
+//find var not empty -> $select_emp LIKE
+if ($search_query != '') {
+    $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE `name_employee` LIKE :search_query OR `phone_to` LIKE :search_query");
+    $select_emp->bindValue(':search_query', '%' . $search_query . '%');
+} else {
+    //else ->load all
+    $select_emp = $conn->prepare("SELECT * FROM `employee`");
+}
 
-// $select_products->execute();
+$select_emp->execute();
 
 ?>
 
@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
     <section class="products">
         <div class="product-title">
             <h2>employees</h2>
-            <a class="btn-add" href="create_gadget.php">+ Add New</a>
+            <a class="btn-add" href="create_employee.php">+ Add New</a>
         </div>
         <div class="container-employee" style="overflow-x: auto; overflow-y: auto;">
             <table class="tbl-employee">
@@ -99,120 +99,51 @@ if (isset($_SESSION['user_id'])) {
                         <td>0123456978</td>
                         <td>Manager</td>
                         <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Joey</td>
-                        <td>10/10/2000</td>
-                        <td>0123456789</td>
-                        <td>Male</td>
-                        <td>0123456978</td>
-                        <td>Manager</td>
-                        <td>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="update_employee.php?id="><i class="fa-solid fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
 
+                    <?php
+                    // $select_products = $conn->prepare("SELECT * FROM `gadget`");
+                    // $select_products->execute();
+                    if ($select_emp->rowCount() > 0) {
+                        while ($fetch_emp = $select_emp->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                            <tr>
+                                <td><?= $fetch_emp['id_employee']; ?></td>
+                                <td><?= $fetch_emp['name_employee']; ?></td>
+                                <td><?= $fetch_emp['date_of_birth']; ?></td>
+                                <td><?= $fetch_emp['citizen_card']; ?></td>
+                                <td><?= $fetch_emp['gender']; ?></td>
+                                <td><?= $fetch_emp['phone_to']; ?></td>
+                                <td><?= $fetch_emp['role']; ?></td>
+                                <td>
+                                    <a href="update_employee.php?id_employee=<?= $fetch_emp['id_employee']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_employee']; ?>)"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
     </section>
     <!-- section products ends -->
+
+    <!-- section to pad starts -->
+    <section style="padding-top: 2rem;">
+
+    </section>
+    <!-- section to pad ends -->
 
 
     <!-- starts footer -->
