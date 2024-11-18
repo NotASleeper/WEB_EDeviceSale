@@ -61,7 +61,7 @@ $select_emp->execute();
 
     <!-- section search starts -->
     <section class="search-section">
-        <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
+        <form class="search-div" action="employee.php" method="GET" enctype="multipart/form-data">
             <input name="txt_input" placeholder="Enter name/phone number..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
