@@ -19,16 +19,16 @@ if (isset($_POST['submit'])) {
     $name_employee = $_POST['name_employee'];     //name
     $name_employee = filter_var($name_employee, FILTER_SANITIZE_STRING);
 
-    $date_of_birth = $_POST['date_of_birth'];     //import price
+    $date_of_birth = $_POST['date_of_birth'];     //bday
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    $citizen_card = $_POST['citizen_card'];     //export price
+    $citizen_card = $_POST['citizen_card'];     //citizen card
     $citizen_card = filter_var($citizen_card, FILTER_SANITIZE_STRING);
 
     $gender = $_POST['gender-select'];     //gender
     $gender = filter_var($gender, FILTER_SANITIZE_STRING);
 
-    $phone_to = $_POST['phone_to'];     //export price
+    $phone_to = $_POST['phone_to'];     //phone number
     $phone_to = filter_var($phone_to, FILTER_SANITIZE_STRING);
 
     $role = $_POST['role-select'];     //role-select

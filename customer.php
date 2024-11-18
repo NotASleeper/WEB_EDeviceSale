@@ -55,13 +55,13 @@ $select_emp->execute();
 
     <!-- section title starts -->
     <section class="section-title">
-        <a href="employee.php">customer</a>
+        <a href="customer.php">customer</a>
     </section>
     <!-- section title ends -->
 
     <!-- section search starts -->
     <section class="search-section">
-        <form class="search-div" action="employee.php" method="GET" enctype="multipart/form-data">
+        <form class="search-div" action="customer.php" method="GET" enctype="multipart/form-data">
             <input name="txt_input" placeholder="Enter name/phone number..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
@@ -105,7 +105,7 @@ $select_emp->execute();
                                 <td><?= $fetch_emp['phone_no']; ?></td>
                                 <td><?= $fetch_emp['total_spending']; ?></td>
                                 <td>
-                                    <a href="update_employee.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
