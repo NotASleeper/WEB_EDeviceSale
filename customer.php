@@ -141,7 +141,7 @@ $select_emp->execute();
         function confirmDelete(gadgetId) {
             console.log(gadgetId); // For debugging
             if (confirm("Are you sure you want to delete this customer?")) {
-                window.location.href = 'delete_employee.php?cus_id=' + gadgetId;
+                window.location.href = 'delete_customer.php?cus_id=' + gadgetId;
             }
         }
     </script>

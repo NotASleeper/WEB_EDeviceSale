@@ -53,7 +53,7 @@ $select_products->execute();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>View Gadget Category</title>
 
     <!-- 28/10/2024 -->
     <link rel="icon" href="images/logocart.png" type="image/png">

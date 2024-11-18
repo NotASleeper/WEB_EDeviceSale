@@ -7,36 +7,30 @@ if (isset($_SESSION['user_id'])) {
     $user_id = '';
 }
 
-if (isset($_GET['emp_id'])) {
-    $emp_id = $_GET['emp_id'];
+if (isset($_GET['cus_id'])) {
+    $cus_id = $_GET['cus_id'];
 
     //da tung import -> khong the xoa
-    $find_emp_import = $conn->prepare("SELECT * FROM `import` WHERE id_employee = ?");
-    $find_emp_import->execute([$emp_id]);
+    $find_cus_export = $conn->prepare("SELECT * FROM `export` WHERE id_customer = ?");
+    $find_cus_export->execute([$cus_id]);
 
-    $find_emp_export = $conn->prepare("SELECT * FROM `export` WHERE id_employee = ?");
-    $find_emp_export->execute([$emp_id]);
-
-    if ($find_emp_import->rowCount() > 0) {
-        $message[] = "Cannot delete";
-        // exit();
-    } else if ($find_emp_export->rowCount() > 0) {
+    if ($find_cus_export->rowCount() > 0) {
         $message[] = "Cannot delete";
         // exit();
     } else {
 
         //find category -> delete detail
-        $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE id_employee = ?");
-        $select_emp->execute([$emp_id]);
-        if ($select_emp->rowCount() > 0) {
+        $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
+        $select_cus->execute([$cus_id]);
+        if ($select_cus->rowCount() > 0) {
 
-            $delete_emp = $conn->prepare("DELETE FROM `employee` WHERE id_employee = ?");
-            $delete_emp->execute([$emp_id]);
+            $delete_cus = $conn->prepare("DELETE FROM `customer` WHERE id_customer = ?");
+            $delete_cus->execute([$cus_id]);
 
-            $confirm_delete  = $conn->prepare("SELECT * FROM `employee` WHERE id_employee = ?");
-            $confirm_delete->execute([$emp_id]);
+            $confirm_delete  = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
+            $confirm_delete->execute([$cus_id]);
             if ($confirm_delete->rowCount() == 0) {
-                header("Location: employee.php"); // Replace with your page
+                header("Location: customer.php"); // Replace with your page
 
             } else {
                 $message[] = "Cannot delete";
@@ -54,7 +48,7 @@ if (isset($_GET['emp_id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Employee</title>
+    <title>Delete Customer</title>
 
     <link rel="icon" href="images/logocart.png" type="image/png">
 
@@ -70,9 +64,9 @@ if (isset($_GET['emp_id'])) {
     <!-- ends header -->
 
     <section class="sec-delete-gadget">
-        <h2 style='padding-bottom: 0.5rem'>CANNOT DELETE THIS EMPLOYEE</h2>
-        <h2>Go back to Employee</h2>
-        <a href="employee.php" class="btn-success" style="margin-top: 1rem; padding-top: 1rem">Employee</a>
+        <h2 style='padding-bottom: 0.5rem'>CANNOT DELETE THIS CUSTOMER</h2>
+        <h2>Go back to Customer</h2>
+        <a href="customer.php" class="btn-success" style="margin-top: 1rem; padding-top: 1rem">Customer</a>
     </section>
 </body>
 
