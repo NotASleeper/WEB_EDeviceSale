@@ -1,6 +1,18 @@
 <?php
 include 'components/connect.php';
 
+session_start();
+
+// not sure 
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = '';
+
+    // //pls un-cmt this when done
+    // header('location:login.php');
+}
+
 if (isset($_GET['id_employee'])) {
     $emp_id = intval($_GET['id_employee']);
 

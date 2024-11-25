@@ -1,13 +1,30 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+include 'components/connect.php';
 
-    // Logic to validate credentials
-    if ($email == "admin@example.com" && $password == "password") {
-        echo "<script>alert('Login successful!');</script>";
+session_start();
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+} else {
+    $user_id = '';
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $username = filter_var($username, FILTER_SANITIZE_STRING);
+
+    $password = $_POST['password'];
+    $password = filter_var($password, FILTER_SANITIZE_STRING);
+
+
+    $select_user = $conn->prepare("SELECT * FROM `employee` WHERE username = ? AND password = ? AND state = 'Available'");
+    $select_user->execute([$username, $password]);
+    $row = $select_user->fetch(PDO::FETCH_ASSOC);
+
+    if ($select_user->rowCount() > 0) {
+        $_SESSION['user_id'] = $row['id_employee'];
+        header('location:home.php');
     } else {
-        echo "<script>alert('Invalid credentials!');</script>";
+        echo '<script>alert("Username or Password is not Valid");</script>';
     }
 }
 ?>
@@ -18,6 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <link rel="icon" href="images/logocart.png" type="image/png">
+
+    <!-- font awesome cdn link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         * {
             margin: 0;
@@ -66,6 +87,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         h2 {
+            text-align: center;
+            width: 100%;
             color: #7ed957;
             margin-bottom: 20px;
         }
@@ -133,8 +156,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2>LOG IN</h2>
             <form method="POST">
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    <label for="username">Username</label>
+                    <input type="username" id="username" name="username" placeholder="Enter your username" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
