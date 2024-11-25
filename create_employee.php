@@ -20,6 +20,13 @@ if (isset($_POST['submit'])) {
     $role = $_POST['role-select'];     //role-select
     $role = filter_var($role, FILTER_SANITIZE_STRING);
 
+    $usr_name = $_POST['usr_name'];     //usr_name
+    $usr_name = filter_var($usr_name, FILTER_SANITIZE_STRING);
+
+    $pass = $_POST['pass'];     //pass-select
+    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+
+
     //check if already exists
     $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ?");
     $select_emp->execute([$phone_to]);
@@ -31,8 +38,8 @@ if (isset($_POST['submit'])) {
         //if new, not exists
 
         //insert to db
-        $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, role) VALUES (?,?,?,?,?,?)");
-        $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role]);
+        $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, role, state, username, password) VALUES (?,?,?,?,?,?,?,?,?)");
+        $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role, "Available", $usr_name, $pass]);
 
         //check
         $confirm_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ?");
@@ -99,6 +106,13 @@ if (isset($_POST['submit'])) {
                     <option value="Manager">manager</option>
                 </select>
             </div>
+
+            <h3>Username</h3>
+            <input name="usr_name" placeholder="Username" maxlength="99" required>
+
+            <h3>Password</h3>
+            <input name="pass" placeholder="Password" maxlength="99" required>
+
 
             <div class="gadget-buttons" style="margin-top: 1rem;">
                 <button type="submit" name="submit" class="btn-success">Add</button>

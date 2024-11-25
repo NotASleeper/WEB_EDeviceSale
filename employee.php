@@ -86,6 +86,7 @@ $select_emp->execute();
                         <th>Gender</th>
                         <th>Phone Number</th>
                         <th>Role</th>
+                        <th>State</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -121,6 +122,7 @@ $select_emp->execute();
                                 <td><?= $fetch_emp['gender']; ?></td>
                                 <td><?= $fetch_emp['phone_to']; ?></td>
                                 <td><?= $fetch_emp['role']; ?></td>
+                                <td><?= $fetch_emp['state']; ?></td>
                                 <td>
                                     <a href="update_employee.php?id_employee=<?= $fetch_emp['id_employee']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_employee']; ?>)"><i class="fa-solid fa-trash"></i></a>

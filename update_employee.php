@@ -34,8 +34,19 @@ if (isset($_POST['submit'])) {
     $role = $_POST['role-select'];     //role-select
     $role = filter_var($role, FILTER_SANITIZE_STRING);
 
-    $update_emp = $conn->prepare("UPDATE `employee` SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, role = ? WHERE id_employee = ?");
-    $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role, $emp_id]);
+    $state = $_POST['state-select'];     //state-select
+    $state = filter_var($state, FILTER_SANITIZE_STRING);
+
+    $usr_name = $_POST['usr_name'];     //usr_name
+    $usr_name = filter_var($usr_name, FILTER_SANITIZE_STRING);
+
+    $pass = $_POST['pass'];     //pass-select
+    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+
+    $update_emp = $conn->prepare("UPDATE `employee` SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, role = ?, state = ?, username = ?, password = ? WHERE id_employee = ?");
+    $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role, $state, $usr_name, $pass, $emp_id]);
+
+
 
     $message[] = "Updated successfully";
 
@@ -99,6 +110,20 @@ if (isset($_POST['submit'])) {
                         <option value="Manager" <?= $fetch_employee['role'] == "Manager" ? "selected" : "" ?>>Manager</option>
                     </select>
                 </div>
+
+                <div class="div-container">
+                    <label style="color: white;">State:</label>
+                    <select class="state-select" name="state-select">
+                        <option value="Available" <?= $fetch_employee['state'] == "Available" ? "selected" : "" ?>>available</option>
+                        <option value="Not Working" <?= $fetch_employee['state'] == "Not Working" ? "selected" : "" ?>>Not Working</option>
+                    </select>
+                </div>
+
+                <h3>Username</h3>
+                <input name="usr_name" placeholder="Username" maxlength="99" required value="<?= $fetch_employee['username'] ?>">
+
+                <h3>Password</h3>
+                <input name="pass" placeholder="Password" maxlength="99" required value="<?= $fetch_employee['password'] ?>">
 
                 <div class="gadget-buttons" style="margin-top: 1rem;">
                     <button type="submit" name="submit" class="btn-success">Update</button>
