@@ -10,13 +10,12 @@ include 'components/message.php';
             <a href="home.php">home</a>
             <!-- <a>search</a> -->
             <a>import</a>
-            <a>export</a>
+            <a>order</a>
             <a href="customer.php">customer</a>
             <a href="employee.php">employee</a>
             <a>report</a>
         </nav>
         <div class="icon">
-
             <i id="user-btn" class="fas fa-user"></i>
             <i id="menu-btn" class="fas fa-solid fa-bars"></i>
         </div>

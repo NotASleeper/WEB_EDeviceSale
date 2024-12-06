@@ -20,12 +20,18 @@ if (isset($_POST['submit'])) {
     $date_of_birth = $_POST['date_of_birth'];     //import price
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    $phone_no = $_POST['phone_no'];     //export price
+    $phone_no = $_POST['phone_no'];     //phone no
     $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
 
+    $username_customer = $_POST['username_customer'];     //username
+    $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
+
+    $pass_customer = $_POST['pass_customer'];     //password
+    $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
+
     //check if already exists
-    $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
-    $select_cus->execute([$phone_no]);
+    $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ? OR username = ?");
+    $select_cus->execute([$phone_no, $username_customer]);
     $row = $select_cus->fetch(PDO::FETCH_ASSOC);
     //if existed
     if ($select_cus->rowCount() > 0) {
@@ -34,8 +40,8 @@ if (isset($_POST['submit'])) {
         //if new, not exists
 
         //insert to db
-        $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending) VALUES (?,?,?,?)");
-        $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0]);
+        $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
+        $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $pass_customer]);
 
         //check
         $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
@@ -84,7 +90,11 @@ if (isset($_POST['submit'])) {
             <h3>Date of Birth:</h3>
             <input name="date_of_birth" placeholder="Date of Birth" type="date" value="" required>
             <h3>Phone Number:</h3>
-            <input name="phone_no" placeholder="Phone Number" maxlength="10" required>
+            <input type="number" name="phone_no" placeholder="Phone Number" maxlength="10" required>
+            <h3>Username:</h3>
+            <input name="username_customer" placeholder="Username" maxlength="99" value="" required>
+            <h3>Password:</h3>
+            <input name="pass_customer" placeholder="Password" maxlength="99" value="" required>
 
             <div class="gadget-buttons" style="margin-top: 1rem;">
                 <button type="submit" name="submit" class="btn-success">Add</button>

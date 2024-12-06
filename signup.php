@@ -9,31 +9,56 @@ if (isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $username = filter_var($username, FILTER_SANITIZE_STRING);
 
-    $password = $_POST['password'];
-    $password = filter_var($password, FILTER_SANITIZE_STRING);
+    //////logic code for login of Customer
+    $name_customer = $_POST['name'];     //name
+    $name_customer = filter_var($name_customer, FILTER_SANITIZE_STRING);
 
-    $select_user = $conn->prepare("SELECT * FROM `employee` WHERE username = ? AND password = ? AND state = 'Available'");
-    $select_user->execute([$username, $password]);
-    $row = $select_user->fetch(PDO::FETCH_ASSOC);
+    $date_of_birth = $_POST['bday'];     //import price
+    $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    if ($select_user->rowCount() > 0) {
-        $_SESSION['user_id'] = $row['id_employee'];
-        header('location:home.php');
-    } else {
-        $select_user_cus = $conn->prepare("SELECT * FROM `customer` WHERE username = ? AND password = ?");
-        $select_user_cus->execute([$username, $password]);
-        $row = $select_user_cus->fetch(PDO::FETCH_ASSOC);
+    $phone_no = $_POST['phone-no'];     //phone no
+    $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
 
-        if ($select_user_cus->rowCount() > 0) {
-            $_SESSION['user_id'] = $row['id_customer'];
-            header('location:home_cus.php');
+    $username_customer = $_POST['username'];     //username
+    $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
+
+    $pass_customer = $_POST['password'];     //password
+    $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
+
+    $cfpass_customer = $_POST['cf-password'];     //password
+    $cfpass_customer = filter_var($cfpass_customer, FILTER_SANITIZE_STRING);
+
+    if ($pass_customer === $cfpass_customer) {
+        //check if already exists
+        $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ? OR username = ?");
+        $select_cus->execute([$phone_no, $username_customer]);
+        $row = $select_cus->fetch(PDO::FETCH_ASSOC);
+        //if existed
+        if ($select_cus->rowCount() > 0) {
+            $message[] = "Phone or username has already existed!";
         } else {
-            echo '<script>alert("Username or Password is not Valid");</script>';
+            //if new, not exists
+
+            //insert to db
+            $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
+            $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $pass_customer]);
+
+            //check
+            $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
+            $confirm_cus->execute([$phone_no]);
+            if ($confirm_cus->rowCount() > 0) {
+                header('location:login.php');
+            } else {
+                echo '<script>alert("Failed to insert");</script>';
+            }
         }
+    } else {
+        echo '<script>alert("Password and Confirm password not matched");</script>';
     }
+
+
+    ///ends
 }
 ?>
 <!DOCTYPE html>
@@ -118,6 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 16px;
+            box-sizing: border-box;
         }
 
         .btn-login {
@@ -161,17 +187,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <img src="images/img_gadget/1731913363.jpg" alt="Illustration of people" />
         </div>
         <div class="login-form">
-            <h2>LOG IN</h2>
+            <h2>SIGN UP</h2>
             <form method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone-no">Phone Number</label>
+                    <input type="number" id="phone-no" name="phone-no" placeholder="Enter your phone number" required>
+                </div>
+                <div class="form-group">
+                    <label for="bday">Date of Birth</label>
+                    <input type="date" id="bday" name="bday" placeholder="Enter your phone number" required>
+                </div>
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="username" id="username" name="username" placeholder="Enter your username" required>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div style="display: flex; flex-direction:row">
+                    <div class="form-group" style="margin-right: 5px;">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <div class="form-group" style="margin-left: 5px;">
+                        <label for="cf-password">Confirm Password</label>
+                        <input type="password" id="cf-password" name="cf-password" placeholder="Confirm your password" required>
+                    </div>
                 </div>
-                <button type="submit" class="btn-login">Log In</button>
+                <button type="submit" class="btn-login">Sign Up</button>
+
             </form>
         </div>
     </div>

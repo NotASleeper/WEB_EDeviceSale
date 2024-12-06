@@ -37,8 +37,14 @@ if (isset($_POST['submit'])) {
     $phone_no = $_POST['phone_no'];     //phone no
     $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
 
-    $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ? WHERE id_customer = ?");
-    $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $cus_id]);
+    $username_customer = $_POST['username_customer'];     //username
+    $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
+
+    $pass_customer = $_POST['pass_customer'];     //password
+    $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
+
+    $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
+    $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $pass_customer, $cus_id]);
 
     $message[] = "Updated successfully";
 
@@ -85,6 +91,10 @@ if (isset($_POST['submit'])) {
                 <input name="date_of_birth" placeholder="Date of Birth" type="date" value="<?= $fetch_customer['date_of_birth'] ?>" required>
                 <h3>Phone Number:</h3>
                 <input name="phone_no" placeholder="Phone Number" maxlength="10" required value="<?= $fetch_customer['phone_no'] ?>">
+                <h3>Username:</h3>
+                <input name="username_customer" placeholder="Username" maxlength="99" value="<?= $fetch_customer['username'] ?>" required>
+                <h3>Password:</h3>
+                <input name="pass_customer" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required>
 
                 <div class="gadget-buttons" style="margin-top: 1rem;">
                     <button type="submit" name="submit" class="btn-success">Update</button>

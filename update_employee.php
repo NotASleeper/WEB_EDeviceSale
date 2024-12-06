@@ -43,8 +43,8 @@ if (isset($_POST['submit'])) {
     $phone_to = $_POST['phone_to'];     //phone number
     $phone_to = filter_var($phone_to, FILTER_SANITIZE_STRING);
 
-    $role = $_POST['role-select'];     //role-select
-    $role = filter_var($role, FILTER_SANITIZE_STRING);
+    // $role = $_POST['role-select'];     //role-select
+    // $role = filter_var($role, FILTER_SANITIZE_STRING);
 
     $state = $_POST['state-select'];     //state-select
     $state = filter_var($state, FILTER_SANITIZE_STRING);
@@ -55,8 +55,8 @@ if (isset($_POST['submit'])) {
     $pass = $_POST['pass'];     //pass-select
     $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-    $update_emp = $conn->prepare("UPDATE `employee` SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, role = ?, state = ?, username = ?, password = ? WHERE id_employee = ?");
-    $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role, $state, $usr_name, $pass, $emp_id]);
+    $update_emp = $conn->prepare("UPDATE `employee` SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, state = ?, username = ?, password = ? WHERE id_employee = ?");
+    $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $state, $usr_name, $pass, $emp_id]);
 
 
 
@@ -115,13 +115,13 @@ if (isset($_POST['submit'])) {
                 <h3>Phone Number:</h3>
                 <input name="phone_to" placeholder="Phone Number" maxlength="10" required value="<?= $fetch_employee['phone_to'] ?>">
 
-                <div class="div-container">
+                <!-- <div class="div-container">
                     <label style="color: white;">Role:</label>
                     <select class="role-select" name="role-select">
                         <option value="Employee" <?= $fetch_employee['role'] == "Employee" ? "selected" : "" ?>>Employee</option>
                         <option value="Manager" <?= $fetch_employee['role'] == "Manager" ? "selected" : "" ?>>Manager</option>
                     </select>
-                </div>
+                </div> -->
 
                 <div class="div-container">
                     <label style="color: white;">State:</label>

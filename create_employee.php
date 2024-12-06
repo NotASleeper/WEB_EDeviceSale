@@ -29,8 +29,8 @@ if (isset($_POST['submit'])) {
     $phone_to = $_POST['phone_to'];     //export price
     $phone_to = filter_var($phone_to, FILTER_SANITIZE_STRING);
 
-    $role = $_POST['role-select'];     //role-select
-    $role = filter_var($role, FILTER_SANITIZE_STRING);
+    // $role = $_POST['role-select'];     //role-select
+    // $role = filter_var($role, FILTER_SANITIZE_STRING);
 
     $usr_name = $_POST['usr_name'];     //usr_name
     $usr_name = filter_var($usr_name, FILTER_SANITIZE_STRING);
@@ -111,13 +111,13 @@ if (isset($_POST['submit'])) {
             <h3>Phone Number:</h3>
             <input name="phone_to" placeholder="Phone Number" maxlength="10" required>
 
-            <div class="div-container">
+            <!-- <div class="div-container">
                 <label style="color: white;">Role:</label>
                 <select class="role-select" name="role-select">
                     <option value="Employee">employee</option>
                     <option value="Manager">manager</option>
                 </select>
-            </div>
+            </div> -->
 
             <h3>Username</h3>
             <input name="usr_name" placeholder="Username" maxlength="99" required>
