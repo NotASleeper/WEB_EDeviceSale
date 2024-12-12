@@ -112,31 +112,14 @@ $select_emp->execute();
                         <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
                         <td><?= $fetch_emp['phone_no']; ?></td>
                         <td><?= $fetch_emp['total_spending']; ?></td>
+                        <td><?= $fetch_emp['username']; ?></td>
+                        <td><?= $fetch_emp['password']; ?></td>
                         <td>
                             <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i
                                     class="fa-solid fa-trash"></i></a>
                         </td>
-                    </tr>
-                    <?php
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_customer']; ?>">
-                    <?= $fetch_emp['id_customer']; ?>
-                    </td>
-                    <td><?= $fetch_emp['name_customer']; ?></td>
-                    <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
-                    <td><?= $fetch_emp['phone_no']; ?></td>
-                    <td><?= $fetch_emp['total_spending']; ?></td>
-                    <td><?= $fetch_emp['username']; ?></td>
-                    <td><?= $fetch_emp['password']; ?></td>
-                    <td>
-                        <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
-                                class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i
-                                class="fa-solid fa-trash"></i></a>
-                    </td>
                     </tr>
                     <?php
                         }
