@@ -13,7 +13,7 @@ include 'components/message.php';
             <a>order</a>
             <a href="customer.php">customer</a>
             <a href="employee.php">employee</a>
-            <a>report</a>
+            <a href="report_revenues_month.php">report</a>
         </nav>
         <div class="icon">
             <i id="user-btn" class="fas fa-user"></i>

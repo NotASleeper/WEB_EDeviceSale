@@ -806,6 +806,177 @@ select {
 
 
 
+/*12/12/2024*/
+.report-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
+}
+
+.report-buttons .container {
+    margin-bottom: 0rem;
+    width: 100%;
+    padding: 1rem 1rem;
+    flex-wrap: wrap;
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.report-buttons .container .report-button {
+    background-color: var(--green);
+    padding: rem;
+    width: 25rem;
+    height: 7rem;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.report-buttons .container .report-button h3 {
+    color: var(--white);
+    font-size: 25px;
+    padding-left: 1rem;
+}
+
+.report-buttons .container .report-button:hover {
+    background-color: rgb(82, 189, 37);
+}
+
+.report-buttons .container .report-goods {
+    background-color: var(--yellow);
+}
+
+.report-buttons .container .report-goods:hover {
+    background-color: rgb(232, 184, 11);
+}
+
+.report-buttons .container .report-customers {
+    background-color: var(--blue);
+}
+
+.report-buttons .container .report-customers:hover {
+    background-color: rgb(34, 113, 206);
+}
+
+.report-buttons .container .report-employees {
+    background-color: var(--pink);
+}
+
+.report-buttons .container .report-employees:hover {
+    background-color: rgb(232, 85, 153);
+}
+
+.report-buttons .container .report-button img {
+    width: 4rem;
+}
+
+.report-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.report-title h2 {
+    font-size: 30px;
+    text-transform: capitalize;
+}
+
+.report-content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
+}
+
+.report-content .table {
+    scrollbar-gutter: stable;
+    min-width: 100%;
+    font-size: 27px;
+    padding: 0rem 1rem 1rem 1rem;
+    border-collapse: separate;
+    border-spacing: 0px 16px;
+}
+
+.report-content .table tr {
+    outline: thin solid;
+    border-radius: 10px;
+}
+
+.report-content .table .table-header {
+    outline: thin solid var(--green);
+    background-color: rgb(from var(--green) r g b / 0.5);
+    border-radius: 10px;
+}
+
+.report-content .table .table-header th {
+    padding: 8px;
+}
+
+.report-content .table .table-header th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.report-content .table .table-header th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.report-content .table tr td {
+    /* background-color: rgb(from var(--green) r g b / 0.5); */
+    text-align: center;
+    padding: 8px;
+    background-color: var(--white);
+}
+
+.report-content .table .table-header .name,
+.report-content .table tr .name {
+    text-align: left;
+}
+
+.revenues-range {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
+}
+
+.revenues-range .table {
+    scrollbar-gutter: stable;
+    min-width: 100%;
+    font-size: 27px;
+    padding: 0rem 1rem 1rem 1rem;
+    border-collapse: separate;
+    border-spacing: 0px 12px;
+}
+
+
+.revenues-range .table tr td {
+    text-align: center;
+    font-weight: bold;
+    width: 50%;
+}
+
+.revenues-range .table tr td .green {
+    background-color: var(--green);
+    height: 5px;
+}
+
+.revenues-range .table tr td .gray {
+    background-color: var(--light-color);
+    height: 5px;
+}
+
+.column-chart {
+    display: flex;
+    flex-direction: column;
+    padding: 0 0;
+}
+
+.revenues-range .table tr td a {
+    text-decoration: none;
+    color: var(--black);
+}
 
 
 
