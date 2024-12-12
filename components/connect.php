@@ -1,6 +1,6 @@
 <?php
 
-$db_name = 'mysql:host=localhost;dbname=storemngdb';
+$db_name = 'mysql:host=localhost;dbname=webstore';
 $user_name = 'root';
 $user_password = '';
 

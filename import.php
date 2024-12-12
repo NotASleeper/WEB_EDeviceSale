@@ -16,23 +16,54 @@ if (isset($_SESSION['user_id'])) {
 //find var -> empty
 $search_query = '';
 
-//if choose to find -> find var not empty
-if (isset($_GET['txt_input'])) {
-    $search_query = $_GET['txt_input'];
+$search_from='';
+$search_to='';
+
+if (isset($_GET['txt_input_from'])) {
+    $search_from=$_GET['txt_input_from'];
+    
 }
 
-//find var not empty -> $select_emp LIKE
-if ($search_query != '') {
-    $select_emp = $conn->prepare("SELECT * FROM `customer` WHERE `name_customer` LIKE :search_query OR `phone_no` LIKE :search_query");
-    $select_emp->bindValue(':search_query', '%' . $search_query . '%');
+if (isset($_GET['txt_input_to'])) {
+    $search_to=$_GET['txt_input_to'];
+}
+
+if ($search_from != '' && $search_to != '')
+{
+    $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
+        FROM import 
+        JOIN employee ON import.id_employee = employee.id_employee
+        WHERE `date` >= :search_from AND `date` <= :search_to");
+        
+    $select_emp->bindValue(':search_from',$search_from);
+    $select_emp->bindValue(':search_to',$search_to);
+} else if ($search_from != '') {
+    $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
+        FROM import 
+        JOIN employee ON import.id_employee = employee.id_employee
+        WHERE `date` >= :search_from");
+        
+    $select_emp->bindValue(':search_from',$search_from);
+
+} else if ($search_to != '') {
+    $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
+        FROM import 
+        JOIN employee ON import.id_employee = employee.id_employee
+        WHERE`date` <= :search_to");
+        
+    $select_emp->bindValue(':search_to',$search_to);
+
 } else {
-    //else ->load all
-    $select_emp = $conn->prepare("SELECT * FROM `customer`");
+    $select_emp = $conn->prepare("SELECT import.*, employee.name_employee 
+        FROM import 
+        JOIN employee ON import.id_employee = employee.id_employee");
 }
 
 $select_emp->execute();
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,8 +71,7 @@ $select_emp->execute();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee</title>
-
+    <title>Import</title>
     <!-- 28/10/2024 -->
     <link rel="icon" href="images/logocart.png" type="image/png">
 
@@ -60,36 +90,39 @@ $select_emp->execute();
 
     <!-- section title starts -->
     <section class="section-title">
-        <a href="customer.php">customer</a>
+        <a href="import.php">import</a>
     </section>
     <!-- section title ends -->
 
     <!-- section search starts -->
-    <section class="search-section">
-        <form class="search-div" action="customer.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Enter name/phone number..."
-                value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+    <section class="">
+        <form class="" action="import.php" method="GET" enctype="multipart/form-data">
+            <label>From:</label>
+            <input name="txt_input_from" type="date"
+                value="<?= isset($_GET['txt_input_from']) ? $_GET['txt_input_from'] : ''; ?>">
+            <label>To: </label>
+            <input name="txt_input_to" type="date"
+                value="<?= isset($_GET['txt_input_to']) ? $_GET['txt_input_to'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </section>
     <!-- section search ends -->
 
-
     <!-- section products starts -->
     <section class="products">
         <div class="product-title">
-            <h2>Customers</h2>
-            <a class="btn-add" href="create_customer.php">+ Add New</a>
+            <h2>Import</h2>
+            <a class="btn-add" href="create_import.php">+ Add New</a>
         </div>
         <div class="container-employee" style="overflow-x: auto; overflow-y: auto;">
             <table class="tbl-employee">
                 <thead>
                     <tr>
-                        <th>Customer ID</th>
-                        <th>Customer Name</th>
-                        <th>Date of Birth</th>
-                        <th>Phone Number</th>
-                        <th>Total Spending</th>
+                        <th>ID</th>
+                        <th>Employee Name</th>
+                        <th>Date</th>
+                        <th>Sum</th>
+                        <th>VAT</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -103,18 +136,15 @@ $select_emp->execute();
                     ?>
                     <tr>
                         <td>
-                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_customer']; ?>">
-                            <?= $fetch_emp['id_customer']; ?>
+                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_import']; ?>">
+                            <?= $fetch_emp['id_import']; ?>
                         </td>
-                        <td><?= $fetch_emp['name_customer']; ?></td>
-                        <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
-                        <td><?= $fetch_emp['phone_no']; ?></td>
-                        <td><?= $fetch_emp['total_spending']; ?></td>
+                        <td><?= $fetch_emp['name_employee']; ?></td>
+                        <td><?= date('d-m-Y', strtotime($fetch_emp['date'])) ?></td>
+                        <td><?= $fetch_emp['sum']; ?></td>
+                        <td><?= $fetch_emp['vat']; ?></td>
                         <td>
-                            <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i
-                                    class="fa-solid fa-trash"></i></a>
+                            <a href="import_detail.php?id_import=<?= $fetch_emp['id_import']; ?>">View</a>
                         </td>
                     </tr>
                     <?php
@@ -133,26 +163,10 @@ $select_emp->execute();
     </section>
     <!-- section products ends -->
 
-    <!-- section to pad starts -->
-    <section style="padding-top: 2rem;">
-
-    </section>
-    <!-- section to pad ends -->
-
 
     <!-- starts footer -->
     <?php include 'components\footer.php' ?>
     <!-- ends footer -->
-
-    <script src="js/index.js"></script>
-    <script>
-    function confirmDelete(gadgetId) {
-        console.log(gadgetId); // For debugging
-        if (confirm("Are you sure you want to delete this customer?")) {
-            window.location.href = 'delete_customer.php?cus_id=' + gadgetId;
-        }
-    }
-    </script>
 </body>
 
 </html>
