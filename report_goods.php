@@ -46,17 +46,29 @@ include 'components/connect.php';
             <tr class="table-header">
                 <th>ID</th>
                 <th class="name">Name</th>
-                <th>Sales</th>
-                <th>Import</th>
                 <th>Remain</th>
             </tr>
-            <tr>
-                <td>ID001</td>
-                <td class="name">Hoang Nhat Quy</td>
-                <td>Sales</td>
-                <td>Import</td>
-                <td>Remain</td>
-            </tr>
+            <?php
+            $sql = "SELECT id_gadget, name_gadget, quantity FROM gadget";
+            $result = $conn->query($sql);
+            if ($result->rowCount() > 0) {
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+                    <tr>
+                        <td><?= $row['id_gadget']; ?></td>
+                        <td class="name"><?= $row['name_gadget']; ?></td>
+                        <td><?= $row['quantity']; ?></td>
+                    </tr>
+                <?php
+                }
+            } else {
+                ?>
+                <tr>
+                    <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                </tr>
+            <?php
+            }
+            ?>
         </table>
     </section>
     <!-- section report content end -->

@@ -47,14 +47,28 @@ include 'components/connect.php';
                 <th>ID</th>
                 <th class="name">Name</th>
                 <th>Sold</th>
-                <th>Salary</th>
             </tr>
-            <tr>
-                <td>ID</td>
-                <td class="name">Name</td>
-                <td>Sold</td>
-                <td>Salary</td>
-            </tr>
+            <?php
+            $sql = "SELECT id_employee, name_employee FROM employee";
+            $result = $conn->query($sql);
+            if ($result->rowCount() > 0) {
+                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            ?>
+                    <tr>
+                        <td><?= $row['id_employee']; ?></td>
+                        <td class="name"><?= $row['name_employee']; ?></td>
+                        <td>0</td>
+                    </tr>
+                <?php
+                }
+            } else {
+                ?>
+                <tr>
+                    <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                </tr>
+            <?php
+            }
+            ?>
         </table>
     </section>
     <!-- section report content end -->
