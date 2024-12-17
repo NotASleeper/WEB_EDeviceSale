@@ -10,7 +10,7 @@ include 'components/message.php';
             <a href="home.php">home</a>
             <!-- <a>search</a> -->
             <a href="import.php">import</a>
-            <a>export</a>
+            <a href="order.php">order</a>
             <a href="customer.php">customer</a>
             <a href="employee.php">employee</a>
             <a href="report_revenues_month.php">report</a>

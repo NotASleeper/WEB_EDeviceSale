@@ -8,11 +8,12 @@ include 'components/message.php';
         <a class="comp-name" href="home_cus.php">S.B.'s Store</a>
         <nav class="menu-bar">
             <a href="home_cus.php">home</a>
-            <a>order</a>
-            <!-- <a href="customer.php">customer</a> -->
+            <a href="order.php">order</a>
         </nav>
         <div class="icon">
-            <i id="cart-btn" class="fas fa-solid fa-cart-shopping"></i>
+            <a href="cart.php" class="cart-link">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
             <i id="user-btn" class="fas fa-user"></i>
             <i id="menu-btn" class="fas fa-solid fa-bars"></i>
         </div>
