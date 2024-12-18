@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($select_user->rowCount() > 0) {
         $_SESSION['user_id'] = $row['id_employee'];
+        $_SESSION['role'] = 'employee';
         header('location:home.php');
     } else {
         $select_user_cus = $conn->prepare("SELECT * FROM `customer` WHERE username = ? AND password = ?");
@@ -29,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($select_user_cus->rowCount() > 0) {
             $_SESSION['user_id'] = $row['id_customer'];
+            $_SESSION['role'] = 'customer';
             header('location:home_cus.php');
         } else {
             echo '<script>alert("Username or Password is not Valid");</script>';

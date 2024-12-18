@@ -50,6 +50,16 @@ $select_products->execute();
     <link rel="stylesheet" href="css/style.css">
 </head>
 
+<script>
+    function confirmAddToCart() {
+        // Hiển thị thông báo xác nhận
+        var confirmation = window.confirm("Bạn có muốn tiếp tục mua sản phẩm này không?");
+
+        // Trả về true nếu người dùng nhấn OK, false nếu nhấn Cancel
+        return confirmation;
+    }
+</script>
+
 <body>
     <!-- starts header -->
     <?php include 'components\cus_header.php' ?>
@@ -120,15 +130,16 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="" method="POST" enctype="multipart/form-data">
+                    <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmAddToCart()">
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
                         <div>
-                            <a><i class="fa-solid fa-cart-shopping"></i></a>
+                            <button type="submit" class="cart-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
                         </div>
 
                         <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
                             <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                            <!-- <img src="images/img_gadget/1731763200.jpg"> -->
                         </a>
 
                         <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
