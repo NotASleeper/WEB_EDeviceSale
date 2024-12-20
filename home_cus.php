@@ -51,12 +51,20 @@ $select_products->execute();
 </head>
 
 <script>
-    function confirmAddToCart() {
-        // Hiển thị thông báo xác nhận
-        var confirmation = window.confirm("Bạn có muốn tiếp tục mua sản phẩm này không?");
+    function confirmAddToCart(form) {
+        // Hiển thị hộp thoại để người dùng nhập số lượng
+        var quantity = prompt("Nhập số lượng sản phẩm bạn muốn thêm:", "1");
 
-        // Trả về true nếu người dùng nhấn OK, false nếu nhấn Cancel
-        return confirmation;
+        // Kiểm tra dữ liệu nhập
+        if (quantity === null || quantity.trim() === "" || isNaN(quantity) || quantity <= 0) {
+            alert("Số lượng không hợp lệ!");
+            return false; // Không gửi biểu mẫu
+        }
+
+        // Gán số lượng vào trường ẩn của sản phẩm cụ thể
+        var quantityInput = form.querySelector('input[name="quantity"]');
+        quantityInput.value = quantity;
+        return true; // Gửi biểu mẫu
     }
 </script>
 
@@ -130,8 +138,10 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmAddToCart()">
+                    <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmAddToCart(this)">
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
+                        <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity" value="1">
+
                         <div>
                             <button type="submit" class="cart-icon">
                                 <i class="fa-solid fa-cart-shopping"></i>
@@ -146,6 +156,7 @@ $select_products->execute();
                         <p><?= $fetch_products['category']; ?></p>
                         <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
                     </form>
+
             <?php
                 }
             } else {
