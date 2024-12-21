@@ -38,19 +38,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($select_cus->rowCount() > 0) {
             $message[] = "Phone or username has already existed!";
         } else {
-            //if new, not exists
-
-            //insert to db
-            $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
-            $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $pass_customer]);
-
-            //check
-            $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
-            $confirm_cus->execute([$phone_no]);
-            if ($confirm_cus->rowCount() > 0) {
-                header('location:login.php');
+            //check emp
+            $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ? OR username = ?");
+            $select_emp->execute([$phone_no, $username_customer]);
+            $row = $select_emp->fetch(PDO::FETCH_ASSOC);
+            if ($select_emp->rowCount() > 0) {
+                $message[] = "Phone or username has already existed!";
             } else {
-                echo '<script>alert("Failed to insert");</script>';
+                //if new, not exists
+
+                //insert to db
+                $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
+                $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $pass_customer]);
+
+                //check
+                $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
+                $confirm_cus->execute([$phone_no]);
+                if ($confirm_cus->rowCount() > 0) {
+                    header('location:login.php');
+                } else {
+                    echo '<script>alert("Failed to insert");</script>';
+                }
             }
         }
     } else {

@@ -3,14 +3,22 @@ include 'components/connect.php';
 
 session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
-};
+
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'customer') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
+}
+
+
 
 //find var -> empty
 $search_query = '';

@@ -4,6 +4,24 @@ include 'components/connect.php';
 
 session_start();
 
+
+
+if (!isset($_SESSION['user_id'])) {
+  header('location:login.php');
+  exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'customer') {
+  echo "Bạn không có quyền xem trang này!";
+  exit();
+}
+
+
+
+
 // Lấy ID sản phẩm từ URL
 $id_gadget = isset($_GET['id_gadget']) ? (int)$_GET['id_gadget'] : 0;
 
