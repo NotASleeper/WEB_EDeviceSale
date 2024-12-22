@@ -110,7 +110,7 @@ $total_price = 0;
                 }
             ?>
                 <div class="shopping-cart <?php echo $class; ?>">
-                    <h3><a href="order_detail.php?id_order=<?php echo $order['id_order']; ?>">Đơn hàng #<?php echo $order['id_order']; ?></a></h3>
+                    <h3>Đơn hàng #<?php echo $order['id_order']; ?></a></h3>
                     <p>Trạng thái: <?php echo htmlspecialchars($order['status']); ?></p>
                     <p>Ngày tạo: <?php echo date("d/m/Y", strtotime($order['created_at'])); ?></p>
                     <p>Ngày cập nhật: <?php echo date("d/m/Y", strtotime($order['updated_at'])); ?></p>
