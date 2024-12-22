@@ -13,24 +13,18 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'];
 
-if ($role !== 'employee') {
+if ($role !== 'customer') {
     echo "Bạn không có quyền xem trang này!";
     exit();
 }
 
+$cus_id = $user_id;
 
 
-if (isset($_GET['id_customer'])) {
-    $cus_id = intval($_GET['id_customer']);
-
-    $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
-    $select_cus->execute([$cus_id]);
-    if ($select_cus->rowCount() == 0) {
-        header('Location: customer.php');
-        exit();
-    }
-} else {
-    header('Location: customer.php');
+$select_cus = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
+$select_cus->execute([$cus_id]);
+if ($select_cus->rowCount() == 0) {
+    header('Location: login.php');
     exit();
 }
 
@@ -59,6 +53,7 @@ if (isset($_POST['submit'])) {
     //     alert('Name: $name, Import Price: $im_price, Export Price: $ex_price, Description: $description, Category: $category');
     // </script>";
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -67,8 +62,7 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Customer</title>
-
+    <title>Edit Customer Profile</title>
     <!-- 28/10/2024 -->
     <link rel="icon" href="images/logocart.png" type="image/png">
 
@@ -80,12 +74,12 @@ if (isset($_POST['submit'])) {
 
 <body>
     <!-- starts header -->
-    <?php include 'components\header_sim.php' ?>
+    <?php include 'components\cus_header.php' ?>
     <!-- ends header -->
 
-    <!-- section create_new_gadget starts -->
+    <!-- section edit profile starts -->
     <section class="create-gadget">
-        <h1 style="color: yellow">UPDATE CUSTOMER</h1>
+        <h1 style="color: yellow">UPDATE PROFILE</h1>
         <?php
         $select_customer = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
         $select_customer->execute([$cus_id]);
@@ -122,7 +116,3 @@ if (isset($_POST['submit'])) {
 </body>
 
 </html>
-
-<!-- onkeydown="return event.keyCode !== 69" -->
-
-<!-- neu k filter + sani -> <script>alert('Hacked!');</script> -->

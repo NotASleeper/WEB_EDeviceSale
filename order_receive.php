@@ -42,4 +42,3 @@ if (isset($_GET['order_id'])) {
     // Nếu không có 'order_id' hợp lệ trong URL
     echo "Dữ liệu không hợp lệ.";
 }
-?>

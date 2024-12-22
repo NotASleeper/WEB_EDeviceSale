@@ -2,14 +2,18 @@
 include 'components/connect.php';
 
 session_start();
-// not sure 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'employee') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
 }
 
 $is_Saved = false;
@@ -45,7 +49,6 @@ if (isset($_GET['id_import'])) {
         'vat' => '',
         'date' => date('Y-m-d'),
     ];
-    
 }
 
 //Lưu phiếu nhập
@@ -69,11 +72,11 @@ if (isset($_POST['save_import'])) {
             $new_id_import = $conn->lastInsertId(); // Lấy ID phiếu nhập vừa tạo
             header("Location: create_import.php?id_import=" . $new_id_import);
         } else {
-        echo "Failed to save import record.";
+            echo "Failed to save import record.";
         }
     } else {
-    // Nếu đã tồn tại ID, không cho phép thêm nữa
-    echo "<script>alert('This import has already been saved!');</script>";
+        // Nếu đã tồn tại ID, không cho phép thêm nữa
+        echo "<script>alert('This import has already been saved!');</script>";
     }
 }
 
@@ -192,32 +195,32 @@ if (isset($_GET['delete_id'])) {
                 <tbody>
 
                     <?php
-                    
+
                     if ($select_detail && $select_detail->rowCount() > 0) {
                         while ($fetch_emp = $select_detail->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_import_detail']; ?>">
-                            <?= $fetch_emp['id_import_detail']; ?>
-                        </td>
-                        <td><?= $fetch_emp['name_gadget']; ?></td>
-                        <td><?= $fetch_emp['im_price']; ?></td>
-                        <td><?= $fetch_emp['quantity']; ?></td>
-                        <td><?= $fetch_emp['total']; ?></td>
-                        <td>
-                            <a href="create_import.php?delete_id=<?= $fetch_emp['id_import_detail']; ?>&id_import=<?= $id_import; ?>"
-                                onclick="return confirm('Are you sure you want to delete this item?');"><i
-                                    class="fa-solid fa-trash"></i></a>
-                        </td>
-                    </tr>
-                    <?php
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_import_detail']; ?>">
+                                    <?= $fetch_emp['id_import_detail']; ?>
+                                </td>
+                                <td><?= $fetch_emp['name_gadget']; ?></td>
+                                <td><?= $fetch_emp['im_price']; ?></td>
+                                <td><?= $fetch_emp['quantity']; ?></td>
+                                <td><?= $fetch_emp['total']; ?></td>
+                                <td>
+                                    <a href="create_import.php?delete_id=<?= $fetch_emp['id_import_detail']; ?>&id_import=<?= $id_import; ?>"
+                                        onclick="return confirm('Are you sure you want to delete this item?');"><i
+                                            class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        <?php
                         }
                     } else {
                         ?>
-                    <tr>
-                        <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                    </tr>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                        </tr>
                     <?php
                     }
                     ?>

@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="login-container">
         <div class="login-illustration">
-            <img src="images/img_gadget/1731913363.jpg" alt="Illustration of people" />
+            <img src="images/shopping_online.jpg" alt="Illustration of the store" />
         </div>
         <div class="login-form">
             <h2>LOG IN</h2>

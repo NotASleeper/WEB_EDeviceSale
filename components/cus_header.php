@@ -30,7 +30,7 @@ include 'components/message.php';
                 <h2 class="name"><?= $fetch_profile['name_customer']; ?></h2>
 
                 <div>
-                    <a class="btn-success">Edit profile</a>
+                    <a class="btn-success" href="edit_profile_cus.php">Edit profile</a>
                     <a href="components/user_logout.php"
                         onclick="return confirm('logout from this website?');"
                         class="btn-danger">Log out</a>

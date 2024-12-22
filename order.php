@@ -3,15 +3,22 @@ include './components/connect.php';
 
 session_start();
 
-// Kiểm tra người dùng đã đăng nhập hay chưa
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
-    // header('location:login.php'); // Uncomment this when login is implemented
+if (!isset($_SESSION['user_id'])) {
+  header('location:login.php');
+  exit();
 }
 
-$role = $_SESSION['role']; // Vai trò của người dùng hiện tại
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'customer') {
+  echo "Bạn không có quyền xem trang này!";
+  exit();
+}
+
+
+$role = $_SESSION['role']; // Role của người dùng hiện tại
+$user_id = $_SESSION['user_id']; // ID người dùng hiện tại
 
 // Câu truy vấn để lấy thông tin đơn hàng và chi tiết sản phẩm
 if ($role === 'employee') {
