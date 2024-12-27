@@ -154,36 +154,12 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-            <form class="product-box" action="" method="POST" enctype="multipart/form-data">
+            <form class="product-box" action="" method="POST" enctype="multipart/form-data"
+                onsubmit="return confirmAddToCart(this)">
                 <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                <div>
-                    <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i
-                            class=" fa-solid fa-pen-to-square"></i></a>
-                    <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i
-                            class="fa-solid fa-trash"></i></a>
-                </div>
-
-                <form class="product-box" action="" method="POST" enctype="multipart/form-data"
-                    onsubmit="return confirmAddToCart(this)">
-                    <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                    <!-- <div>
-                            <button type="submit" class="cart-icon">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                        </div> -->
-
-                    <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
-                        <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                        <!-- <img src="images/img_gadget/1731763200.jpg"> -->
-                    </a>
-                    <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
-                        <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                    </a>
-
-                    <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                    <p><?= $fetch_products['category']; ?></p>
-                    <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
-                </form>
+                <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
+                    <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                </a>
                 <div class="product-info">
                     <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
                     <p><?= $fetch_products['category']; ?></p>
