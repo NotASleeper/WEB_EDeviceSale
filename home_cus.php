@@ -77,11 +77,8 @@ function confirmAddToCart(form) {
     quantityInput.value = quantity;
     return true; // Gửi biểu mẫu
 }
-// Gán số lượng vào trường ẩn của sản phẩm cụ thể
-var quantityInput = form.querySelector('input[name="quantity"]');
-quantityInput.value = quantity;
-return true; // Gửi biểu mẫu
-}
+
+
 
 function handleSelectChange(select) {
     if (select.value !== "") {
@@ -138,121 +135,74 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- section search ends -->
 
     <!-- section preview-categories starts -->
-    <section class="preview-categories">
-        <h2>categories</h2>
+
+    <section class="banner">
+        <div class="welcome-message">
+            <h1>Welcome to my shop!</h1>
+            <button><a href="#products-list"><i class="fa-solid fa-cart-shopping"></i> Buying now </a></button>
+        </div>
+        <div class="banner-images">
+            <div class="banner-slideshow"></div>
+        </div>
+    </section>
+
+
+
+    <!-- section products starts -->
+    <section class="products" id="products-list">
+        <div class="product-title">
+            <h2>Features products</h2>
+            <form method="GET" class="cate-box" style="text-decoration: none; " enctype="multipart/form-data"
+                action="view_gadget_category_cus.php">
+                <select name="category" id="category-select" onchange="handleSelectChange(this)">
+                    <option value="" selected>All products
+                    </option>
+                    <option value="smartphone">smartphone</option>
+                    <option value="laptop">laptop</option>
+                    <option value="smartwatch">smartwatch</option>
+                    <option value="accessory">accessory</option>
+                </select>
+            </form>
+        </div>
         <div class="container">
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
-                action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="smartphone">
-                <button type="submit"
-                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_cellphone.png">
-                    <h3>smartphone</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
-                action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="laptop">
-                <button type="submit"
-                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_laptop.png">
-                    <h3>laptop</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
-                action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="smartwatch">
-                <button type="submit"
-                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_smartwatch.png">
-                    <h3>smartwatch</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
-                action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="accessory">
-                <button type="submit"
-                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_accessory.png">
-                    <h3>accessory</h3>
-                </button>
-            </form>
-
-            <section class="banner">
-                <div class="welcome-message">
-                    <h1>Welcome to my shop!</h1>
-                    <button><a href="#products-list"><i class="fa-solid fa-cart-shopping"></i> Buying now </a></button>
-                </div>
-                <div class="banner-images">
-                    <div class="banner-slideshow"></div>
-                </div>
-            </section>
-
-
-
-            <!-- section products starts -->
-            <section class="products" id="products-list">
-                <div class="product-title">
-                    <h2>Features products</h2>
-                    <form method="GET" class="cate-box" style="text-decoration: none; " enctype="multipart/form-data"
-                        action="view_gadget_category_cus.php">
-                        <select name="category" id="category-select" onchange="handleSelectChange(this)">
-                            <option value="" selected>All products
-                            </option>
-                            <option value="smartphone">smartphone</option>
-                            <option value="laptop">laptop</option>
-                            <option value="smartwatch">smartwatch</option>
-                            <option value="accessory">accessory</option>
-                        </select>
-                    </form>
-                </div>
-                <div class="container">
-                    <!-- 11-15-2024 -->
-                    <?php
+            <!-- 11-15-2024 -->
+            <?php
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data"
-                        onsubmit="return confirmAddToCart(this)">
-                        <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                        <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity"
-                            value="1">
+            <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data"
+                onsubmit="return confirmAddToCart(this)">
+                <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
+                <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity" value="1">
 
-                        <div>
-                            <button type="submit" class="cart-icon">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                            </button>
-                        </div>
-                        <!-- <div>
+                <div>
+                    <button type="submit" class="cart-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+                </div>
+                <!-- <div>
                             <button type="submit" class="cart-icon">
                                 <i class="fa-solid fa-cart-shopping"></i>
                             </button>
                         </div> -->
 
-                        <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
-                            <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                        </a>
+                <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
+                    <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                </a>
 
-                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                        <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
-                    </form>
-                    <div class="product-info">
-                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                        <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
-                    </div>
-                    <div class="product-action">
-                        <button type="submit">
-                            Add to cart
-                        </button>
-                    </div>
-                    </form>
+                <div class="product-info">
+                    <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
+                    <p><?= $fetch_products['category']; ?></p>
+                    <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
+                </div>
+                <div class="product-action">
+                    <button type="submit">
+                        Add to cart
+                    </button>
+                </div>
+            </form>
 
-                    <?php
+            <?php
                 }
             } else {
                 echo "
@@ -262,15 +212,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ";
             }
             ?>
-                </div>
-            </section>
-            <!-- section products ends -->
+        </div>
+    </section>
+    <!-- section products ends -->
 
-            <!-- starts footer -->
-            <?php include 'components\footer.php' ?>
-            <!-- ends footer -->
+    <!-- starts footer -->
+    <?php include 'components\footer.php' ?>
+    <!-- ends footer -->
 
-            <script src="js/index.js"></script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
