@@ -5,7 +5,7 @@ include 'components/message.php';
 
 <header class="header-container">
     <section class="flex">
-        <a class="comp-name" href="home.php">S.B.'s Store</a>
+        <a class="comp-name" href="home.php">TechHub</a>
         <nav class="menu-bar">
             <a href="home.php">home</a>
             <!-- <a>search</a> -->
