@@ -5,46 +5,22 @@ include 'components/message.php';
 
 <header class="header-container">
     <section class="flex">
-        <a class="comp-name" href="home_cus.php">S.B.'s Store</a>
+        <a class="comp-name" href="home_cus.php">TechHub</a>
         <nav class="menu-bar">
-            <a href="home_cus.php">home</a>
-            <a href="view_gadget_category_cus.php">
-                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                    <input type="hidden" name="category" value="smartphone">
-                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                        Smartphone
-                    </button>
-                </form>
-            </a>
-            <a href="view_gadget_category_cus.php">
-                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                    <input type="hidden" name="category" value="laptop">
-                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                        Laptop
-                    </button>
-                </form>
-            </a>
+            <!-- <a href="home_cus.php">home</a>
+            <a href="order.php">order</a> -->
 
-            <a href="view_gadget_category_cus.php">
-                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                    <input type="hidden" name="category" value="smartwatch">
-                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                        Smartwatch
-                    </button>
+            <section class="search-section">
+                <form class="search-div" action="" method="GET" enctype="multipart/form-data">
+                    <input name="txt_input" placeholder="Searching..."
+                        value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+                    <button style="background-color: white;" type="submit"><i
+                            class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
-            </a>
-
-            <a href="view_gadget_category_cus.php">
-                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                    <input type="hidden" name="category" value="accessory">
-                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                        Accessory
-                    </button>
-                </form>
-            </a>
-            <a href="order.php">order</a>
+            </section>
         </nav>
         <div class="icon">
+            <i id="order-btn" class="fa-solid fa-file-lines"></i>
             <a href="cart.php" class="cart-link">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>
@@ -60,20 +36,19 @@ include 'components/message.php';
                 $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
 
             ?>
-                <!-- not sure  -->
-                <h2 class="name"><?= $fetch_profile['name_customer']; ?></h2>
+            <!-- not sure  -->
+            <h2 class="name"><?= $fetch_profile['name_customer']; ?></h2>
 
-                <div>
-                    <a class="btn-success" href="edit_profile_cus.php">Edit profile</a>
-                    <a href="components/user_logout.php"
-                        onclick="return confirm('logout from this website?');"
-                        class="btn-danger">Log out</a>
-                </div>
+            <div>
+                <a class="btn-success" href="edit_profile_cus.php">Edit profile</a>
+                <a href="components/user_logout.php" onclick="return confirm('logout from this website?');"
+                    class="btn-danger">Log out</a>
+            </div>
             <?php
             } else {
             ?>
-                <h2 class="name">Please login first</h2>
-                <a class="btn-success" href="login.php">Log in</a>
+            <h2 class="name">Please login first</h2>
+            <a class="btn-success" href="login.php">Log in</a>
             <?php
             }
             ?>

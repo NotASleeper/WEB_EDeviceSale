@@ -54,6 +54,8 @@ $select_emp->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="components/header footer.css">
 </head>
 
 <body>
@@ -106,31 +108,31 @@ $select_emp->execute();
                     if ($select_emp->rowCount() > 0) {
                         while ($fetch_emp = $select_emp->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_customer']; ?>">
-                                    <?= $fetch_emp['id_customer']; ?>
-                                </td>
-                                <td><?= $fetch_emp['name_customer']; ?></td>
-                                <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
-                                <td><?= $fetch_emp['phone_no']; ?></td>
-                                <td><?= $fetch_emp['total_spending']; ?></td>
-                                <td><?= $fetch_emp['username']; ?></td>
-                                <td><?= $fetch_emp['password']; ?></td>
-                                <td>
-                                    <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
-                                            class="fa-solid fa-pen-to-square"></i></a>
-                                    <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i
-                                            class="fa-solid fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        <?php
+                    <tr>
+                        <td>
+                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_customer']; ?>">
+                            <?= $fetch_emp['id_customer']; ?>
+                        </td>
+                        <td><?= $fetch_emp['name_customer']; ?></td>
+                        <td><?= date('m-d-Y', strtotime($fetch_emp['date_of_birth'])) ?></td>
+                        <td><?= $fetch_emp['phone_no']; ?></td>
+                        <td><?= $fetch_emp['total_spending']; ?></td>
+                        <td><?= $fetch_emp['username']; ?></td>
+                        <td><?= $fetch_emp['password']; ?></td>
+                        <td>
+                            <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_emp['id_customer']; ?>)"><i
+                                    class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                    <?php
                         }
                     } else {
                         ?>
-                        <tr>
-                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                        </tr>
+                    <tr>
+                        <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                    </tr>
                     <?php
                     }
                     ?>
@@ -153,12 +155,12 @@ $select_emp->execute();
 
     <script src="js/index.js"></script>
     <script>
-        function confirmDelete(gadgetId) {
-            console.log(gadgetId); // For debugging
-            if (confirm("Are you sure you want to delete this customer?")) {
-                window.location.href = 'delete_customer.php?cus_id=' + gadgetId;
-            }
+    function confirmDelete(gadgetId) {
+        console.log(gadgetId); // For debugging
+        if (confirm("Are you sure you want to delete this customer?")) {
+            window.location.href = 'delete_customer.php?cus_id=' + gadgetId;
         }
+    }
     </script>
 </body>
 
