@@ -58,7 +58,7 @@ $select_products->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="components/header.css">
+    <link rel="stylesheet" href="components/header footer.css">
 </head>
 
 <script>

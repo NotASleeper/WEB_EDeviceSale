@@ -236,20 +236,6 @@ section {
   margin-bottom: 15px;
 } /* đã xử lý trong header.css */
 
-.footer-container {
-  position: absolute;
-  background-color: var(--black);
-  bottom: 0;
-  width: 100%;
-}
-
-.footer-container .flex {
-  display: flex;
-  color: var(--green);
-  justify-content: center;
-  font-size: 12px;
-}
-
 .section-title {
   padding-left: 20px;
 }
