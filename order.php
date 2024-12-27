@@ -11,11 +11,6 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'];
 
-if ($role !== 'customer') {
-  echo "Bạn không có quyền xem trang này!";
-  exit();
-}
-
 
 $role = $_SESSION['role']; // Role của người dùng hiện tại
 $user_id = $_SESSION['user_id']; // ID người dùng hiện tại

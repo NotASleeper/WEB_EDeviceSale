@@ -16,6 +16,7 @@ if ($role !== 'customer') {
     exit();
 }
 
+// Xử lý đặt hàng
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
     $selected_items = $_POST['selected_items'] ?? [];
 
@@ -54,7 +55,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['checkout'])) {
         }
     } else {
         echo "Vui lòng chọn ít nhất một sản phẩm để đặt hàng.";
-        exit();
+    }
+}
+
+// Xử lý xóa hàng
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete'])) {
+    $selected_items = $_POST['selected_items'] ?? [];
+
+    if (!empty($selected_items)) {
+        try {
+            $stmt = $conn->prepare("DELETE FROM cart WHERE id_cart = :id_cart");
+            foreach ($selected_items as $id_cart) {
+                $stmt->bindValue(':id_cart', $id_cart, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+            echo "Các sản phẩm đã được xóa khỏi giỏ hàng.";
+            header('location: cart.php');
+        } catch (Exception $e) {
+            echo "Lỗi: " . $e->getMessage();
+        }
+    } else {
+        echo "Vui lòng chọn ít nhất một sản phẩm để xóa.";
     }
 }
 ?>

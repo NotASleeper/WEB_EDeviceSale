@@ -8,6 +8,40 @@ include 'components/message.php';
         <a class="comp-name" href="home_cus.php">S.B.'s Store</a>
         <nav class="menu-bar">
             <a href="home_cus.php">home</a>
+            <a href="view_gadget_category_cus.php">
+                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
+                    <input type="hidden" name="category" value="smartphone">
+                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                        Smartphone
+                    </button>
+                </form>
+            </a>
+            <a href="view_gadget_category_cus.php">
+                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
+                    <input type="hidden" name="category" value="laptop">
+                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                        Laptop
+                    </button>
+                </form>
+            </a>
+
+            <a href="view_gadget_category_cus.php">
+                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
+                    <input type="hidden" name="category" value="smartwatch">
+                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                        Smartwatch
+                    </button>
+                </form>
+            </a>
+
+            <a href="view_gadget_category_cus.php">
+                <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
+                    <input type="hidden" name="category" value="accessory">
+                    <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                        Accessory
+                    </button>
+                </form>
+            </a>
             <a href="order.php">order</a>
         </nav>
         <div class="icon">

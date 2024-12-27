@@ -20,15 +20,16 @@
 }
 
 ::-webkit-scrollbar {
-	width: 1.5rem;
+	width: 1rem;
 }
 
 ::-webkit-scrollbar-track {
 	background-color: none;
+	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: var(--green);
+	background-color: rgba(119, 119, 119, 0.8);
 }
 
 html {
@@ -156,10 +157,12 @@ section {
 
 .header-container .flex .menu-bar {
 	display: flex;
+	flex-direction: row;
 	justify-items: center;
 }
 
-.header-container .flex .menu-bar a {
+.header-container .flex .menu-bar a,
+.header-container .flex .menu-bar a button {
 	text-transform: capitalize;
 	font-size: 20px;
 	margin-left: 15px;
@@ -167,7 +170,8 @@ section {
 	text-decoration: none;
 }
 
-.header-container .flex .menu-bar a:hover {
+.header-container .flex .menu-bar a:hover,
+.header-container .flex .menu-bar a button:hover {
 	color: var(--green);
 	text-decoration: underline;
 }
@@ -192,10 +196,6 @@ section {
 
 #menu-btn {
 	display: none;
-}
-
-.header-container .flex .menu-bar {
-	display: inline-block;
 }
 
 .header-container .flex .profile {
@@ -394,6 +394,90 @@ select {
 		hue-rotate(80deg) brightness(95%) contrast(85%);
 }
 
+.banner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #f2f2f2;
+}
+
+.welcome-message {
+	width: 60%;
+	opacity: 0; /* Ẩn ban đầu */
+	transform: translateY(20px); /* Dịch xuống ban đầu */
+	animation: fadeIn 1.5s ease-in-out forwards; /* Gọi animation */
+}
+
+@media screen and (max-width: 850px) {
+	.welcome-message {
+		display: none;
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+			opacity: 0;
+			transform: translateY(20px); /* Dịch từ vị trí dưới */
+	}
+	100% {
+			opacity: 1;
+			transform: translateY(0); /* Trở về vị trí ban đầu */
+	}
+}
+
+.welcome-message h1 {
+	font-size: 30px;
+	color: #333;
+	padding: 0px 10px;
+	text-align: left;
+}
+
+.welcome-message button{
+	background-color: black;
+	padding: 16px;
+	border-radius: 8px;
+	margin-top: 16px;
+}
+
+.welcome-message button a{
+	font-size: 16px;
+	text-decoration: none;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+/* Container của slider */
+.banner-images {
+	width: 100%;
+	height: 400px; /* Chiều cao của slider */
+	overflow: hidden; /* Ẩn phần dư thừa */
+	position: relative;
+}
+
+@media screen and (max-width: 850px) {
+	.banner-images {
+		height: 360px;
+	}
+}
+
+@media screen and (max-width: 756px) {
+	.banner-images {
+		height: 240px;
+	}
+}
+
+/* Slider chính */
+.banner-slideshow {
+	width: 100%;
+	height: 100%;
+	background-size: contain; /* Đảm bảo ảnh lấp đầy khung mà giữ tỷ lệ */
+	background-position: center; /* Căn giữa ảnh */
+	background-repeat: no-repeat; /* Không lặp lại ảnh */
+	transition: background-image 0.5s ease-out; /* Hiệu ứng chuyển đổi mượt */
+}
+
+
 .products {
 	margin-bottom: 5rem;
 	display: flex;
@@ -407,6 +491,15 @@ select {
 
 .products .product-title h2 {
 	font-size: 25px;
+	text-transform: capitalize;
+}
+
+.products .product-title #category-select {
+	border: 1px solid black;
+	border-radius: 8px;
+	padding: 8px;
+	font-size: 14px;
+	font-weight: 600;
 	text-transform: capitalize;
 }
 
@@ -438,13 +531,15 @@ select {
 	/* background-color: #4a90e2; */
 	margin-top: 1rem;
 	margin-bottom: 5rem;
+	gap: 10px;
+	align-items: center;
+	justify-content: space-evenly;
 }
 
 .products .container .product-box {
 	display: flex;
 	flex-direction: column;
-	height: 32rem;
-	width: 20rem;
+	gap: 10px;
 	background-color: var(--white);
 	margin: 3px 3px;
 	padding: 0 1rem;
@@ -454,62 +549,110 @@ select {
 	margin: 1rem 1.5rem;
 }
 
-.products .container .product-box div {
-	margin-top: 1rem;
-	display: flex;
-	justify-content: center;
-	height: 40px;
-	color: var(--black);
-	justify-content: flex-end;
-}
-
-.products .container .product-box div button {
-	background-color: transparent;
-}
-
-.products .container .product-box div button i {
-	font-size: 20px;
-	color: var(--black);
-	transition: color linear 0.1s;
-	cursor: pointer;
-}
-
-.products .container .product-box div button i:hover {
-	color: var(--green);
-}
-
 .products .container .product-box img {
-	width: 100%;
-	height: 12rem;
-	align-self: center;
+	width: 200px;
+	height: 200px;
 	cursor: pointer;
+	margin-top: 20px;
 }
 
-.products .container .product-box h2 {
-	font-size: 14px;
-	padding-top: 10px;
-}
-
-.products .container .product-box .gadget_title {
-	height: 6rem;
-	width: 18rem;
+.products .container .product-box .product-info {
 	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	width: 200px;
+}
+
+.products .container .product-box .product-info h2 {
+	font-size: 14px;
+}
+
+.products .container .product-box .product-info .gadget_title {
+	/* display: flex;
 	justify-content: flex-start;
 	flex-wrap: wrap;
 	word-wrap: break-word;
 	word-break: break-all;
+	text-align: justify; */
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.products .container .product-box p {
+.products .container .product-box .product-info p {
 	font-size: 13px;
-	position: absolute;
-	bottom: 3.5rem;
+	text-transform: capitalize;
+	font-style: italic;
+	color: var(--light-color);
 }
 
-.products .container .product-box .gadget_price {
+.products .container .product-box .product-info .gadget_price {
 	color: var(--red);
-	position: absolute;
-	bottom: 1rem;
+}
+
+.products .container .product-box .product-action {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+	color: var(--black);
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.products .container .product-box .product-action button {
+	background-color: black;
+	color: white;
+	font-size: 14px;
+	width: 100%;
+	height: 40px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.products .container .product-box .product-action button:hover {
+	background-color: #ccc;
+	color: black;
+	font-weight: bold;
+}
+
+.products .container .product-box .product-action div{
+	font-size: 14px;
+	width: 100%;
+	height: 40px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.products .container .product-box .product-action a{
+	text-decoration: none;
+	color: white;
+	font-weight: 600;
+	text-align: center;
+}
+
+.products .container .product-box .product-action div.update{
+	background-color: rgb(0, 255, 0);
+}
+
+.products .container .product-box .product-action div.update:hover{
+	background-color: rgba(0, 255, 0, 0.7);
+}
+
+.products .container .product-box .product-action div.delete{
+	background-color: rgb(255, 0, 0);
+}
+
+.products .container .product-box .product-action div.delete:hover{
+	background-color: rgba(255, 0, 0, 0.7);
 }
 
 /* 27/10/2024 */
@@ -965,8 +1108,18 @@ select {
 /* Order pages */
 .order-page {
 	display: flex;
+	flex-direction: row;
 	gap: 20px;
 	padding: 20px;
+}
+
+@media screen and (max-width: 850px) {
+	.order-page {
+		flex-direction: column;
+	}
+	.user-info-summary{
+		margin-bottom: 40px;
+	}
 }
 
 .order-page h2 {
@@ -1301,11 +1454,12 @@ select {
 	text-align: right;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
 }
 
 .cart-summary button {
-	width: 100px;
+	width: 80px;
 	height: 40px;
 	background-color: rgba(0, 157, 96, 1);
 	color: #fff;
@@ -1316,6 +1470,18 @@ select {
 
 .cart-summary button:hover {
 	background-color: rgba(0, 157, 96, 0.7);
+}
+
+.cart-summary button.delete-button {
+	background-color: rgb(255, 3, 3);
+}
+
+.cart-summary button.delete-button:hover {
+	background-color: rgb(255, 3, 3, 0.7);
+}
+
+.cart-summary div{
+	flex: 1;
 }
 
 .cart-summary h3 {
@@ -1537,7 +1703,6 @@ select {
 	.products .container .product-box {
 		display: flex;
 		flex-direction: column;
-		height: 28rem;
 		width: 15rem;
 		background-color: var(--white);
 		margin: 3px 3px;
@@ -1547,7 +1712,6 @@ select {
 		margin-top: 0.5rem;
 		display: flex;
 		justify-content: center;
-		height: 35px;
 		color: var(--black);
 		justify-content: flex-end;
 	}
@@ -1570,29 +1734,15 @@ select {
 
 	.products .container .product-box h2 {
 		font-size: 12px;
-		padding-top: 10px;
 	}
 
 	.products .container .product-box .gadget_title {
-		height: 6rem;
 		width: 13rem;
 		display: flex;
 		justify-content: flex-start;
 		flex-wrap: wrap;
 		word-wrap: break-word;
 		word-break: break-all;
-	}
-
-	.products .container .product-box p {
-		font-size: 13px;
-		position: absolute;
-		bottom: 3.5rem;
-	}
-
-	.products .container .product-box .gadget_price {
-		color: var(--red);
-		position: absolute;
-		bottom: 1rem;
 	}
 
 	/* 27/10/2024 */
