@@ -1,5 +1,5 @@
 <?php
-include './components/connect.php';
+include 'components/connect.php';
 
 session_start();
 
@@ -74,6 +74,7 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Đơn Hàng</title>
+    <link rel="stylesheet" href="css/order.css">
     <link rel="stylesheet" href="css/style.css">
     <script>
         function handleOrder(action, orderId) {
@@ -184,5 +185,4 @@ $total_price = 0;
 
     <?php include 'components/footer.php'; ?>
 </body>
-
 </html>

@@ -1,0 +1,164 @@
+/* Order pages */
+.order-page {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+}
+
+@media screen and (max-width: 850px) {
+  .order-page {
+    flex-direction: column;
+  }
+  .user-info-summary {
+    margin-bottom: 40px;
+  }
+}
+
+.order-page h2 {
+  color: #222;
+  font-size: 2.4rem;
+}
+
+.order-page {
+  font-size: 1.6rem;
+}
+
+/* Shopping Cart Section */
+.order-page .shopping-cart {
+  flex: 3;
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-page .shopping-cart.done {
+  background-color: rgba(0, 128, 0, 0.3);
+}
+
+.order-page .shopping-cart.cancel {
+  background-color: rgba(128, 0, 0, 0.3);
+}
+
+.order-page .shopping-cart h3 a {
+  text-decoration: none;
+  color: black;
+}
+
+.order-page .shopping-cart > p {
+  color: rgb(0, 0, 0);
+  padding: 4px 0px;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.order-page .gadget-list-card {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.order-page .gadget-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.order-page .gadget-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.order-page .gadget-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.order-page .gadget-card .details {
+  flex-grow: 1;
+}
+
+.order-page .gadget-card .details a {
+  text-decoration: none;
+}
+
+.order-page .gadget-card .details a h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.order-page .gadget-card .details p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.order-page .action-buttons button {
+  position: relative;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-confirm {
+  background-color: #5682e8;
+}
+
+.btn-delete {
+  background-color: #ff4d4d;
+}
+
+.order-page .gadget-card button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.2); /* Màu lớp phủ */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.order-page .gadget-card button:hover::before {
+  opacity: 1;
+}
+
+/* User Info and Summary Section */
+.order-page .user-info-summary {
+  flex: 1;
+  background: #f4f4f4;
+  height: 83vh;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.order-page .user-info-summary p {
+  margin: 10px 0;
+}
+
+.order-page .summary {
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
