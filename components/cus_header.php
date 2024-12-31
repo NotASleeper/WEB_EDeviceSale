@@ -1,7 +1,6 @@
 <?php
-include 'components/message.php';
+include './components/message.php';
 ?>
-
 
 <header class="header-container">
     <section class="flex">
@@ -20,7 +19,7 @@ include 'components/message.php';
             </section>
         </nav>
         <div class="icon">
-            <i id="order-btn" class="fa-solid fa-file-lines"></i>
+            <a href="order.php"><i id="order-btn" class="fa-solid fa-file-lines"></i></a>
             <a href="cart.php" class="cart-link">
                 <i class="fa-solid fa-cart-shopping"></i>
             </a>

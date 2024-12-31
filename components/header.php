@@ -1,7 +1,6 @@
 <?php
-include 'components/message.php';
+    include './components/message.php';
 ?>
-
 
 <header class="header-container">
     <section class="flex">

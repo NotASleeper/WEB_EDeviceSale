@@ -1,0 +1,110 @@
+.cart-page h2 {
+  margin-top: 20px;
+  color: #444;
+  font-size: 2.4rem;
+}
+
+.cart-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.cart-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cart-item img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item .details {
+  flex-grow: 1;
+}
+
+.cart-item .details a {
+  text-decoration: none;
+}
+
+.cart-item .details a h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.cart-item .details p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Tổng quan giỏ hàng */
+.cart-summary {
+  margin-top: 20px;
+  margin-bottom: 80px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f5f5f5;
+  text-align: right;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-summary button {
+  width: 80px;
+  height: 40px;
+  background-color: rgba(0, 157, 96, 1);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cart-summary button:hover {
+  background-color: rgba(0, 157, 96, 0.7);
+}
+
+.cart-summary button.delete-button {
+  background-color: rgb(255, 3, 3);
+}
+
+.cart-summary button.delete-button:hover {
+  background-color: rgb(255, 3, 3, 0.7);
+}
+
+.cart-summary div {
+  flex: 1;
+}
+
+.cart-summary h3 {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #444;
+}
