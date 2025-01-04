@@ -84,11 +84,12 @@ $select_emp->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="components/header footer.css">
 </head>
 
 <body>
     <!-- starts header -->
-
+    <?php include 'components\header.php' ?>
     <!-- ends header -->
 
     <!-- section title starts -->
@@ -137,26 +138,26 @@ $select_emp->execute();
                     if ($select_emp->rowCount() > 0) {
                         while ($fetch_emp = $select_emp->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_import']; ?>">
-                                    <?= $fetch_emp['id_import']; ?>
-                                </td>
-                                <td><?= $fetch_emp['name_employee']; ?></td>
-                                <td><?= date('d-m-Y', strtotime($fetch_emp['date'])) ?></td>
-                                <td><?= $fetch_emp['sum']; ?></td>
-                                <td><?= $fetch_emp['vat']; ?></td>
-                                <td>
-                                    <a href="import_detail.php?id_import=<?= $fetch_emp['id_import']; ?>">View</a>
-                                </td>
-                            </tr>
-                        <?php
+                    <tr>
+                        <td>
+                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_import']; ?>">
+                            <?= $fetch_emp['id_import']; ?>
+                        </td>
+                        <td><?= $fetch_emp['name_employee']; ?></td>
+                        <td><?= date('d-m-Y', strtotime($fetch_emp['date'])) ?></td>
+                        <td><?= $fetch_emp['sum']; ?></td>
+                        <td><?= $fetch_emp['vat']; ?></td>
+                        <td>
+                            <a href="import_detail.php?id_import=<?= $fetch_emp['id_import']; ?>">View</a>
+                        </td>
+                    </tr>
+                    <?php
                         }
                     } else {
                         ?>
-                        <tr>
-                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                        </tr>
+                    <tr>
+                        <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                    </tr>
                     <?php
                     }
                     ?>
