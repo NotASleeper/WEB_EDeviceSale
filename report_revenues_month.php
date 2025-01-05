@@ -1,7 +1,7 @@
 <?php
 include 'components/connect.php';
 
-
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header('location:login.php');
@@ -16,6 +16,47 @@ if ($role !== 'employee') {
     exit();
 }
 
+$query = "SELECT 
+  MONTHNAME(COALESCE(a.Month, b.Month)) AS Month,
+  COALESCE(a.Revenues, 0) AS Revenues,
+  COALESCE(b.Expenses, 0) AS Expenses,
+  (COALESCE(a.Revenues, 0) - COALESCE(b.Expenses, 0)) AS Profit
+FROM (
+  SELECT Month, SUM(total_order + total_export) AS Revenues
+  FROM (
+    SELECT DATE_FORMAT(o.created_at, '%Y-%m-01') AS Month, SUM(g.exp_gadget * od.quantity) AS total_order, 0 AS total_export
+    FROM orders o
+    JOIN order_details od ON o.id_order = od.id_order
+    JOIN gadget g ON od.id_gadget = g.id_gadget
+    WHERE YEAR(o.created_at) = YEAR(CURDATE())
+    GROUP BY Month
+    UNION
+    SELECT DATE_FORMAT(e.date, '%Y-%m-01') AS Month, 0 AS total_order, SUM(ed.ex_price * ed.quantity) AS total_export
+    FROM export e
+    JOIN export_detail ed ON e.id_export = ed.id_export
+    WHERE YEAR(e.date) = YEAR(CURDATE())
+    GROUP BY Month
+  ) AS combined
+  GROUP BY Month
+) a
+LEFT JOIN (
+  SELECT DATE_FORMAT(i.date, '%Y-%m-01') AS Month, SUM(id.im_price * id.quantity) AS Expenses
+  FROM import i
+  JOIN import_detail id ON i.id_import = id.id_import
+  WHERE YEAR(i.date) = YEAR(CURDATE())
+  GROUP BY Month
+) b ON a.Month = b.Month
+ORDER BY a.Month ASC;
+";
+
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$data = [];
+foreach ($result as $row) {
+    $data[] = [$row['Month'], (int)$row['Revenues'], (int)$row['Expenses'], (int)$row['Profit']];
+}
 
 ?>
 
@@ -45,23 +86,16 @@ if ($role !== 'employee') {
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Month', 'Expenses', 'Revenues', 'Profit'],
-                ['1', 1000, 400, 200],
-                ['2', 1170, 460, 250],
-                ['3', 660, 1120, 300],
-                ['4', 1030, 540, 350],
-                ['5', 210, 590, 1100],
-                ['6', 190, 240, 750],
-                ['7', 100, 420, 680],
-                ['8', 100, 540, 350],
-                ['9', 930, 340, 350],
-                ['10', 740, 930, 220],
-                ['11', 100, 430, 320],
-                ['12', 1030, 540, 350],
+                <?php
+                foreach ($data as $entry) {
+                    echo "['{$entry[0]}', {$entry[1]}, {$entry[2]}, {$entry[3]}],";
+                }
+                ?>
             ]);
 
             var options = {
                 // title: 'Company Performance',
-                title: 'Expenses, Revenues, and Profit: 2023',
+                title: 'Expenses, Revenues, and Profit: current year',
                 legend: {
                     position: 'bottom',
                 },

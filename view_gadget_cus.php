@@ -22,20 +22,31 @@ if ($role !== 'customer') {
 
 
 
+// Lấy thông tin gadget và chi tiết theo danh mục
+$gadget_data = null;
+$gadget_details = null;
+
 if (isset($_GET['id'])) {
     $gadget_id = intval($_GET['id']);
-
     $select_gadget = $conn->prepare("SELECT * FROM `gadget` WHERE id_gadget = ?");
     $select_gadget->execute([$gadget_id]);
-    if ($select_gadget->rowCount() == 0) {
-        header('Location: home.php');
+
+    if ($select_gadget->rowCount() > 0) {
+        $gadget_data = $select_gadget->fetch(PDO::FETCH_ASSOC);
+
+        // Lấy chi tiết theo danh mục (laptop, smartphone, smartwatch, accessory)
+        $category = $gadget_data['category'];
+        $detail_query = $conn->prepare("SELECT * FROM `$category` WHERE id_gadget = ?");
+        $detail_query->execute([$gadget_id]);
+        $gadget_details = $detail_query->fetch(PDO::FETCH_ASSOC);
+    } else {
+        header('Location: home_cus.php');
         exit();
     }
 } else {
-    header('Location: home.php');
+    header('Location: home_cus.php');
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -55,293 +66,68 @@ if (isset($_GET['id'])) {
 
 <body>
     <!-- starts header -->
-    <?php include 'components\cus_header.php' ?>
+    <?php include 'components/cus_header.php' ?>
     <!-- ends header -->
 
     <!-- section view_gadget starts -->
-    <section class="view-gadget">
-        <?php
-        $select_gadget = $conn->prepare("SELECT * FROM `gadget` WHERE id_gadget = ?");
-        $select_gadget->execute([$gadget_id]);
-        if ($fetch_gadget = $select_gadget->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-            <h1 style="color: yellow">GADGET INFORMATION</h1>
-            <table class="tbl-general">
-                <thead>
-                    <tr>
-                        <th class="header" colspan="2">General Information</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="text-left">Gadget ID:</td>
-                        <td class="text-right"><?= $fetch_gadget['id_gadget']; ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Gadget Name:</td>
-                        <td class="text-right"><?= $fetch_gadget['name_gadget']; ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Category:</td>
-                        <td class="text-right"><?= $fetch_gadget['category']; ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Import Price:</td>
-                        <td class="text-right"><?= number_format($fetch_gadget['imp_gadget'], 0, '.', ','); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Export Price:</td>
-                        <td class="text-right"><?= number_format($fetch_gadget['exp_gadget'], 0, '.', ','); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Quantity:</td>
-                        <td class="text-right"><?= number_format($fetch_gadget['quantity'], 0, '.', ','); ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Description:</td>
-                        <td class="text-right"><?= $fetch_gadget['des_gadget']; ?></td>
-                    </tr>
-                    <tr>
-                        <td class="text-left">Picture:</td>
-                        <td class="text-right"><img src="images/img_gadget/<?= $fetch_gadget['pic_gadget'] ?>" height="120px"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <?php
-            if ($fetch_gadget['category'] === 'laptop') {
-                $select_lap = $conn->prepare("SELECT * FROM `laptop` WHERE id_gadget = ?");
-                $select_lap->execute([$gadget_id]);
-                if ($fetch_lap = $select_lap->fetch(PDO::FETCH_ASSOC)) {
-            ?>
-                    <!-- laptop -->
-                    <table class="tbl-detail tbl-laptop">
-                        <thead>
-                            <tr>
-                                <th class="header" colspan="2">Laptop Information</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-left">CPU Technology:</td>
-                                <td class="text-right"><?= $fetch_lap['cpu_tech'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Number of Cores:</td>
-                                <td class="text-right"><?= $fetch_lap['num_of_core'] ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Number of Threads:</td>
-                                <td class="text-right"><?= $fetch_lap['num_of_thread'] ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">RAM:</td>
-                                <td class="text-right"><?= $fetch_lap['ram'] ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Hard Drive Capability:</td>
-                                <td class="text-right"><?= $fetch_lap['hard_drive'] ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Screen:</td>
-                                <td class="text-right"><?= $fetch_lap['screen'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Resolution:</td>
-                                <td class="text-right"><?= $fetch_lap['resolution'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Refresh Rate:</td>
-                                <td class="text-right"><?= $fetch_lap['refresh_rate'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Dimension:</td>
-                                <td class="text-right"><?= $fetch_lap['dimension'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Weight:</td>
-                                <td class="text-right"><?= $fetch_lap['weight'] ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Material:</td>
-                                <td class="text-right"><?= $fetch_lap['material'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Release Date:</td>
-                                <td class="text-right"><?= date('m-d-Y', strtotime($fetch_lap['release_date'])) ?? 'Unknown' ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- laptop  -->
-                <?php
-                }
-            } else if ($fetch_gadget['category'] === 'smartphone') {
-                $select_phone = $conn->prepare("SELECT * FROM `smartphone` WHERE id_gadget = ?");
-                $select_phone->execute([$gadget_id]);
-                if ($fetch_phone = $select_phone->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                    <!-- smartphone -->
-                    <table class="tbl-detail tbl-smartphone">
-                        <thead>
-                            <tr>
-                                <th class="header" colspan="2">Smartphone Information</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Display Technology:</td>
-                                <td class="text-right"><?= $fetch_phone['display_tech'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Resolution:</td>
-                                <td class="text-right"><?= $fetch_phone['resolution'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Maximum Brightness:</td>
-                                <td class="text-right"><?= $fetch_phone['maximun_brightness'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Rearcam Resolution:</td>
-                                <td class="text-right"><?= $fetch_phone['rearcam_resolution'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Number of Flash:</td>
-                                <td class="text-right"><?= $fetch_phone['flash'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Frontcam Resolution:</td>
-                                <td class="text-right"><?= $fetch_phone['frontcam_resolution'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Operation System:</td>
-                                <td class="text-right"><?= $fetch_phone['operation_sys'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Chip:</td>
-                                <td class="text-right"><?= $fetch_phone['chip'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">RAM:</td>
-                                <td class="text-right"><?= $fetch_phone['ram'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Storage Capability:</td>
-                                <td class="text-right"><?= number_format($fetch_phone['storage_capacity'], 0, '.', ','); ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Available Capability:</td>
-                                <td class="text-right"><?= number_format($fetch_phone['available_capacity'], 0, '.', ','); ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Battery Capability:</td>
-                                <td class="text-right"><?= $fetch_phone['battery_capacity'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Battery Type:</td>
-                                <td class="text-right"><?= $fetch_phone['battery_type'] ?? 'Unknown' ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- smartphone -->
-                <?php
-                }
-            } else if ($fetch_gadget['category'] === 'smartwatch') {
-                $select_watch = $conn->prepare("SELECT * FROM `smartwatch` WHERE id_gadget = ?");
-                $select_watch->execute([$gadget_id]);
-                if ($fetch_watch = $select_watch->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                    <!-- smartwatch -->
-                    <table class="tbl-detail tbl-smartwatch">
-                        <thead>
-                            <tr>
-                                <th class="header" colspan="2">Smartwatch Information</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Display Technology:</td>
-                                <td class="text-right"><?= $fetch_watch['display_tech'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Screen Size:</td>
-                                <td class="text-right"><?= $fetch_watch['screen_size'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Resolution:</td>
-                                <td class="text-right"><?= $fetch_watch['resolution'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Face Material:</td>
-                                <td class="text-right"><?= $fetch_watch['face_material'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Frame Material:</td>
-                                <td class="text-right"><?= $fetch_watch['frame_material'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Battery Life:</td>
-                                <td class="text-right"><?= $fetch_watch['battery_life'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Charging Time:</td>
-                                <td class="text-right"><?= $fetch_watch['charging_time'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Battery Capacity:</td>
-                                <td class="text-right"><?= $fetch_watch['battery_capacity'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Brand:</td>
-                                <td class="text-right"><?= $fetch_watch['brand'] ?? 'Unknown' ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- smartwatch -->
-                <?php }
-            } else {
-                $select_ac = $conn->prepare("SELECT * FROM `accessory` WHERE id_gadget = ?");
-                $select_ac->execute([$gadget_id]);
-                if ($fetch_ac = $select_ac->fetch(PDO::FETCH_ASSOC)) {
-                ?>
-                    <!-- accessory -->
-                    <table class="tbl-detail tbl-accessory">
-                        <thead>
-                            <tr>
-                                <th class="header" colspan="2">Accessory Information</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-left">Model:</td>
-                                <td class="text-right"><?= $fetch_ac['model'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Functionality:</td>
-                                <td class="text-right"><?= $fetch_ac['functionality'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Usage Time:</td>
-                                <td class="text-right"><?= $fetch_ac['usage_time'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Dimension:</td>
-                                <td class="text-right"><?= $fetch_ac['dimension'] ?? 'Unknown' ?></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Brand:</td>
-                                <td class="text-right"><?= $fetch_ac['brand'] ?? 'Unknown' ?></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <!-- accessory -->
-        <?php
-                }
-            }
-        }
-        ?>
+    <div class="gadget-detail-container">
+        <?php if ($gadget_data): ?>
+            <!-- Title -->
+            <h1>Gadget Information</h1>
 
-        <button name="back" class="btn-success" onclick="window.location.href='home_cus.php'">Back</button>
+            <!-- Main Section -->
+            <div class="gadget-main-section">
+                <!-- Gadget Image -->
+                <div>
+                    <img src="images/img_gadget/<?php echo htmlspecialchars($gadget_data['pic_gadget'] ?? 'default.jpg'); ?>" alt="Gadget Image">
+                </div>
+                <!-- Gadget Information -->
+                <div class="gadget-info">
+                    <p class="gadget-name"><?php echo htmlspecialchars($gadget_data['name_gadget']); ?></p>
+                    <p class="gadget-type"><?php echo ucfirst(htmlspecialchars($gadget_data['category'])); ?></p>
+                    <p class="gadget-price">
+                        <?php echo number_format($gadget_data['exp_gadget'], 0, '.', ','); ?> VND
+                        <del><?php echo number_format($gadget_data['imp_gadget'], 0, '.', ','); ?> VND</del>
+                    </p>
+                    <p class="gadget-description"><?php echo htmlspecialchars($gadget_data['des_gadget']); ?></p>
+                    <form class="gadget-buy" action="add_cart.php" method="POST">
+                        <!-- Thêm trường input ẩn chứa ID sản phẩm -->
+                        <input type="hidden" name="pid" value="<?php echo htmlspecialchars($gadget_data['id_gadget']); ?>">
 
-    </section>
+                        <!-- Số lượng -->
+                        <input type="number" name="quantity" value="1" min="1" required>
+
+                        <button type="submit">Add to cart</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Detailed Information -->
+            <div class="gadget-details">
+                <h2><?php echo ucfirst(htmlspecialchars($gadget_data['category'])); ?> Features</h2>
+                <table>
+                    <tbody>
+                        <?php foreach ($gadget_details as $key => $value): ?>
+                            <tr>
+                                <!-- Hiển thị tên cột bằng tiếng Anh, định dạng đẹp -->
+                                <td><?php echo htmlspecialchars(ucwords(str_replace('_', ' ', $key))); ?></td>
+                                <!-- Hiển thị giá trị của trường -->
+                                <td><?php echo htmlspecialchars($value ?? 'Unknown'); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Back Button -->
+            <div style="text-align: center;">
+                <button class="btn-success" onclick="window.location.href='home_cus.php'">Back</button>
+            </div>
+        <?php else: ?>
+            <p style="text-align: center; color: red;">Gadget not found!</p>
+        <?php endif; ?>
+    </div>
     <!-- section view_gadget ends -->
 
     <!-- starts footer -->

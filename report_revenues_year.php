@@ -1,7 +1,7 @@
 <?php
 include 'components/connect.php';
 
-
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header('location:login.php');
@@ -14,6 +14,44 @@ $role = $_SESSION['role'];
 if ($role !== 'employee') {
     echo "Bạn không có quyền xem trang này!";
     exit();
+}
+
+$query = "SELECT 
+  COALESCE(a.Year, b.Year) AS Year,
+  COALESCE(a.Revenues, 0) AS Revenues,
+  COALESCE(b.Expenses, 0) AS Expenses,
+  (COALESCE(a.Revenues, 0) - COALESCE(b.Expenses, 0)) AS Profit
+FROM (
+  SELECT Year, SUM(total_order + total_export) AS Revenues
+  FROM (
+    SELECT YEAR(o.created_at) AS Year, SUM(g.exp_gadget * od.quantity) AS total_order, 0 AS total_export
+    FROM orders o
+    JOIN order_details od ON o.id_order = od.id_order
+    JOIN gadget g ON od.id_gadget = g.id_gadget
+    GROUP BY YEAR(o.created_at)
+    UNION
+    SELECT YEAR(e.date) AS Year, 0 AS total_order, SUM(ed.ex_price * ed.quantity) AS total_export
+    FROM export e
+    JOIN export_detail ed ON e.id_export = ed.id_export
+    GROUP BY YEAR(e.date)
+  ) AS combined
+  GROUP BY Year
+) a
+LEFT JOIN (
+  SELECT YEAR(i.date) AS Year, SUM(id.im_price * id.quantity) AS Expenses
+  FROM import i
+  JOIN import_detail id ON i.id_import = id.id_import
+  GROUP BY YEAR(i.date)
+) b ON a.Year = b.Year
+ORDER BY Year ASC;";
+
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$data = [];
+foreach ($result as $row) {
+    $data[] = [$row['Year'], (int)$row['Revenues'], (int)$row['Expenses'], (int)$row['Profit']];
 }
 
 
@@ -45,13 +83,11 @@ if ($role !== 'employee') {
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Year', 'Expenses', 'Revenues', 'Profit'],
-                ['2016', 190, 240, 750],
-                ['2017', 100, 420, 680],
-                ['2018', 100, 540, 350],
-                ['2019', 930, 340, 350],
-                ['2020', 740, 930, 220],
-                ['2021', 100, 430, 320],
-                ['2022', 1030, 540, 350],
+                <?php
+                foreach ($data as $entry) {
+                    echo "['{$entry[0]}', {$entry[1]}, {$entry[2]}, {$entry[3]}],";
+                }
+                ?>
             ]);
 
             var options = {

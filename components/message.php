@@ -8,3 +8,4 @@ if (isset($message)) {
         </div>';
     }
 }
+

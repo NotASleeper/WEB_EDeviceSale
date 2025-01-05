@@ -58,7 +58,7 @@ $select_products->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="components/header footer.css">
+    <link rel="stylesheet" href="css/header_footer.css">
 </head>
 
 <script>
@@ -174,12 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 onsubmit="return confirmAddToCart(this)">
                 <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
                 <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity" value="1">
-
-                <div>
-                    <button type="submit" class="cart-icon">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                    </button>
-                </div>
                 <!-- <div>
                             <button type="submit" class="cart-icon">
                                 <i class="fa-solid fa-cart-shopping"></i>

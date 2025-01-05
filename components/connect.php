@@ -1,6 +1,6 @@
 <?php
 
-$db_name = 'mysql:host=localhost;dbname=webstore';
+$db_name = 'mysql:host=localhost:3307;dbname=webstore';
 $user_name = 'root';
 $user_password = '';
 

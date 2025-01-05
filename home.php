@@ -59,7 +59,7 @@ $select_products->execute();
 
     <link rel="stylesheet" href="css/style.css">
 
-    <link rel="stylesheet" href="components/header footer.css">
+    <link rel="stylesheet" href="css/header_footer.css">
 </head>
 
 <body>
@@ -157,7 +157,7 @@ $select_products->execute();
             <form class="product-box" action="" method="POST" enctype="multipart/form-data"
                 onsubmit="return confirmAddToCart(this)">
                 <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
+                <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
                     <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
                 </a>
                 <div class="product-info">

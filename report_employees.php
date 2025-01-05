@@ -1,7 +1,7 @@
 <?php
 include 'components/connect.php';
 
-
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     header('location:login.php');
@@ -66,7 +66,9 @@ if ($role !== 'employee') {
                 <th>Sold</th>
             </tr>
             <?php
-            $sql = "SELECT id_employee, name_employee FROM employee";
+            $sql = "SELECT e.id_employee, e.name_employee, COUNT(o.id_employee) AS order_count
+                    FROM employee e JOIN orders o ON e.id_employee = o.id_employee
+                    GROUP BY e.id_employee, e.name_employee;";
             $result = $conn->query($sql);
             if ($result->rowCount() > 0) {
                 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -74,7 +76,7 @@ if ($role !== 'employee') {
                     <tr>
                         <td><?= $row['id_employee']; ?></td>
                         <td class="name"><?= $row['name_employee']; ?></td>
-                        <td>0</td>
+                        <td><?= $row['order_count']; ?></td>
                     </tr>
                 <?php
                 }
