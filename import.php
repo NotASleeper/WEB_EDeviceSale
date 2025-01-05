@@ -3,56 +3,59 @@ include 'components/connect.php';
 
 session_start();
 
-// not sure 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
 }
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'employee') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
+}
+
+
 
 //find var -> empty
 $search_query = '';
 
-$search_from='';
-$search_to='';
+$search_from = '';
+$search_to = '';
 
 if (isset($_GET['txt_input_from'])) {
-    $search_from=$_GET['txt_input_from'];
-    
+    $search_from = $_GET['txt_input_from'];
 }
 
 if (isset($_GET['txt_input_to'])) {
-    $search_to=$_GET['txt_input_to'];
+    $search_to = $_GET['txt_input_to'];
 }
 
-if ($search_from != '' && $search_to != '')
-{
+if ($search_from != '' && $search_to != '') {
     $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
         FROM import 
         JOIN employee ON import.id_employee = employee.id_employee
         WHERE `date` >= :search_from AND `date` <= :search_to");
-        
-    $select_emp->bindValue(':search_from',$search_from);
-    $select_emp->bindValue(':search_to',$search_to);
+
+    $select_emp->bindValue(':search_from', $search_from);
+    $select_emp->bindValue(':search_to', $search_to);
 } else if ($search_from != '') {
     $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
         FROM import 
         JOIN employee ON import.id_employee = employee.id_employee
         WHERE `date` >= :search_from");
-        
-    $select_emp->bindValue(':search_from',$search_from);
 
+    $select_emp->bindValue(':search_from', $search_from);
 } else if ($search_to != '') {
     $select_emp = $conn->prepare("SELECT import.*, employee.name_employee
         FROM import 
         JOIN employee ON import.id_employee = employee.id_employee
         WHERE`date` <= :search_to");
-        
-    $select_emp->bindValue(':search_to',$search_to);
 
+    $select_emp->bindValue(':search_to', $search_to);
 } else {
     $select_emp = $conn->prepare("SELECT import.*, employee.name_employee 
         FROM import 
@@ -85,7 +88,7 @@ $select_emp->execute();
 
 <body>
     <!-- starts header -->
-    <?php include 'components\header.php' ?>
+
     <!-- ends header -->
 
     <!-- section title starts -->
@@ -134,26 +137,26 @@ $select_emp->execute();
                     if ($select_emp->rowCount() > 0) {
                         while ($fetch_emp = $select_emp->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                    <tr>
-                        <td>
-                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_import']; ?>">
-                            <?= $fetch_emp['id_import']; ?>
-                        </td>
-                        <td><?= $fetch_emp['name_employee']; ?></td>
-                        <td><?= date('d-m-Y', strtotime($fetch_emp['date'])) ?></td>
-                        <td><?= $fetch_emp['sum']; ?></td>
-                        <td><?= $fetch_emp['vat']; ?></td>
-                        <td>
-                            <a href="import_detail.php?id_import=<?= $fetch_emp['id_import']; ?>">View</a>
-                        </td>
-                    </tr>
-                    <?php
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_import']; ?>">
+                                    <?= $fetch_emp['id_import']; ?>
+                                </td>
+                                <td><?= $fetch_emp['name_employee']; ?></td>
+                                <td><?= date('d-m-Y', strtotime($fetch_emp['date'])) ?></td>
+                                <td><?= $fetch_emp['sum']; ?></td>
+                                <td><?= $fetch_emp['vat']; ?></td>
+                                <td>
+                                    <a href="import_detail.php?id_import=<?= $fetch_emp['id_import']; ?>">View</a>
+                                </td>
+                            </tr>
+                        <?php
                         }
                     } else {
                         ?>
-                    <tr>
-                        <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                    </tr>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                        </tr>
                     <?php
                     }
                     ?>

@@ -1,16 +1,15 @@
 <?php
-include 'components/message.php';
+    include './components/message.php';
 ?>
-
 
 <header class="header-container">
     <section class="flex">
-        <a class="comp-name" href="home.php">S.B.'s Store</a>
+        <a class="comp-name" href="home.php">TechHub</a>
         <nav class="menu-bar">
             <a href="home.php">home</a>
             <!-- <a>search</a> -->
             <a href="import.php">import</a>
-            <a>export</a>
+            <a href="order.php">order</a>
             <a href="customer.php">customer</a>
             <a href="employee.php">employee</a>
             <a href="report_revenues_month.php">report</a>
@@ -32,7 +31,7 @@ include 'components/message.php';
             <h2 class="name"><?= $fetch_profile['name_employee']; ?></h2>
 
             <div>
-                <a class="btn-success">Edit profile</a>
+                <a class="btn-success" href="edit_profile.php">Edit profile</a>
                 <a href="components/user_logout.php" onclick="return confirm('logout from this website?');"
                     class="btn-danger">Log out</a>
             </div>

@@ -3,15 +3,23 @@ include 'components/connect.php';
 
 session_start();
 
-// not sure 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
+
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
 }
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'customer') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
+}
+
+
+
 
 if (isset($_GET['category'])) {
     $category = $_GET['category'];
@@ -102,20 +110,30 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="" method="POST" enctype="multipart/form-data">
+                    <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data" onsubmit="return confirmAddToCart(this)">
                         <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                        <div>
-                            <a><i class="fa-solid fa-cart-shopping"></i></a>
-                        </div>
+                        <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity" value="1">
+
+                        <!-- <div>
+                            <button type="submit" class="cart-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                        </div> -->
 
                         <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
                             <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                            <!-- <img src="images/img_gadget/1731763200.jpg"> -->
                         </a>
 
-                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                        <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
+                        <div class="product-info">
+                            <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
+                            <p><?= $fetch_products['category']; ?></p>
+                            <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
+                        </div>
+                        <div class="product-action">
+                            <button type="submit">
+                                Add to cart
+                            </button>
+                        </div>
                     </form>
             <?php
                 }

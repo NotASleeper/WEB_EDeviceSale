@@ -1,0 +1,107 @@
+/* .order-page-detail or gadget-details-pages */
+.gadget-detail-container {
+  max-width: 1000px;
+  margin: 0px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.gadget-detail-container h1 {
+  padding: 15px;
+  font-size: 2.8rem;
+}
+
+/* gadget detail layout */
+.gadget-detail-container .gadget-main-section {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+.gadget-detail-container .gadget-main-section img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+/* gadget info styles */
+.gadget-detail-container .gadget-info {
+  flex: 1;
+}
+
+.gadget-detail-container .gadget-name {
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.gadget-detail-container .gadget-type {
+  font-size: 1.6rem;
+  color: #666;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+  font-style: italic;
+}
+
+.gadget-detail-container .gadget-price {
+  font-size: 1.6em;
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.gadget-detail-container .gadget-price del {
+  font-style: italic;
+  color: #ccc;
+}
+
+.gadget-detail-container .gadget-description {
+  font-size: 1.6rem;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* gadget details styles */
+.gadget-detail-container .gadget-details {
+  margin-top: 20px;
+  margin-bottom: 80px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gadget-detail-container .gadget-details h2 {
+  font-size: 2.4rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.gadget-detail-container .gadget-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 1.6rem;
+}
+
+.gadget-detail-container .gadget-details table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.gadget-detail-container .gadget-details table td:first-child {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+.gadget-detail-container .gadget-details p {
+  color: #555;
+  margin-bottom: 5px;
+}

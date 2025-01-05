@@ -3,14 +3,22 @@ include 'components/connect.php';
 
 session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
-};
+
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'employee') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
+}
+
+
 
 //find var -> empty
 $search_query = '';
@@ -45,9 +53,13 @@ $select_products->execute();
     <link rel="icon" href="images/logocart.png" type="image/png">
 
     <!-- font awesome cdn link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/header_footer.css">
 </head>
 
 <body>
@@ -64,7 +76,8 @@ $select_products->execute();
     <!-- section search starts -->
     <section class="search-section">
         <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Enter name..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+            <input name="txt_input" placeholder="Enter name..."
+                value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </section>
@@ -74,33 +87,41 @@ $select_products->execute();
     <section class="preview-categories">
         <h2>categories</h2>
         <div class="container">
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
+            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
+                action="view_gadget_category.php">
                 <input type="hidden" name="category" value="smartphone">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                <button type="submit"
+                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
                     <img src="images/icon_cellphone.png">
                     <h3>smartphone</h3>
                 </button>
             </form>
 
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
+            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
+                action="view_gadget_category.php">
                 <input type="hidden" name="category" value="laptop">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                <button type="submit"
+                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
                     <img src="images/icon_laptop.png">
                     <h3>laptop</h3>
                 </button>
             </form>
 
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
+            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
+                action="view_gadget_category.php">
                 <input type="hidden" name="category" value="smartwatch">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                <button type="submit"
+                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
                     <img src="images/icon_smartwatch.png">
                     <h3>smartwatch</h3>
                 </button>
             </form>
 
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category.php">
+            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data"
+                action="view_gadget_category.php">
                 <input type="hidden" name="category" value="accessory">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
+                <button type="submit"
+                    style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
                     <img src="images/icon_accessory.png">
                     <h3>accessory</h3>
                 </button>
@@ -133,22 +154,28 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                        <div>
-                            <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i class=" fa-solid fa-pen-to-square"></i></a>
-                            <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i class="fa-solid fa-trash"></i></a>
-                        </div>
-
-                        <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
-                            <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                            <!-- <img src="images/img_gadget/1731763200.jpg"> -->
-                        </a>
-
-                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                        <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
-                    </form>
+            <form class="product-box" action="" method="POST" enctype="multipart/form-data"
+                onsubmit="return confirmAddToCart(this)">
+                <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
+                <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
+                    <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                </a>
+                <div class="product-info">
+                    <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
+                    <p><?= $fetch_products['category']; ?></p>
+                    <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
+                </div>
+                <div class="product-action">
+                    <div class="update">
+                        <a href="update_gadget.php?id=<?= $fetch_products['id_gadget']; ?>"><i
+                                class=" fa-solid fa-pen-to-square"></i> Update</a>
+                    </div>
+                    <div class="delete">
+                        <a href="javascript:void(0);" onclick="confirmDelete(<?= $fetch_products['id_gadget']; ?>)"><i
+                                class="fa-solid fa-trash"></i> Delete</a>
+                    </div>
+                </div>
+            </form>
             <?php
                 }
             } else {
@@ -169,13 +196,13 @@ $select_products->execute();
 
     <script src="js/index.js"></script>
     <script>
-        function confirmDelete(gadgetId) {
-            //confirmation
-            if (confirm("Are you sure you want to delete this gadget?")) {
-                // Redirect to PHP file with the ID to delete
-                window.location.href = 'delete_gadget.php?id=' + gadgetId;
-            }
+    function confirmDelete(gadgetId) {
+        //confirmation
+        if (confirm("Are you sure you want to delete this gadget?")) {
+            // Redirect to PHP file with the ID to delete
+            window.location.href = 'delete_gadget.php?id=' + gadgetId;
         }
+    }
     </script>
 </body>
 

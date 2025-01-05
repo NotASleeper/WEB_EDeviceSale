@@ -3,12 +3,17 @@ include 'components/connect.php';
 
 session_start();
 
-// Kiểm tra người dùng đã đăng nhập
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
-    // header('location:login.php');
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'employee') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
 }
 
 // Lấy danh sách gadget
@@ -53,7 +58,7 @@ if (isset($_POST['submit'])) {
             $update_import->bindValue(':total', $total);
             $update_import->bindValue(':id_import', $id_import);
             $update_import->execute();
-            
+
             // $message[] = "Import detail added successfully!";
             header("Location: create_import.php?id_import=" . $id_import);
         } else {
@@ -98,9 +103,9 @@ if (isset($_POST['submit'])) {
             <select name="id_gadget" id="id_gadget" onchange="updatePrice()" required>
                 <option value="" disabled selected>Select a gadget</option>
                 <?php foreach ($gadget_list as $gadget): ?>
-                <option value="<?= $gadget['id_gadget']; ?>" data-price="<?= $gadget['imp_gadget']; ?>">
-                    <?= $gadget['name_gadget']; ?>
-                </option>
+                    <option value="<?= $gadget['id_gadget']; ?>" data-price="<?= $gadget['imp_gadget']; ?>">
+                        <?= $gadget['name_gadget']; ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
             <h3>Import Price:</h3>
@@ -115,15 +120,15 @@ if (isset($_POST['submit'])) {
             </div>
         </form>
         <script>
-        function updatePrice() {
-            const gadgetSelect = document.getElementById('id_gadget');
-            const priceInput = document.getElementById('im_price');
+            function updatePrice() {
+                const gadgetSelect = document.getElementById('id_gadget');
+                const priceInput = document.getElementById('im_price');
 
-            const selectedOption = gadgetSelect.options[gadgetSelect.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
+                const selectedOption = gadgetSelect.options[gadgetSelect.selectedIndex];
+                const price = selectedOption.getAttribute('data-price');
 
-            priceInput.value = price || '';
-        }
+                priceInput.value = price || '';
+            }
         </script>
     </section>
 

@@ -3,14 +3,22 @@ include 'components/connect.php';
 
 session_start();
 
-if (isset($_SESSION['user_id'])) {
-    $user_id = $_SESSION['user_id'];
-} else {
-    $user_id = '';
 
-    // //pls un-cmt this when done
-    // header('location:login.php');
-};
+
+if (!isset($_SESSION['user_id'])) {
+    header('location:login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
+
+if ($role !== 'customer') {
+    echo "Bạn không có quyền xem trang này!";
+    exit();
+}
+
+
 
 //find var -> empty
 $search_query = '';
@@ -45,10 +53,65 @@ $select_products->execute();
     <link rel="icon" href="images/logocart.png" type="image/png">
 
     <!-- font awesome cdn link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header_footer.css">
 </head>
+
+<script>
+function confirmAddToCart(form) {
+    // Hiển thị hộp thoại để người dùng nhập số lượng
+    var quantity = prompt("Nhập số lượng sản phẩm bạn muốn thêm:", "1");
+
+    // Kiểm tra dữ liệu nhập
+    if (quantity === null || quantity.trim() === "" || isNaN(quantity) || quantity <= 0) {
+        alert("Số lượng không hợp lệ!");
+        return false; // Không gửi biểu mẫu
+    }
+
+    // Gán số lượng vào trường ẩn của sản phẩm cụ thể
+    var quantityInput = form.querySelector('input[name="quantity"]');
+    quantityInput.value = quantity;
+    return true; // Gửi biểu mẫu
+}
+
+
+
+function handleSelectChange(select) {
+    if (select.value !== "") {
+        // Nếu không phải "Xem tất cả", tự động submit form
+        select.form.submit();
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const slideshow = document.querySelector('.banner-slideshow');
+
+    // Mảng các đường dẫn ảnh
+    const images = [
+        './images/banner1.png',
+        './images/banner2.jpg',
+        './images/banner1.png'
+    ];
+
+    let currentIndex = 0; // Chỉ số ảnh hiện tại
+
+    function changeBackground() {
+        // Cập nhật ảnh nền của slideshow
+        slideshow.style.backgroundImage = `url('${images[currentIndex]}')`;
+        currentIndex = (currentIndex + 1) % images.length; // Chuyển sang ảnh tiếp theo
+    }
+
+    // Hiển thị ảnh đầu tiên ngay lập tức
+    changeBackground();
+
+    // Tự động chuyển ảnh mỗi 3 giây
+    setInterval(changeBackground, 3000);
+});
+</script>
 
 <body>
     <!-- starts header -->
@@ -56,63 +119,50 @@ $select_products->execute();
     <!-- ends header -->
 
     <!-- section title starts -->
-    <section class="section-title">
+    <!-- <section class="section-title">
         <a href="home_cus.php">home</a>
-    </section>
+    </section> -->
     <!-- section title ends -->
 
     <!-- section search starts -->
-    <section class="search-section">
+    <!-- <section class="search-section">
         <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Enter name..." value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
+            <input name="txt_input" placeholder="Enter name..."
+                value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
             <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
-    </section>
+    </section> -->
     <!-- section search ends -->
 
     <!-- section preview-categories starts -->
-    <section class="preview-categories">
-        <h2>categories</h2>
-        <div class="container">
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="smartphone">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_cellphone.png">
-                    <h3>smartphone</h3>
-                </button>
-            </form>
 
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="laptop">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_laptop.png">
-                    <h3>laptop</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="smartwatch">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_smartwatch.png">
-                    <h3>smartwatch</h3>
-                </button>
-            </form>
-
-            <form method="GET" class="cate-box" style="text-decoration: none;" enctype="multipart/form-data" action="view_gadget_category_cus.php">
-                <input type="hidden" name="category" value="accessory">
-                <button type="submit" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 0;">
-                    <img src="images/icon_accessory.png">
-                    <h3>accessory</h3>
-                </button>
-            </form>
+    <section class="banner">
+        <div class="welcome-message">
+            <h1>Welcome to my shop!</h1>
+            <button><a href="#products-list"><i class="fa-solid fa-cart-shopping"></i> Buying now </a></button>
+        </div>
+        <div class="banner-images">
+            <div class="banner-slideshow"></div>
         </div>
     </section>
-    <!-- section preview-categories ends -->
+
+
 
     <!-- section products starts -->
-    <section class="products">
+    <section class="products" id="products-list">
         <div class="product-title">
-            <h2>products</h2>
+            <h2>Features products</h2>
+            <form method="GET" class="cate-box" style="text-decoration: none; " enctype="multipart/form-data"
+                action="view_gadget_category_cus.php">
+                <select name="category" id="category-select" onchange="handleSelectChange(this)">
+                    <option value="" selected>All products
+                    </option>
+                    <option value="smartphone">smartphone</option>
+                    <option value="laptop">laptop</option>
+                    <option value="smartwatch">smartwatch</option>
+                    <option value="accessory">accessory</option>
+                </select>
+            </form>
         </div>
         <div class="container">
             <!-- 11-15-2024 -->
@@ -120,21 +170,32 @@ $select_products->execute();
             if ($select_products->rowCount() > 0) {
                 while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) {
             ?>
-                    <form class="product-box" action="" method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
-                        <div>
-                            <a><i class="fa-solid fa-cart-shopping"></i></a>
-                        </div>
+            <form class="product-box" action="add_cart.php" method="POST" enctype="multipart/form-data"
+                onsubmit="return confirmAddToCart(this)">
+                <input type="hidden" name="pid" value="<?= $fetch_products['id_gadget']; ?>">
+                <input type="hidden" id="quantity-input-<?= $fetch_products['id_gadget']; ?>" name="quantity" value="1">
+                <!-- <div>
+                            <button type="submit" class="cart-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </button>
+                        </div> -->
 
-                        <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
-                            <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
-                            <!-- <img src="images/img_gadget/1731763200.jpg"> -->
-                        </a>
+                <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
+                    <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
+                </a>
 
-                        <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
-                        <p><?= $fetch_products['category']; ?></p>
-                        <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
-                    </form>
+                <div class="product-info">
+                    <h2 class="gadget_title"><?= $fetch_products['name_gadget']; ?></h2>
+                    <p><?= $fetch_products['category']; ?></p>
+                    <h2 class="gadget_price"><?= number_format($fetch_products['exp_gadget'], 0, '.', ','); ?></h2>
+                </div>
+                <div class="product-action">
+                    <button type="submit">
+                        Add to cart
+                    </button>
+                </div>
+            </form>
+
             <?php
                 }
             } else {
