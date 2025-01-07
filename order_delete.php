@@ -1,5 +1,5 @@
 <?php
-include './components/connect.php';
+include 'components/connect.php';
 session_start();
 
 if ($_SESSION['role'] !== 'employee') {

@@ -8,4 +8,13 @@ if (isset($message)) {
         </div>';
     }
 }
+?>
 
+<script>
+    // Tự động xóa thông báo sau 2 giây
+    setTimeout(() => {
+        document.querySelectorAll('.message').forEach(message => {
+            message.remove();
+        });
+    }, 2000);
+</script>
