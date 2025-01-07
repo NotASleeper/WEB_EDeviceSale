@@ -170,6 +170,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #007b4a;
         }
 
+        div.signup-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        div.signup-container span,
+        div.signup-container a {
+            margin: 0 5px;
+            font-size: 14px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        div .signup-container a {
+            color: #007b4a;
+        }
+
+        div.signup-container a:hover {
+            text-decoration: underline;
+            color: #7ed957;
+        }
+
 
         /* Responsive Design */
         @media (max-width: 700px) {
@@ -224,8 +248,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <button type="submit" class="btn-login">Sign Up</button>
-
             </form>
+            <div class="signup-container">
+                <span>Already have an account?</span>
+                <a href="login.php">Login!</a>
+            </div>
         </div>
     </div>
 </body>
