@@ -118,7 +118,7 @@ $select_products->execute();
                             </button>
                         </div> -->
 
-                        <a href="view_gadget_cus.php?id=<?= $fetch_products['id_gadget']; ?>">
+                        <a href="view_gadget.php?id=<?= $fetch_products['id_gadget']; ?>">
                             <img src="images/img_gadget/<?= $fetch_products['pic_gadget']; ?>">
                         </a>
 
