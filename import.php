@@ -88,7 +88,7 @@ $select_emp->execute();
 
 <body>
     <!-- starts header -->
-
+    <?php include 'components\header.php' ?>
     <!-- ends header -->
 
     <!-- section title starts -->

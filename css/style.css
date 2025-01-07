@@ -189,7 +189,7 @@ section {
   cursor: pointer;
 }
 
-.header-container .flex .icon > *:hover {
+.header-container .flex .icon>*:hover {
   color: var(--green);
 }
 
@@ -273,7 +273,9 @@ section {
   width: 100%;
   color: white;
   flex-shrink: 0;
+  z-index: 1000;
 }
+
 
 .footer-container .information {
   column-count: 2;
@@ -348,7 +350,9 @@ section {
   border-bottom: var(--border);
   top: 0;
   left: 0;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .header-container .flex {
   height: 6rem;
@@ -356,7 +360,9 @@ section {
   align-items: center;
   justify-content: space-between;
   position: relative;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .comp-name {
   color: var(--green);
@@ -364,7 +370,9 @@ section {
   font-weight: bold;
   font-size: 30px;
   text-align: center;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .header-container .flex .menu-bar {
   display: flex;
@@ -392,18 +400,24 @@ section {
   justify-content: center;
   align-items: center;
   margin-left: 15px;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .header-container .flex .icon i {
   font-size: 20px;
   margin-left: 15px;
   color: var(--white);
   cursor: pointer;
-} /* đã xử lý trong header.css */
+}
 
-.header-container .flex .icon > *:hover {
+/* đã xử lý trong header.css */
+
+.header-container .flex .icon>*:hover {
   color: var(--green);
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 #menu-btn {
   display: none;
@@ -420,11 +434,15 @@ section {
   width: 30rem;
   display: none;
   animation: fade 0.2s linear;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .header-container .flex .profile.active {
   display: inline-block;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 @keyframes fade {
   0% {
@@ -435,17 +453,23 @@ section {
 .header-container .flex .profile .profile-div {
   position: relative;
   display: flex;
-} /* đã xử lý trona header.css */
+}
+
+/* đã xử lý trona header.css */
 
 .header-container .flex .profile div {
   display: flex;
   justify-content: space-around;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .header-container .flex .profile h2 {
   font-size: 20px;
   margin-bottom: 15px;
-} /* đã xử lý trong header.css */
+}
+
+/* đã xử lý trong header.css */
 
 .section-title {
   padding-left: 20px;
@@ -559,8 +583,7 @@ select {
 }
 
 .preview-categories .container .cate-box img:hover {
-  filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%)
-    hue-rotate(80deg) brightness(95%) contrast(85%);
+  filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
 }
 
 .preview-categories .container .cate-box h3 {
@@ -587,8 +610,7 @@ select {
 }
 
 .cate-box button:hover img {
-  filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%)
-    hue-rotate(80deg) brightness(95%) contrast(85%);
+  filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
 }
 
 .banner {
@@ -600,9 +622,12 @@ select {
 
 .welcome-message {
   width: 60%;
-  opacity: 0; /* Ẩn ban đầu */
-  transform: translateY(20px); /* Dịch xuống ban đầu */
-  animation: fadeIn 1.5s ease-in-out forwards; /* Gọi animation */
+  opacity: 0;
+  /* Ẩn ban đầu */
+  transform: translateY(20px);
+  /* Dịch xuống ban đầu */
+  animation: fadeIn 1.5s ease-in-out forwards;
+  /* Gọi animation */
 }
 
 @media (max-width: 850px) {
@@ -614,11 +639,14 @@ select {
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* Dịch từ vị trí dưới */
+    transform: translateY(20px);
+    /* Dịch từ vị trí dưới */
   }
+
   100% {
     opacity: 1;
-    transform: translateY(0); /* Trở về vị trí ban đầu */
+    transform: translateY(0);
+    /* Trở về vị trí ban đầu */
   }
 }
 
@@ -647,8 +675,10 @@ select {
 /* Container của slider */
 .banner-images {
   width: 100%;
-  height: 400px; /* Chiều cao của slider */
-  overflow: hidden; /* Ẩn phần dư thừa */
+  height: 400px;
+  /* Chiều cao của slider */
+  overflow: hidden;
+  /* Ẩn phần dư thừa */
   position: relative;
 }
 
@@ -668,10 +698,14 @@ select {
 .banner-slideshow {
   width: 100%;
   height: 100%;
-  background-size: contain; /* Đảm bảo ảnh lấp đầy khung mà giữ tỷ lệ */
-  background-position: center; /* Căn giữa ảnh */
-  background-repeat: no-repeat; /* Không lặp lại ảnh */
-  transition: background-image 0.5s ease-out; /* Hiệu ứng chuyển đổi mượt */
+  background-size: contain;
+  /* Đảm bảo ảnh lấp đầy khung mà giữ tỷ lệ */
+  background-position: center;
+  /* Căn giữa ảnh */
+  background-repeat: no-repeat;
+  /* Không lặp lại ảnh */
+  transition: background-image 0.5s ease-out;
+  /* Hiệu ứng chuyển đổi mượt */
 }
 
 .products {
@@ -1313,6 +1347,7 @@ select {
   .order-page {
     flex-direction: column;
   }
+
   .user-info-summary {
     margin-bottom: 40px;
   }
@@ -1350,7 +1385,7 @@ select {
   color: black;
 }
 
-.order-page .shopping-cart > p {
+.order-page .shopping-cart>p {
   color: rgb(0, 0, 0);
   padding: 4px 0px;
   font-weight: 500;
@@ -1435,7 +1470,8 @@ select {
   width: 100%;
   height: 100%;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.2); /* Màu lớp phủ */
+  background-color: rgba(0, 0, 0, 0.2);
+  /* Màu lớp phủ */
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -1492,7 +1528,7 @@ select {
 }
 
 @media (max-width: 720px) {
-  .gadget-detail-container .gadget-main-section{
+  .gadget-detail-container .gadget-main-section {
     flex-direction: column;
     align-items: center;
   }
@@ -1557,7 +1593,7 @@ select {
   text-overflow: ellipsis;
 }
 
-.gadget-detail-container .gadget-buy{
+.gadget-detail-container .gadget-buy {
   flex: 1;
   display: flex;
   flex-direction: row;
@@ -1568,23 +1604,23 @@ select {
 }
 
 .gadget-detail-container .gadget-buy input[type="number"] {
-  width: 100px;             
-  padding: 8px;             
-  font-size: 16px;          
-  border: 1px solid #ccc;  
-  border-radius: 4px;      
-  margin-right: 10px;      
+  width: 100px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
   transition: border-color 0.3s;
 }
 
 .gadget-detail-container .gadget-buy button {
   background-color: #000000;
-  color: white;             
-  padding: 10px 20px;       
-  font-size: 16px;          
-  border: none;             
-  border-radius: 4px;       
-  cursor: pointer;         
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
   transition: background-color 0.3s;
 }
 
@@ -1595,7 +1631,7 @@ select {
 
 .gadget-detail-container .gadget-buy input[type="number"]:focus {
   border-color: #4CAF50;
-  outline: none;        
+  outline: none;
 }
 
 /* gadget details styles */
@@ -1937,13 +1973,11 @@ select {
 
   .preview-categories .container .cate-box button:hover {
     color: var(--green);
-    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%)
-      hue-rotate(80deg) brightness(95%) contrast(85%);
+    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
   }
 
   .preview-categories .container .cate-box:hover img {
-    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%)
-      hue-rotate(80deg) brightness(95%) contrast(85%);
+    filter: brightness(0) saturate(100%) invert(35%) sepia(90%) saturate(500%) hue-rotate(80deg) brightness(95%) contrast(85%);
   }
 
   .preview-categories .container .cate-box img {
