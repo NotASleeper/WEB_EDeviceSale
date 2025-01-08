@@ -67,7 +67,9 @@ if (isset($_POST['submit'])) {
     <link rel="icon" href="images/logocart.png" type="image/png">
 
     <!-- font awesome cdn link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -85,26 +87,31 @@ if (isset($_POST['submit'])) {
         $select_customer->execute([$cus_id]);
         if ($fetch_customer = $select_customer->fetch(PDO::FETCH_ASSOC)) {
         ?>
-            <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
-                <h3>Name:</h3>
-                <input name="name_customer" placeholder="Name" maxlength="50" value="<?= $fetch_customer['name_customer'] ?>" required>
-                <h3>Date of Birth:</h3>
-                <input name="date_of_birth" placeholder="Date of Birth" type="date" value="<?= $fetch_customer['date_of_birth'] ?>" required>
-                <h3>Phone Number:</h3>
-                <input name="phone_no" placeholder="Phone Number" maxlength="10" required value="<?= $fetch_customer['phone_no'] ?>">
-                <h3>Username:</h3>
-                <input name="username_customer" placeholder="Username" maxlength="99" value="<?= $fetch_customer['username'] ?>" required>
-                <h3>Password:</h3>
-                <input name="pass_customer" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required>
+        <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
+            <h3>Name:</h3>
+            <input name="name_customer" placeholder="Name" maxlength="50"
+                value="<?= $fetch_customer['name_customer'] ?>" required>
+            <h3>Date of Birth:</h3>
+            <input name="date_of_birth" placeholder="Date of Birth" type="date"
+                value="<?= $fetch_customer['date_of_birth'] ?>" required>
+            <h3>Phone Number:</h3>
+            <input name="phone_no" placeholder="Phone Number" maxlength="10" required
+                value="<?= $fetch_customer['phone_no'] ?>">
+            <h3>Username:</h3>
+            <input name="username_customer" placeholder="Username" maxlength="99"
+                value="<?= $fetch_customer['username'] ?>" required>
+            <h3>Password:</h3>
+            <input type="password" name="pass_customer" placeholder="Password" maxlength="99"
+                value="<?= $fetch_customer['password'] ?>" required>
 
-                <div class="gadget-buttons" style="margin-top: 1rem;">
-                    <button type="submit" name="submit" class="btn-success">Update</button>
-                    <button class="btn-second-green addgg-clear">Clear</button>
-                </div>
+            <div class="gadget-buttons" style="margin-top: 1rem;">
+                <button type="submit" name="submit" class="btn-success">Update</button>
+                <button class="btn-second-green addgg-clear">Clear</button>
+            </div>
             <?php
         }
             ?>
-            </form>
+        </form>
     </section>
     <!-- section create_new_gadget ends -->
 

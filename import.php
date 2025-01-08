@@ -84,11 +84,12 @@ $select_emp->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header_footer.css">
 </head>
 
 <body>
     <!-- starts header -->
-
+    <?php include 'components\header.php' ?>
     <!-- ends header -->
 
     <!-- section title starts -->
