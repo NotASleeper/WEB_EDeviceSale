@@ -1193,17 +1193,18 @@ select {
   padding: rem;
   width: 25rem;
   height: 7rem;
-  border-radius: 15px;
+  border-radius: 8px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   text-decoration: none;
+  margin: 1rem;
 }
 
 .report-buttons .container .report-button h3 {
   color: var(--white);
-  font-size: 25px;
+  font-size: 20px;
   padding-left: 1rem;
 }
 
@@ -1237,6 +1238,60 @@ select {
 
 .report-buttons .container .report-button img {
   width: 4rem;
+}
+
+@media screen and (max-width:394px) {
+  .report-buttons .container .report-button {
+    width: 15rem;
+  }
+
+  .report-buttons .container .report-button img {
+    width: 3rem;
+  }
+
+  .report-buttons .container .report-button h3 {
+    font-size: 16px;
+  }
+
+  .revenues-range .table tr td a {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:394px) and (max-width:470px) {
+  .report-buttons .container .report-button {
+    width: 15rem;
+  }
+
+  .report-buttons .container .report-button img {
+    width: 3rem;
+  }
+
+  .report-buttons .container .report-button h3 {
+    font-size: 16px;
+  }
+
+  .revenues-range .table tr td a {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width:471px) and (max-width:570px) {
+  .report-buttons .container .report-button {
+    width: 20rem;
+  }
+
+  .report-buttons .container .report-button img {
+    width: 3rem;
+  }
+
+  .report-buttons .container .report-button h3 {
+    font-size: 16px;
+  }
+
+  .revenues-range .table tr td a {
+    font-size: 16px;
+  }
 }
 
 .report-title {
@@ -1322,6 +1377,7 @@ select {
   text-align: center;
   font-weight: bold;
   width: 50%;
+  font-size: 20px;
 }
 
 .revenues-range .table tr td .green {
@@ -1343,6 +1399,7 @@ select {
 .revenues-range .table tr td a {
   text-decoration: none;
   color: var(--black);
+  font-size: 20px
 }
 
 /* Order pages */
