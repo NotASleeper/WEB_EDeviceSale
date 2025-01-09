@@ -33,6 +33,7 @@
             <form class="form-email" action="" method="POST">
                 <input type="email" name="email" placeholder="Enter your email">
                 <button type="submit">Subscribe</button>
+            </form>
         </div>
     </section>
     <section class="flex">

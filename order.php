@@ -4,8 +4,8 @@ include 'components/connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-  header('location:login.php');
-  exit();
+    header('location:login.php');
+    exit();
 }
 
 $user_id = $_SESSION['user_id'];
@@ -74,8 +74,11 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Đơn Hàng</title>
-    <link rel="stylesheet" href="css/order.css">
+
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/order.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
     <script>
         function handleOrder(action, orderId) {
             let message = "";
@@ -92,11 +95,13 @@ $total_price = 0;
 
 <body>
 
-    <?php if ($role === 'customer'): ?>
-        <?php include 'components/cus_header.php'; ?>
-    <?php elseif ($role === 'employee'): ?>
-        <?php include 'components/header.php'; ?>
-    <?php endif; ?>
+    <?php
+    if ($role === 'customer') {
+        include 'components/cus_header.php';
+    } elseif ($role === 'employee') {
+        include 'components/header.php';
+    }
+    ?>
 
     <div class="order-page">
         <!-- Bảng Đơn Hàng -->
@@ -185,4 +190,5 @@ $total_price = 0;
 
     <?php include 'components/footer.php'; ?>
 </body>
+
 </html>

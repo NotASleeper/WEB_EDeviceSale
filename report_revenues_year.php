@@ -151,6 +151,9 @@ foreach ($result as $row) {
         <div id="columnchart_material" style="width: 98%; height: 500px; margin: auto"></div>
     </section>
     <!-- section report content end -->
+
+    <script src="js/index.js"></script>
+
 </body>
 
 </html>

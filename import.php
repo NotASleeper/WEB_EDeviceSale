@@ -166,6 +166,8 @@ $select_emp->execute();
     </section>
     <!-- section products ends -->
 
+    <script src="js/index.js"></script>
+
 
     <!-- starts footer -->
     <?php include 'components\footer.php' ?>

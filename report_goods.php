@@ -89,6 +89,9 @@ if ($role !== 'employee') {
         </table>
     </section>
     <!-- section report content end -->
+
+    <script src="js/index.js"></script>
+
 </body>
 
 </html>
