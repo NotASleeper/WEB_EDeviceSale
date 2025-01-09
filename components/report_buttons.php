@@ -8,9 +8,9 @@
             <img src="images/icon_goods.png">
             <h3>Goods</h3>
         </a>
-        <a href="report_customers.php" class="report-button report-customers">
-            <img src="images/icon_customers.png">
-            <h3>Customers</h3>
+        <a href="report_orders.php" class="report-button report-orders">
+            <img src="images/icon_orders.png">
+            <h3>Orders</h3>
         </a>
         <a href="report_employees.php" class="report-button report-employees">
             <img src="images/icon_employees.png">

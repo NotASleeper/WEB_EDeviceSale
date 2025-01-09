@@ -1215,11 +1215,11 @@ select {
   background-color: rgb(232, 184, 11);
 }
 
-.report-buttons .container .report-customers {
+.report-buttons .container .report-orders {
   background-color: var(--blue);
 }
 
-.report-buttons .container .report-customers:hover {
+.report-buttons .container .report-orders:hover {
   background-color: rgb(34, 113, 206);
 }
 
