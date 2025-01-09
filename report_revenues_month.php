@@ -86,7 +86,7 @@ foreach ($result as $row) {
 
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Month', 'Expenses', 'Revenues', 'Profit'],
+                ['Month', 'Revenues', 'Expenses', 'Profit'],
                 <?php
                 foreach ($data as $entry) {
                     echo "['{$entry[0]}', {$entry[1]}, {$entry[2]}, {$entry[3]}],";
