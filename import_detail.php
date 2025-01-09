@@ -126,28 +126,29 @@ if (isset($_GET['id_import'])) {
                     <?php
 
                     if ($select_detail && $select_detail->rowCount() > 0) {
+                        $index = 1; // Biến đếm bắt đầu từ 1
                         while ($fetch_emp = $select_detail->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="pid" value="<?= $fetch_emp['id_import_detail']; ?>">
-                                    <?= $fetch_emp['id_import_detail']; ?>
-                                </td>
-                                <td><?= $fetch_emp['name_gadget']; ?></td>
-                                <td><?= $fetch_emp['im_price']; ?></td>
-                                <td><?= $fetch_emp['quantity']; ?></td>
-                                <td><?= $fetch_emp['total']; ?></td>
-                                <td>
+                    <tr>
+                        <td>
+                            <input type="hidden" name="pid" value="<?= $fetch_emp['id_import_detail']; ?>">
+                            <?= $index++;/*$fetch_emp['id_import_detail'];*/ ?>
+                        </td>
+                        <td><?= $fetch_emp['name_gadget']; ?></td>
+                        <td><?= $fetch_emp['im_price']; ?></td>
+                        <td><?= $fetch_emp['quantity']; ?></td>
+                        <td><?= $fetch_emp['total']; ?></td>
+                        <td>
 
-                                </td>
-                            </tr>
-                        <?php
+                        </td>
+                    </tr>
+                    <?php
                         }
                     } else {
                         ?>
-                        <tr>
-                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                        </tr>
+                    <tr>
+                        <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                    </tr>
                     <?php
                     }
                     ?>

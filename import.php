@@ -85,7 +85,17 @@ $select_emp->execute();
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header_footer.css">
+    <style>
+    .search-time label {
+        font-size: 20px;
+        font-weight: bold;
+    }
 
+    .search-time input {
+        padding-left: 10px;
+        font-size: 20px;
+    }
+    </style>
 </head>
 
 <body>
@@ -100,15 +110,16 @@ $select_emp->execute();
     <!-- section title ends -->
 
     <!-- section search starts -->
-    <section class="">
+    <section class="search-time">
         <form class="" action="import.php" method="GET" enctype="multipart/form-data">
             <label>From:</label>
             <input name="txt_input_from" type="date"
                 value="<?= isset($_GET['txt_input_from']) ? $_GET['txt_input_from'] : ''; ?>">
-            <label>To: </label>
+            <label style="margin-left: 40px;">To: </label>
             <input name="txt_input_to" type="date"
                 value="<?= isset($_GET['txt_input_to']) ? $_GET['txt_input_to'] : ''; ?>">
-            <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            <button style="background-color: white;margin-left: 20px; font-size: 20px" type="submit"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </section>
     <!-- section search ends -->
