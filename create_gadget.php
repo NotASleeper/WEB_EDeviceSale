@@ -341,7 +341,9 @@ if (isset($_POST['submit'])) {
     <link rel="icon" href="images/logocart.png" type="image/png">
 
     <!-- font awesome cdn link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/gadget.css">
@@ -372,11 +374,13 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="item">
                         <label>Price import</label>
-                        <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value="" type="number" onkeydown="return event.keyCode !== 69" required>
+                        <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value=""
+                            type="number" onkeydown="return event.keyCode !== 69" required>
                     </div>
                     <div class="item">
                         <label>Price export</label>
-                        <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" type="number" onkeydown="return event.keyCode !== 69" required>
+                        <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" type="number"
+                            onkeydown="return event.keyCode !== 69" required>
                     </div>
                     <div class="item">
                         <label>Description</label>
@@ -398,15 +402,20 @@ if (isset($_POST['submit'])) {
                 <label class="details-label">Laptop Information: </label>
                 <div class="details-input">
                     <input name="lap_cpu" maxlength="99" placeholder="CPU Technology (Optional)" value="">
-                    <input name="lap_core" placeholder="Number of Cores (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="lap_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_core" placeholder="Number of Cores (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_ram" placeholder="RAM (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="lap_screen" maxlength="99" placeholder="Screen (Optional)" value="">
                     <input name="lap_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
                     <input name="lap_refresh" maxlength="99" placeholder="Refresh Rate (Optional)" value="">
                     <input name="lap_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
-                    <input name="lap_weight" placeholder="Weight (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_weight" placeholder="Weight (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="lap_material" maxlength="99" placeholder="Material (Optional)" value="">
                     <input name="lap_date" placeholder="Release Date (Optional)" type="date" value="">
                 </div>
@@ -419,13 +428,17 @@ if (isset($_POST['submit'])) {
                     <input name="phone_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
                     <input name="phone_bright" maxlength="99" placeholder="Maximum brightness (Optional)" value="">
                     <input name="phone_rearcam" maxlength="99" placeholder="Rearcam Resolution (Optional)" value="">
-                    <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="phone_frontcam" maxlength="99" placeholder="Frontcam Resolution (Optional)" value="">
                     <input name="phone_os" maxlength="99" placeholder="Operation System (Optional)" value="">
                     <input name="phone_chip" maxlength="99" placeholder="Chip (Optional)" value="">
-                    <input name="phone_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_ram" placeholder="RAM (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="phone_battery" maxlength="99" placeholder="Battery Capacity (Optional)" value="">
                     <input name="phone_battype" maxlength="99" placeholder="Battery Type (Optional)" value="">
                 </div>
@@ -439,9 +452,12 @@ if (isset($_POST['submit'])) {
                     <input name="watch_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
                     <input name="watch_facemat" maxlength="99" placeholder="Face Material (Optional)" value="">
                     <input name="watch_framemat" maxlength="99" placeholder="Frame Material (Optional)" value="">
-                    <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="watch_charging" placeholder="Charging Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                    <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_charging" placeholder="Charging Time (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="watch_brand" maxlength="99" placeholder="Brand (Optional)" value="">
                 </div>
             </div>
@@ -451,7 +467,8 @@ if (isset($_POST['submit'])) {
                 <div class="details-input">
                     <input name="ac_model" maxlength="99" placeholder="Model (Optional)" value="">
                     <input name="ac_func" maxlength="99" placeholder="Functionality (Optional)" value="">
-                    <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number"
+                        onkeydown="return event.keyCode !== 69" value="">
                     <input name="ac_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
                     <input name="ac_brand" placeholder="Brand (Optional)" value="">
                 </div>
@@ -471,16 +488,16 @@ if (isset($_POST['submit'])) {
     <!-- ends footer -->
 
     <script>
-        // Hàm để cập nhật ảnh preview khi chọn tệp
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                const preview = document.getElementById('image-preview');
-                preview.src = reader.result;
-            };
-            // Đọc tệp được chọn
-            reader.readAsDataURL(event.target.files[0]);
-        }
+    // Hàm để cập nhật ảnh preview khi chọn tệp
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const preview = document.getElementById('image-preview');
+            preview.src = reader.result;
+        };
+        // Đọc tệp được chọn
+        reader.readAsDataURL(event.target.files[0]);
+    }
     </script>
     <script src="js/index.js"></script>
 </body>
