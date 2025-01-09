@@ -72,6 +72,7 @@ foreach ($result as $row) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header_footer.css">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -151,6 +152,9 @@ foreach ($result as $row) {
         <div id="columnchart_material" style="width: 98%; height: 500px; margin: auto"></div>
     </section>
     <!-- section report content end -->
+
+    <script src="js/index.js"></script>
+
 </body>
 
 </html>

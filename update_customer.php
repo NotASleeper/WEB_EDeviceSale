@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 <body>
     <!-- starts header -->
-    <?php include 'components\header_sim.php' ?>
+    <?php include 'components\header.php' ?>
     <!-- ends header -->
 
     <section class="user-profile">

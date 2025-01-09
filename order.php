@@ -4,12 +4,9 @@ include 'components/connect.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-  header('location:login.php');
-  exit();
+    header('location:login.php');
+    exit();
 }
-
-$user_id = $_SESSION['user_id'];
-$role = $_SESSION['role'];
 
 
 $role = $_SESSION['role']; // Role của người dùng hiện tại
@@ -74,29 +71,36 @@ $total_price = 0;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản Lý Đơn Hàng</title>
-    <link rel="stylesheet" href="css/order.css">
+
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/order.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
     <script>
-        function handleOrder(action, orderId) {
-            let message = "";
-            if (action === "delete") message = "Bạn có chắc chắn muốn xóa đơn hàng này?";
-            if (action === "confirm") message = "Bạn chắc chắn muốn xác nhận đơn hàng?";
-            if (action === "cancel") message = "Bạn chắc chắn muốn hủy đơn hàng này?";
-            if (action === "receive") message = "Bạn chắc chắn muốn nhận hàng?";
-            if (confirm(message)) {
-                window.location.href = `order_${action}.php?order_id=${orderId}`;
-            }
+    function handleOrder(action, orderId) {
+        let message = "";
+        if (action === "delete") message = "Bạn có chắc chắn muốn xóa đơn hàng này?";
+        if (action === "confirm") message = "Bạn chắc chắn muốn xác nhận đơn hàng?";
+        if (action === "cancel") message = "Bạn chắc chắn muốn hủy đơn hàng này?";
+        if (action === "receive") message = "Bạn chắc chắn muốn nhận hàng?";
+        if (confirm(message)) {
+            window.location.href = `order_${action}.php?order_id=${orderId}`;
         }
+    }
     </script>
+
+    <link rel="stylesheet" href="components/header footer.css">
 </head>
 
 <body>
 
-    <?php if ($role === 'customer'): ?>
-        <?php include 'components/cus_header.php'; ?>
-    <?php elseif ($role === 'employee'): ?>
-        <?php include 'components/header.php'; ?>
-    <?php endif; ?>
+    <?php
+    if ($role === 'customer') {
+        include 'components/cus_header.php';
+    } elseif ($role === 'employee') {
+        include 'components/header.php';
+    }
+    ?>
 
     <div class="order-page">
         <!-- Bảng Đơn Hàng -->
@@ -112,14 +116,14 @@ $total_price = 0;
                     $class = 'cancel'; // Class cancel cho "Cancelled" với employee
                 }
             ?>
-                <div class="shopping-cart <?php echo $class; ?>">
-                    <h3>Đơn hàng #<?php echo $order['id_order']; ?></a></h3>
-                    <p>Trạng thái: <?php echo htmlspecialchars($order['status']); ?></p>
-                    <p>Ngày tạo: <?php echo date("d/m/Y", strtotime($order['created_at'])); ?></p>
-                    <p>Ngày cập nhật: <?php echo date("d/m/Y", strtotime($order['updated_at'])); ?></p>
-                    <p>Sản phẩm:</p>
-                    <ul class="gadget-list-card">
-                        <?php
+            <div class="shopping-cart <?php echo $class; ?>">
+                <h3>Đơn hàng #<?php echo $order['id_order']; ?></a></h3>
+                <p>Trạng thái: <?php echo htmlspecialchars($order['status']); ?></p>
+                <p>Ngày tạo: <?php echo date("d/m/Y", strtotime($order['created_at'])); ?></p>
+                <p>Ngày cập nhật: <?php echo date("d/m/Y", strtotime($order['updated_at'])); ?></p>
+                <p>Sản phẩm:</p>
+                <ul class="gadget-list-card">
+                    <?php
                         // Câu truy vấn lấy chi tiết sản phẩm trong đơn hàng
                         $details_sql = "SELECT g.id_gadget, g.name_gadget, g.category, g.pic_gadget, g.imp_gadget, g.exp_gadget, od.quantity
                                         FROM order_details od
@@ -138,32 +142,37 @@ $total_price = 0;
                                 $total_price += $detail['quantity'] * $detail['imp_gadget'];
                             }
                         ?>
-                            <ul class="gadget-card">
-                                <img src="./images/img_gadget/<?php echo $detail['pic_gadget'] ?: 'default.png'; ?>" alt="<?php echo htmlspecialchars($detail['name_gadget']); ?>" class="gadget-image" />
-                                <div class="details">
-                                    <a href="view_gadget_cus.php?id=<?php echo $detail['id_gadget']; ?>">
-                                        <h3><?php echo htmlspecialchars($detail['name_gadget']); ?></h3>
-                                    </a>
-                                    <p>Số lượng: <?php echo $detail['quantity']; ?></p>
-                                    <p>Giá: <?php echo number_format($detail['imp_gadget'], 0); ?> VND</p>
-                                    <p>Thành tiền: <?php echo $detail['quantity'] * $detail['imp_gadget']; ?> VND</p>
-                                </div>
-                            </ul>
-                        <?php endforeach; ?>
+                    <ul class="gadget-card">
+                        <img src="./images/img_gadget/<?php echo $detail['pic_gadget'] ?: 'default.png'; ?>"
+                            alt="<?php echo htmlspecialchars($detail['name_gadget']); ?>" class="gadget-image" />
+                        <div class="details">
+                            <a href="view_gadget_cus.php?id=<?php echo $detail['id_gadget']; ?>">
+                                <h3><?php echo htmlspecialchars($detail['name_gadget']); ?></h3>
+                            </a>
+                            <p>Số lượng: <?php echo $detail['quantity']; ?></p>
+                            <p>Giá: <?php echo number_format($detail['imp_gadget'], 0); ?> VND</p>
+                            <p>Thành tiền: <?php echo $detail['quantity'] * $detail['imp_gadget']; ?> VND</p>
+                        </div>
                     </ul>
+                    <?php endforeach; ?>
+                </ul>
 
-                    <!-- Các nút hành động -->
-                    <div class="action-buttons">
-                        <?php if ($role === 'employee' && $order['status'] === 'Pending'): ?>
-                            <button class="btn-confirm" onclick="handleOrder('confirm', <?php echo $order['id_order']; ?>)">Gửi hàng</button>
-                        <?php elseif ($role === 'customer' && $order['status'] === 'Confirmed'): ?>
-                            <button class="btn-confirm" onclick="handleOrder('receive', <?php echo $order['id_order']; ?>)">Nhận hàng</button>
-                            <button class="btn-delete" onclick="handleOrder('cancel', <?php echo $order['id_order']; ?>)">Hủy đơn</button>
-                        <?php elseif ($role === 'employee' && $order['status'] === 'Cancelled'): ?>
-                            <button class="btn-delete" onclick="handleOrder('delete', <?php echo $order['id_order']; ?>)">Xóa đơn</button>
-                        <?php endif; ?>
-                    </div>
+                <!-- Các nút hành động -->
+                <div class="action-buttons">
+                    <?php if ($role === 'employee' && $order['status'] === 'Pending'): ?>
+                    <button class="btn-confirm" onclick="handleOrder('confirm', <?php echo $order['id_order']; ?>)">Gửi
+                        hàng</button>
+                    <?php elseif ($role === 'customer' && $order['status'] === 'Confirmed'): ?>
+                    <button class="btn-confirm" onclick="handleOrder('receive', <?php echo $order['id_order']; ?>)">Nhận
+                        hàng</button>
+                    <button class="btn-delete" onclick="handleOrder('cancel', <?php echo $order['id_order']; ?>)">Hủy
+                        đơn</button>
+                    <?php elseif ($role === 'employee' && $order['status'] === 'Cancelled'): ?>
+                    <button class="btn-delete" onclick="handleOrder('delete', <?php echo $order['id_order']; ?>)">Xóa
+                        đơn</button>
+                    <?php endif; ?>
                 </div>
+            </div>
             <?php endforeach; ?>
         </div>
 
@@ -171,8 +180,11 @@ $total_price = 0;
         <div class="user-info-summary">
             <div class="info">
                 <h2><?php echo $role === 'employee' ? 'Thông tin nhân viên' : 'Thông tin người dùng'; ?></h2>
-                <p><strong>Tên:</strong> <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'name_employee' : 'name_customer']); ?></p>
-                <p><strong>Số điện thoại:</strong> <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'phone_to' : 'phone_no']); ?></p>
+                <p><strong>Tên:</strong>
+                    <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'name_employee' : 'name_customer']); ?>
+                </p>
+                <p><strong>Số điện thoại:</strong>
+                    <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'phone_to' : 'phone_no']); ?></p>
             </div>
 
             <div class="summary">
@@ -185,4 +197,5 @@ $total_price = 0;
 
     <?php include 'components/footer.php'; ?>
 </body>
+
 </html>
