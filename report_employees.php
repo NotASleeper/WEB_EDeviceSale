@@ -73,12 +73,11 @@ if ($role !== 'employee') {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT e.id_employee, e.name_employee, COUNT(DISTINCT o.id_employee) AS order_count, SUM(g.exp_gadget * od.quantity) AS total_price
+                    $sql = "SELECT e.id_employee, e.name_employee, COALESCE(COUNT(DISTINCT o.id_order), 0) AS order_count, COALESCE(SUM(g.exp_gadget * od.quantity), 0) AS total_price
                             FROM employee e
-                            JOIN orders o ON e.id_employee = o.id_employee
-                            JOIN order_details od ON o.id_order = od.id_order
-                            JOIN gadget g ON od.id_gadget = g.id_gadget
-                            WHERE YEAR(o.created_at) = YEAR(CURDATE())
+                            LEFT JOIN orders o ON e.id_employee = o.id_employee AND YEAR(o.created_at) = YEAR(CURDATE())
+                            LEFT JOIN order_details od ON o.id_order = od.id_order
+                            LEFT JOIN gadget g ON od.id_gadget = g.id_gadget
                             GROUP BY e.id_employee, e.name_employee;";
                     $result = $conn->query($sql);
                     if ($result->rowCount() > 0) {
