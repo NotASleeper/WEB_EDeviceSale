@@ -1283,6 +1283,7 @@ select {
 
 .report-content .table .table-header th:last-child {
   border-radius: 0 10px 10px 0;
+  width: 20%;
 }
 
 .report-content .table tr td {
