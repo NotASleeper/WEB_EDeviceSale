@@ -83,7 +83,7 @@ foreach ($result as $row) {
 
         function drawChart() {
             var data = google.visualization.arrayToDataTable([
-                ['Year', 'Expenses', 'Revenues', 'Profit'],
+                ['Year', 'Revenues', 'Expenses', 'Profit'],
                 <?php
                 foreach ($data as $entry) {
                     echo "['{$entry[0]}', {$entry[1]}, {$entry[2]}, {$entry[3]}],";
@@ -152,6 +152,10 @@ foreach ($result as $row) {
         <div id="columnchart_material" style="width: 98%; height: 500px; margin: auto"></div>
     </section>
     <!-- section report content end -->
+
+    <!-- starts footer -->
+    <?php include 'components\footer.php' ?>
+    <!-- ends footer -->
 
     <script src="js/index.js"></script>
 

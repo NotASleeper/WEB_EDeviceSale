@@ -65,10 +65,13 @@ if ($role !== 'employee') {
             <tr class="table-header">
                 <th>ID</th>
                 <th class="name">Name</th>
+                <th>Sold</th>
                 <th>Remain</th>
             </tr>
             <?php
-            $sql = "SELECT id_gadget, name_gadget, quantity FROM gadget";
+            $sql = "SELECT g.id_gadget, g.name_gadget, SUM(od.quantity) AS sold, g.quantity AS remain
+                    FROM gadget g JOIN order_details od ON g.id_gadget = od.id_gadget
+                    GROUP BY g.id_gadget, g.name_gadget;";
             $result = $conn->query($sql);
             if ($result->rowCount() > 0) {
                 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
@@ -76,7 +79,8 @@ if ($role !== 'employee') {
                     <tr>
                         <td><?= $row['id_gadget']; ?></td>
                         <td class="name"><?= $row['name_gadget']; ?></td>
-                        <td><?= $row['quantity']; ?></td>
+                        <td><?= $row['sold']; ?></td>
+                        <td><?= $row['remain']; ?></td>
                     </tr>
                 <?php
                 }
@@ -91,6 +95,10 @@ if ($role !== 'employee') {
         </table>
     </section>
     <!-- section report content end -->
+
+    <!-- starts footer -->
+    <?php include 'components\footer.php' ?>
+    <!-- ends footer -->
 
     <script src="js/index.js"></script>
 

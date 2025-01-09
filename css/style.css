@@ -1215,11 +1215,11 @@ select {
   background-color: rgb(232, 184, 11);
 }
 
-.report-buttons .container .report-customers {
+.report-buttons .container .report-orders {
   background-color: var(--blue);
 }
 
-.report-buttons .container .report-customers:hover {
+.report-buttons .container .report-orders:hover {
   background-color: rgb(34, 113, 206);
 }
 
@@ -1283,6 +1283,7 @@ select {
 
 .report-content .table .table-header th:last-child {
   border-radius: 0 10px 10px 0;
+  width: 20%;
 }
 
 .report-content .table tr td {
@@ -1332,7 +1333,7 @@ select {
 .column-chart {
   display: flex;
   flex-direction: column;
-  padding: 0 0;
+  /* padding: 0 0; */
 }
 
 .revenues-range .table tr td a {
