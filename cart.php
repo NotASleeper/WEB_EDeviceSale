@@ -35,6 +35,8 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ Hàng</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
 </head>
 
 <body>
@@ -69,7 +71,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="cart-summary">
                     <button type="submit" name="checkout" class="checkout-button">Đặt Hàng</button>
-                    <button type="submit" name="delete" class="delete-button">Xóa Hàng</button> 
+                    <button type="submit" name="delete" class="delete-button">Xóa Hàng</button>
                     <div>
                         <h3>Tổng Số Lượng: <?= $total_quantity; ?></h3>
                         <h3>Tổng Giá Trị: <?= number_format($total_price, 0); ?> VND</h3>
