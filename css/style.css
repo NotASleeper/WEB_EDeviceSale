@@ -14,6 +14,7 @@
   --light-color: #777;
   --border: 0.2rem solid var(--black);
   --green: #7ed957;
+  /* --green: #007B4A; */
   --blue: #4a90e2;
   --purple: #9b59b6;
   --pink: #ff7eb9;
@@ -44,7 +45,7 @@ html {
 body {
   position: relative;
   min-height: 100vh;
-  /* background-color: #4a90e2; */
+  overflow-x: hidden;
 }
 
 section {
@@ -290,6 +291,7 @@ section {
   border-radius: 6px;
   text-align: center;
   font-size: 17px;
+  height: 26px;
 }
 
 .footer-container .information button {
@@ -870,7 +872,7 @@ select {
 }
 
 .products .container .product-box .product-action div.update {
-  background-color: rgb(0, 255, 0);
+  background-color: #007B4A;
 }
 
 .products .container .product-box .product-action div.update:hover {
@@ -878,7 +880,7 @@ select {
 }
 
 .products .container .product-box .product-action div.delete {
-  background-color: rgb(255, 0, 0);
+  background-color: var(--red);
 }
 
 .products .container .product-box .product-action div.delete:hover {
@@ -1239,7 +1241,7 @@ select {
 }
 
 .report-title h2 {
-  font-size: 30px;
+  font-size: 25px;
   text-transform: capitalize;
 }
 
@@ -1263,10 +1265,12 @@ select {
   border-radius: 10px;
 }
 
+/* ///////// */
 .report-content .table .table-header {
   outline: thin solid var(--green);
   background-color: rgb(from var(--green) r g b / 0.5);
   border-radius: 10px;
+  font-size: 20px;
 }
 
 .report-content .table .table-header th {
@@ -1286,6 +1290,7 @@ select {
   text-align: center;
   padding: 8px;
   background-color: var(--white);
+  font-size: 20px;
 }
 
 .report-content .table .table-header .name,
@@ -1852,6 +1857,11 @@ select {
     padding-bottom: 2rem;
     font-size: 20px;
   }
+
+  .report-content .table .table-header,
+  .report-content .table tr td {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 720px) {
@@ -1904,6 +1914,9 @@ select {
     font-size: 16px;
     padding-bottom: 0.5rem;
   }
+
+
+
 }
 
 @media (max-width: 480px) {
@@ -2121,6 +2134,17 @@ select {
   .products .container-employee .tbl-employee {
     font-size: 14px;
   }
+
+  .footer-container .information input {
+    font-size: 14px;
+    height: 20px;
+  }
+
+  .report-content .table .table-header,
+  .report-content .table tr td {
+    font-size: 14px;
+  }
+
 }
 
 /* https://anytexteditor.com/vi/text-compare */

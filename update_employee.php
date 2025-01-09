@@ -90,7 +90,6 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <!-- Header -->
     <?php include 'components/header_sim.php'; ?>
 
     <!-- User Profile Section -->
