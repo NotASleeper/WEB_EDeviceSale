@@ -64,6 +64,8 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
 
 </head>
 
@@ -107,7 +109,7 @@ if (isset($_POST['submit'])) {
                 <div class="profile-item">
                     <label><i class="fa-solid fa-key"></i> Password</label>
                     <div class="password-wrapper">
-                        <input id="password" name="pass_customer" type="password" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required>
+                        <input id="password" name="pass_customer" type="password" placeholder="Password" maxlength="99" value="">
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
                     </div>
                 </div>
