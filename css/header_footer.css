@@ -56,7 +56,7 @@
   cursor: pointer;
 }
 
-.header-container .flex .icon > *:hover {
+.header-container .flex .icon>*:hover {
   color: var(--green);
 }
 

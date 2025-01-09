@@ -42,13 +42,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $usr_name = filter_input(INPUT_POST, 'usr_name', FILTER_SANITIZE_STRING);
     $pass = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
-    // Cập nhật cơ sở dữ liệu
-    $update_emp = $conn->prepare("
+    if ($pass === '') {
+        // Cập nhật cơ sở dữ liệu
+        $update_emp = $conn->prepare("
+    UPDATE `employee` 
+    SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?
+    WHERE id_employee = ?
+");
+        $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $user_id]);
+    } else {
+        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+        // Cập nhật cơ sở dữ liệu
+        $update_emp = $conn->prepare("
         UPDATE `employee` 
         SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?, password = ? 
         WHERE id_employee = ?
     ");
-    $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $pass, $user_id]);
+        $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $hashed_password, $user_id]);
+    }
+
+
     header('location:edit_profile.php');
 }
 
@@ -71,6 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+    <!-- <link rel="stylesheet" href="css/header_footer.css"> -->
+
 </head>
 
 <body>
@@ -123,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="profile-item">
                     <label><i class="fa-solid fa-key"></i> Password</label>
                     <div class="password-wrapper">
-                        <input name="pass" placeholder="Password" maxlength="99" value="<?= htmlspecialchars($fetch_employee['password']) ?>" required>
+                        <input name="pass" placeholder="Password" maxlength="99" value="">
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
                     </div>
                 </div>
@@ -141,6 +156,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Footer -->
     <?php include 'components/footer.php'; ?>
+
+    <script src="js/index.js"></script>
 
     <script>
         document.getElementById('toggle-password').addEventListener('click', function() {
