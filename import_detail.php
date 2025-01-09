@@ -75,6 +75,8 @@ if (isset($_GET['id_import'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
 </head>
 
 <body>
@@ -157,6 +159,9 @@ if (isset($_GET['id_import'])) {
     <!-- starts footer -->
     <?php include 'components\footer.php' ?>
     <!-- ends footer -->
+
+    <script src="js/index.js"></script>
+
 </body>
 
 </html>

@@ -83,6 +83,8 @@ if (isset($_POST['submit'])) {
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
 </head>
 
 <body>
@@ -210,7 +212,6 @@ if (isset($_POST['submit'])) {
                 confirmPasswordDialog.style.display = 'none';
             });
         });
-    
     </script>
     <script src="js/index.js"></script>
 </body>

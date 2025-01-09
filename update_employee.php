@@ -87,6 +87,8 @@ if (isset($_POST['submit'])) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/header_footer.css">
+
 </head>
 
 <body>
@@ -236,7 +238,7 @@ if (isset($_POST['submit'])) {
             });
         });
     </script>
-        <script src="js/index.js"></script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
