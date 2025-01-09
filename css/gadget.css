@@ -1,0 +1,79 @@
+input:not(input[type='file']){
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+input:not(input[type='file']):focus{
+  border: 1px solid #000;
+}
+
+select{
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+h1{
+  padding: 10px 35px 0px !important;
+}
+
+.gadget-main-section {
+  justify-content: space-between;
+}
+
+
+.gadget-general {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+}
+
+.gadget-general .item {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.gadget-general .item label{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.gadget-general .item input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 50%;
+  min-width: 200px;
+}
+
+.gadget-details{
+  margin-bottom: 20px !important;
+}
+
+.details-label{
+  font-size: 18px;
+}
+
+.details-input{
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.gadget-buttons{
+  padding: 0px 15px;
+}
+
+.gadget-buttons button{
+  border-radius: 8px;
+  margin-right: 10px;
+}

@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="profile-item row">
                     <button type="submit" name="submit" class="profile-btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                    <button type="reset" class="profile-btn clear"><i class="fa-solid fa-eraser"></i> Clear</button>
+                    <button type="reset" class="profile-btn clear addgg-clear"><i class="fa-solid fa-eraser"></i> Clear</button>
                 </div>
             </div>
         </form>
@@ -130,6 +130,7 @@ if (isset($_POST['submit'])) {
             });
         });
     </script>
+    <script src="js/index.js"></script>
 </body>
 
 </html>
