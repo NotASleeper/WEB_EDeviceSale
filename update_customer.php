@@ -56,8 +56,15 @@ if (isset($_POST['submit'])) {
     $pass_customer = $_POST['pass_customer'];     //password
     $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
 
-    $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
-    $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $pass_customer, $cus_id]);
+    if ($pass_customer === '') {
+        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
+        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+    } else {
+        $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
+        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
+        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+    }
 
     header("location: customer.php");
 
@@ -124,7 +131,7 @@ if (isset($_POST['submit'])) {
                 <div class="profile-item">
                     <label><i class="fa-solid fa-key"></i> Password</label>
                     <div class="password-wrapper">
-                        <input id="password" name="pass_customer" type="password" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required readonly>
+                        <input id="password" name="pass_customer" type="password" placeholder="Password" maxlength="99" value="">
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
                     </div>
                 </div>
@@ -187,23 +194,38 @@ if (isset($_POST['submit'])) {
                 }
             };
 
-            // Xử lý khi nhấn Confirm trong hộp thoại
+
             confirmPasswordBtn.addEventListener('click', function() {
                 const enteredPassword = confirmPasswordInput.value;
 
-                // Mật khẩu lấy từ PHP
-                const storedPassword = '<?php echo $user_password; ?>';
+                // Gửi mật khẩu đến PHP để xác thực
+                fetch('verify_password.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            password: enteredPassword
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
+                            isPasswordConfirmed = true;
+                            confirmPasswordDialog.style.display = 'none';
 
-                if (enteredPassword === storedPassword) {
-                    // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
-                    isPasswordConfirmed = true;
-                    confirmPasswordDialog.style.display = 'none';
-
-                    // Thực hiện click lại nút Edit để gửi form
-                    editBtn.click();
-                } else {
-                    alert('Incorrect password! Please try again.');
-                }
+                            // Thực hiện click lại nút Edit để gửi form
+                            editBtn.click();
+                        } else {
+                            // Hiển thị thông báo lỗi từ server
+                            alert(data.message || 'Incorrect password! Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Something went wrong. Please try again.');
+                    });
             });
 
             // Xử lý khi nhấn Cancel trong hộp thoại

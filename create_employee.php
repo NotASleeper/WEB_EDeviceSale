@@ -53,8 +53,8 @@ if (isset($_POST['submit'])) {
         //if new, not exists
 
         //insert to db
-        $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, role, state, username, password) VALUES (?,?,?,?,?,?,?,?,?)");
-        $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $role, "Available", $usr_name, $pass]);
+        $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, state, username, password) VALUES (?,?,?,?,?,?,?,?)");
+        $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, "Available", $usr_name, $pass]);
 
         //check
         $confirm_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ?");
