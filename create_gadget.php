@@ -344,6 +344,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gadget.css">
 </head>
 
 <body>
@@ -352,78 +353,108 @@ if (isset($_POST['submit'])) {
     <!-- ends header -->
 
     <!-- section create_new_gadget starts -->
-    <section class="create-gadget">
-        <h1 style="color: yellow">CREATE A NEW GADGET</h1>
-        <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
-            <input name="name" placeholder="Name" value="" required>
-            <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value="" type="number" onkeydown="return event.keyCode !== 69" required>
-            <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" type="number" onkeydown="return event.keyCode !== 69" required>
-            <input name="description" placeholder="Description" maxlength="499" required>
+    <section class="gadget-detail-container ">
+        <h1>CREATE A NEW GADGET</h1>
+        <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data" class="gadget-detail-container">
+            <div class="gadget-main-section">
+                <div class="image-upload" style="display: flex; flex-direction: column">
+                    <!-- Hiển thị ảnh placeholder ban đầu -->
+                    <img id="image-preview" src="images/placeholder.jpg" alt="Image Preview">
 
-            <input name="image" type="file" accept="image/*" required>
-            <div class="div-container">
-                <label style="color: white;">Category</label>
-                <select class="gadget-select" name="gadget-select">
-                    <option value="laptop">laptop</option>
-                    <option value="smartphone">smartphone</option>
-                    <option value="smartwatch">smartwatch</option>
-                    <option value="accessory">accessory</option>
-                </select>
+                    <!-- Input file để chọn ảnh -->
+                    <input name="image" type="file" accept="image/*" onchange="previewImage(event)" required>
+                </div>
+                <div class="gadget-general">
+                    <h1 class="name" style="text-align: end;">General Infomation</h1>
+                    <div class="item">
+                        <label>Name</label>
+                        <input name="name" placeholder="Name" value="" required>
+                    </div>
+                    <div class="item">
+                        <label>Price import</label>
+                        <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value="" type="number" onkeydown="return event.keyCode !== 69" required>
+                    </div>
+                    <div class="item">
+                        <label>Price export</label>
+                        <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" type="number" onkeydown="return event.keyCode !== 69" required>
+                    </div>
+                    <div class="item">
+                        <label>Description</label>
+                        <input name="description" placeholder="Description" maxlength="499" required>
+                    </div>
+                    <div class="item">
+                        <label>Category</label>
+                        <select class="gadget-select" name="gadget-select">
+                            <option value="laptop">laptop</option>
+                            <option value="smartphone">smartphone</option>
+                            <option value="smartwatch">smartwatch</option>
+                            <option value="accessory">accessory</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="div-con-type div-laptop">
-                <label style="color: yellow;">Laptop Information</label>
-                <input name="lap_cpu" maxlength="99" placeholder="CPU Technology (Optional)" value="">
-                <input name="lap_core" placeholder="Number of Cores (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="lap_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="lap_screen" maxlength="99" placeholder="Screen (Optional)" value="">
-                <input name="lap_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
-                <input name="lap_refresh" maxlength="99" placeholder="Refresh Rate (Optional)" value="">
-                <input name="lap_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
-                <input name="lap_weight" placeholder="Weight (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="lap_material" maxlength="99" placeholder="Material (Optional)" value="">
-                <input name="lap_date" placeholder="Release Date (Optional)" type="date" value="">
+            <div class="gadget-details div-laptop">
+                <label class="details-label">Laptop Information: </label>
+                <div class="details-input">
+                    <input name="lap_cpu" maxlength="99" placeholder="CPU Technology (Optional)" value="">
+                    <input name="lap_core" placeholder="Number of Cores (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_screen" maxlength="99" placeholder="Screen (Optional)" value="">
+                    <input name="lap_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
+                    <input name="lap_refresh" maxlength="99" placeholder="Refresh Rate (Optional)" value="">
+                    <input name="lap_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
+                    <input name="lap_weight" placeholder="Weight (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="lap_material" maxlength="99" placeholder="Material (Optional)" value="">
+                    <input name="lap_date" placeholder="Release Date (Optional)" type="date" value="">
+                </div>
             </div>
 
-            <div class="div-con-type div-smartphone hidden">
-                <label style="color: yellow;">Smartphone Information</label>
-                <input name="phone_tech" maxlength="99" placeholder="Display Technology (Optional)" value="">
-                <input name="phone_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
-                <input name="phone_bright" maxlength="99" placeholder="Maximum brightness (Optional)" value="">
-                <input name="phone_rearcam" maxlength="99" placeholder="Rearcam Resolution (Optional)" value="">
-                <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers" onkeydown="return event.keyCode !== 69" value="">
-                <input name="phone_frontcam" maxlength="99" placeholder="Frontcam Resolution (Optional)" value="">
-                <input name="phone_os" maxlength="99" placeholder="Operation System (Optional)" value="">
-                <input name="phone_chip" maxlength="99" placeholder="Chip (Optional)" value="">
-                <input name="phone_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="phone_battery" maxlength="99" placeholder="Battery Capacity (Optional)" value="">
-                <input name="phone_battype" maxlength="99" placeholder="Battery Type (Optional)" value="">
+            <div class="gadget-details div-smartphone hidden">
+                <label class="details-label">Smartphone Information</label>
+                <div class="details-input">
+                    <input name="phone_tech" maxlength="99" placeholder="Display Technology (Optional)" value="">
+                    <input name="phone_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
+                    <input name="phone_bright" maxlength="99" placeholder="Maximum brightness (Optional)" value="">
+                    <input name="phone_rearcam" maxlength="99" placeholder="Rearcam Resolution (Optional)" value="">
+                    <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_frontcam" maxlength="99" placeholder="Frontcam Resolution (Optional)" value="">
+                    <input name="phone_os" maxlength="99" placeholder="Operation System (Optional)" value="">
+                    <input name="phone_chip" maxlength="99" placeholder="Chip (Optional)" value="">
+                    <input name="phone_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="phone_battery" maxlength="99" placeholder="Battery Capacity (Optional)" value="">
+                    <input name="phone_battype" maxlength="99" placeholder="Battery Type (Optional)" value="">
+                </div>
             </div>
 
-            <div class="div-con-type div-smartwatch hidden">
-                <label style="color: yellow;">Smartwatch Information</label>
-                <input name="watch_tech" maxlength="99" placeholder="Display Technology (Optional)" value="">
-                <input name="watch_screen" maxlength="99" placeholder="Screen Size (Optional)" value="">
-                <input name="watch_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
-                <input name="watch_facemat" maxlength="99" placeholder="Face Material (Optional)" value="">
-                <input name="watch_framemat" maxlength="99" placeholder="Frame Material (Optional)" value="">
-                <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="watch_charging" placeholder="Charging Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="watch_brand" maxlength="99" placeholder="Brand (Optional)" value="">
+            <div class="gadget-details div-smartwatch hidden">
+                <label class="details-label">Smartwatch Information</label>
+                <div class="details-input">
+                    <input name="watch_tech" maxlength="99" placeholder="Display Technology (Optional)" value="">
+                    <input name="watch_screen" maxlength="99" placeholder="Screen Size (Optional)" value="">
+                    <input name="watch_resolution" maxlength="99" placeholder="Resolution (Optional)" value="">
+                    <input name="watch_facemat" maxlength="99" placeholder="Face Material (Optional)" value="">
+                    <input name="watch_framemat" maxlength="99" placeholder="Frame Material (Optional)" value="">
+                    <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_charging" placeholder="Charging Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="watch_brand" maxlength="99" placeholder="Brand (Optional)" value="">
+                </div>
             </div>
 
-            <div class="div-con-type div-accessory hidden">
-                <label style="color: yellow;">Accessory Information</label>
-                <input name="ac_model" maxlength="99" placeholder="Model (Optional)" value="">
-                <input name="ac_func" maxlength="99" placeholder="Functionality (Optional)" value="">
-                <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
-                <input name="ac_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
-                <input name="ac_brand" placeholder="Brand (Optional)" value="">
+            <div class="gadget-details div-accessory hidden">
+                <label class="details-label">Accessory Information</label>
+                <div class="details-input">
+                    <input name="ac_model" maxlength="99" placeholder="Model (Optional)" value="">
+                    <input name="ac_func" maxlength="99" placeholder="Functionality (Optional)" value="">
+                    <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="">
+                    <input name="ac_dimension" maxlength="99" placeholder="Dimension (Optional)" value="">
+                    <input name="ac_brand" placeholder="Brand (Optional)" value="">
+                </div>
             </div>
 
             <div class="gadget-buttons">
@@ -439,6 +470,18 @@ if (isset($_POST['submit'])) {
     <?php include 'components\footer.php' ?>
     <!-- ends footer -->
 
+    <script>
+        // Hàm để cập nhật ảnh preview khi chọn tệp
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const preview = document.getElementById('image-preview');
+                preview.src = reader.result;
+            };
+            // Đọc tệp được chọn
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
     <script src="js/index.js"></script>
 </body>
 

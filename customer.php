@@ -54,8 +54,6 @@ $select_emp->execute();
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
-
-    <link rel="stylesheet" href="components/header footer.css">
 </head>
 
 <body>

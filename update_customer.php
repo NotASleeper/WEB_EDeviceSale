@@ -18,7 +18,9 @@ if ($role !== 'employee') {
     exit();
 }
 
-
+$select_password = $conn->prepare("SELECT password FROM `employee` WHERE id_employee = ?");
+$select_password->execute([$user_id]);
+$user_password = $select_password->fetchColumn();
 
 if (isset($_GET['id_customer'])) {
     $cus_id = intval($_GET['id_customer']);
@@ -33,6 +35,10 @@ if (isset($_GET['id_customer'])) {
     header('Location: customer.php');
     exit();
 }
+
+$select_customer = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
+$select_customer->execute([$cus_id]);
+$fetch_customer = $select_customer->fetch(PDO::FETCH_ASSOC);
 
 if (isset($_POST['submit'])) {
     $name_customer = $_POST['name_customer'];     //name
@@ -53,7 +59,7 @@ if (isset($_POST['submit'])) {
     $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
     $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $pass_customer, $cus_id]);
 
-    $message[] = "Updated successfully";
+    header("location: customer.php");
 
     // echo "<script>
     //     alert('Name: $name, Import Price: $im_price, Export Price: $ex_price, Description: $description, Category: $category');
@@ -76,6 +82,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
@@ -83,41 +90,128 @@ if (isset($_POST['submit'])) {
     <?php include 'components\header_sim.php' ?>
     <!-- ends header -->
 
-    <!-- section create_new_gadget starts -->
-    <section class="create-gadget">
-        <h1 style="color: yellow">UPDATE CUSTOMER</h1>
-        <?php
-        $select_customer = $conn->prepare("SELECT * FROM `customer` WHERE id_customer = ?");
-        $select_customer->execute([$cus_id]);
-        if ($fetch_customer = $select_customer->fetch(PDO::FETCH_ASSOC)) {
-        ?>
-            <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
-                <h3>Name:</h3>
-                <input name="name_customer" placeholder="Name" maxlength="50" value="<?= $fetch_customer['name_customer'] ?>" required>
-                <h3>Date of Birth:</h3>
-                <input name="date_of_birth" placeholder="Date of Birth" type="date" value="<?= $fetch_customer['date_of_birth'] ?>" required>
-                <h3>Phone Number:</h3>
-                <input name="phone_no" placeholder="Phone Number" maxlength="10" required value="<?= $fetch_customer['phone_no'] ?>">
-                <h3>Username:</h3>
-                <input name="username_customer" placeholder="Username" maxlength="99" value="<?= $fetch_customer['username'] ?>" required>
-                <h3>Password:</h3>
-                <input name="pass_customer" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required>
-
-                <div class="gadget-buttons" style="margin-top: 1rem;">
-                    <button type="submit" name="submit" class="btn-success">Update</button>
-                    <button class="btn-second-green addgg-clear">Clear</button>
+    <section class="user-profile">
+        <img src="./images/sub_bg.png" alt="sub_bg" class="bg-1">
+        <img src="./images/sub_bg.png" alt="sub_bg" class="bg-2">
+        <div class="profile-header">
+            <img src="https://avatar.iran.liara.run/public" alt="avatar">
+            <p class="header-title">User profile <br> <span>Customer</span></p>
+        </div>
+        <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data" class="profile-body">
+            <div class="panel">
+                <h1 class="panel-title">General Information</h1>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-user"></i> Username</label>
+                    <input name="name_customer" placeholder="Name" maxlength="50" value="<?= $fetch_customer['name_customer'] ?>" required>
                 </div>
-            <?php
-        }
-            ?>
-            </form>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-cake-candles"></i> Day of birth</label>
+                    <input name="date_of_birth" placeholder="Date of Birth" type="date" value="<?= $fetch_customer['date_of_birth'] ?>" required>
+                </div>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-phone"></i> Phone number</label>
+                    <input name="phone_no" placeholder="Phone Number" maxlength="10" required value="<?= $fetch_customer['phone_no'] ?>">
+                </div>
+            </div>
+            <div class="panel">
+                <h1 class="panel-title">Account Information</h1>
+                <div class="profile-item">
+                    <label><i class="fa-regular fa-circle-user"></i> Account</label>
+                    <input name="username_customer" placeholder="Username" maxlength="99" value="<?= $fetch_customer['username'] ?>" required>
+                </div>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-key"></i> Password</label>
+                    <div class="password-wrapper">
+                        <input id="password" name="pass_customer" type="password" placeholder="Password" maxlength="99" value="<?= $fetch_customer['password'] ?>" required readonly>
+                        <i id="toggle-password" class="fa-solid fa-eye"></i>
+                    </div>
+                </div>
+                <div class="profile-item row">
+                    <button type="submit" id="editBtn" name="submit" class="profile-btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                    <button type="reset" class="profile-btn clear addgg-clear"><i class="fa-solid fa-eraser"></i> Clear</button>
+                </div>
+            </div>
+        </form>
     </section>
-    <!-- section create_new_gadget ends -->
+
+    <!-- Password Confirmation Dialog -->
+    <div id="confirmPasswordDialog" class="dialog" style="display: none;">
+        <div class="dialog-content">
+            <h2>Enter Your Password</h2>
+            <input type="password" id="confirmPasswordInput" placeholder="Enter your password" required>
+            <div class="dialog-buttons">
+                <button type="button" id="confirmPasswordBtn">Confirm</button>
+                <button type="button" id="cancelDialogBtn">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <!-- starts footer -->
     <?php include 'components\footer.php' ?>
     <!-- ends footer -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('toggle-password');
 
+            togglePassword.addEventListener('click', () => {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    togglePassword.classList.remove('fa-eye');
+                    togglePassword.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const editBtn = document.getElementById('editBtn'); // Nút Edit
+            const confirmPasswordDialog = document.getElementById('confirmPasswordDialog'); // Hộp thoại xác nhận mật khẩu
+            const confirmPasswordInput = document.getElementById('confirmPasswordInput'); // Input mật khẩu
+            const confirmPasswordBtn = document.getElementById('confirmPasswordBtn'); // Nút Confirm
+            const cancelDialogBtn = document.getElementById('cancelDialogBtn'); // Nút Cancel
+            const updateForm = document.getElementById('updateForm'); // Form cần submit
+            let isPasswordConfirmed = false; // Biến trạng thái xác nhận mật khẩu
+
+            // Khi nhấn nút Edit, kiểm tra trạng thái xác nhận mật khẩu
+            editBtn.onclick = function(event) {
+                if (!isPasswordConfirmed) {
+                    // Nếu chưa xác nhận mật khẩu, chặn hành vi gửi form
+                    event.preventDefault();
+                    confirmPasswordDialog.style.display = 'flex'; // Hiển thị hộp thoại
+                }
+            };
+
+            // Xử lý khi nhấn Confirm trong hộp thoại
+            confirmPasswordBtn.addEventListener('click', function() {
+                const enteredPassword = confirmPasswordInput.value;
+
+                // Mật khẩu lấy từ PHP
+                const storedPassword = '<?php echo $user_password; ?>';
+
+                if (enteredPassword === storedPassword) {
+                    // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
+                    isPasswordConfirmed = true;
+                    confirmPasswordDialog.style.display = 'none';
+
+                    // Thực hiện click lại nút Edit để gửi form
+                    editBtn.click();
+                } else {
+                    alert('Incorrect password! Please try again.');
+                }
+            });
+
+            // Xử lý khi nhấn Cancel trong hộp thoại
+            cancelDialogBtn.addEventListener('click', function() {
+                // Ẩn hộp thoại mà không thực hiện gì
+                confirmPasswordDialog.style.display = 'none';
+            });
+        });
+    
+    </script>
     <script src="js/index.js"></script>
 </body>
 
