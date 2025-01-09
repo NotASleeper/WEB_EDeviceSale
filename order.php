@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
-$role = $_SESSION['role'];
-
 
 $role = $_SESSION['role']; // Role của người dùng hiện tại
 $user_id = $_SESSION['user_id']; // ID người dùng hiện tại
