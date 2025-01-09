@@ -1332,7 +1332,7 @@ select {
 .column-chart {
   display: flex;
   flex-direction: column;
-  padding: 0 0;
+  /* padding: 0 0; */
 }
 
 .revenues-range .table tr td a {

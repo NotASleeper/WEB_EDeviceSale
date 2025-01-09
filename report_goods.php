@@ -92,6 +92,10 @@ if ($role !== 'employee') {
     </section>
     <!-- section report content end -->
 
+    <!-- starts footer -->
+    <?php include 'components\footer.php' ?>
+    <!-- ends footer -->
+
     <script src="js/index.js"></script>
 
 </body>
