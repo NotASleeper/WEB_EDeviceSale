@@ -18,13 +18,27 @@ if ($role !== 'employee') {
     exit();
 }
 
+if (isset($_GET['id_employee'])) {
+    $emp_id = intval($_GET['id_employee']);
+
+    $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE id_employee = ?");
+    $select_emp->execute([$emp_id]);
+    if ($select_emp->rowCount() == 0) {
+        header('Location: employee.php');
+        exit();
+    }
+} else {
+    header('Location: employee.php');
+    exit();
+}
+
 $select_password = $conn->prepare("SELECT password FROM `employee` WHERE id_employee = ?");
 $select_password->execute([$user_id]);
 $user_password = $select_password->fetchColumn();
 
 // Lấy thông tin nhân viên từ cơ sở dữ liệu
 $select_employee = $conn->prepare("SELECT * FROM `employee` WHERE id_employee = ?");
-$select_employee->execute([$user_id]);
+$select_employee->execute([$emp_id]);
 $fetch_employee = $select_employee->fetch(PDO::FETCH_ASSOC);
 
 $avatar_url = $fetch_employee['gender'] === 'Male'
@@ -44,8 +58,33 @@ if (isset($_POST['submit'])) {
     $gender = isset($_POST['gender']) ? filter_var($_POST['gender'], FILTER_SANITIZE_STRING) : null;
     $state = isset($_POST['status-select']) ? filter_var($_POST['status-select'], FILTER_SANITIZE_STRING) : null;
 
-    // Thực hiện cập nhật thông tin
-    $update_emp = $conn->prepare("UPDATE `employee` SET 
+    if ($pass === '') {
+        // Thực hiện cập nhật thông tin
+        $update_emp = $conn->prepare("UPDATE `employee` SET 
+    name_employee = ?, 
+    date_of_birth = ?, 
+    citizen_card = ?, 
+    gender = ?, 
+    phone_to = ?, 
+    state = ?, 
+    username = ?
+    WHERE id_employee = ?");
+        $update_emp->execute([
+            $name_employee,
+            $date_of_birth,
+            $citizen_card,
+            $gender,
+            $phone_to,
+            $state,
+            $usr_name,
+            $emp_id
+        ]);
+    } else {
+        //hash pass
+        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+
+        // Thực hiện cập nhật thông tin
+        $update_emp = $conn->prepare("UPDATE `employee` SET 
         name_employee = ?, 
         date_of_birth = ?, 
         citizen_card = ?, 
@@ -55,17 +94,20 @@ if (isset($_POST['submit'])) {
         username = ?, 
         password = ? 
         WHERE id_employee = ?");
-    $update_emp->execute([
-        $name_employee,
-        $date_of_birth,
-        $citizen_card,
-        $gender,
-        $phone_to,
-        $state,
-        $usr_name,
-        $pass,
-        $user_id
-    ]);
+        $update_emp->execute([
+            $name_employee,
+            $date_of_birth,
+            $citizen_card,
+            $gender,
+            $phone_to,
+            $state,
+            $usr_name,
+            $hashed_password,
+            $emp_id
+        ]);
+    }
+
+
     header("location: employee.php");
 }
 ?>
@@ -92,7 +134,7 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body>
-    <?php include 'components/header_sim.php'; ?>
+    <?php include 'components/header.php'; ?>
 
     <!-- User Profile Section -->
     <section class="user-profile">
@@ -155,7 +197,7 @@ if (isset($_POST['submit'])) {
                 <div class="profile-item">
                     <label><i class="fa-solid fa-key"></i> Password</label>
                     <div class="password-wrapper">
-                        <input type="password" name="pass" placeholder="Password" maxlength="99" value="<?= htmlspecialchars($fetch_employee['password']) ?>" required>
+                        <input type="password" name="pass" placeholder="Password" maxlength="99" value="">
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
                     </div>
                 </div>
@@ -212,23 +254,55 @@ if (isset($_POST['submit'])) {
                 }
             };
 
-            // Xử lý khi nhấn Confirm trong hộp thoại
+            // // Xử lý khi nhấn Confirm trong hộp thoại
+            // confirmPasswordBtn.addEventListener('click', function() {
+            //     const enteredPassword = confirmPasswordInput.value;
+
+            //     // Mật khẩu lấy từ PHP
+            //     const storedPassword = '<?php echo $user_password; ?>';
+            //     // password_verify
+            //     if (enteredPassword === storedPassword) {
+            //         // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
+            //         isPasswordConfirmed = true;
+            //         confirmPasswordDialog.style.display = 'none';
+
+            //         // Thực hiện click lại nút Edit để gửi form
+            //         editBtn.click();
+            //     } else {
+            //         alert('Incorrect password! Please try again.');
+            //     }
+            // });
+
             confirmPasswordBtn.addEventListener('click', function() {
                 const enteredPassword = confirmPasswordInput.value;
 
-                // Mật khẩu lấy từ PHP
-                const storedPassword = '<?php echo $user_password; ?>';
+                // Gửi mật khẩu đến PHP để xác thực
+                fetch('verify_password.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: new URLSearchParams({
+                            password: enteredPassword
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
+                            isPasswordConfirmed = true;
+                            confirmPasswordDialog.style.display = 'none';
 
-                if (enteredPassword === storedPassword) {
-                    // Nếu mật khẩu đúng, đóng hộp thoại và cho phép gửi form
-                    isPasswordConfirmed = true;
-                    confirmPasswordDialog.style.display = 'none';
-
-                    // Thực hiện click lại nút Edit để gửi form
-                    editBtn.click();
-                } else {
-                    alert('Incorrect password! Please try again.');
-                }
+                            // Thực hiện click lại nút Edit để gửi form
+                            editBtn.click();
+                        } else {
+                            alert(data.message || 'Incorrect password! Please try again.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Something went wrong. Please try again.');
+                    });
             });
 
             // Xử lý khi nhấn Cancel trong hộp thoại
