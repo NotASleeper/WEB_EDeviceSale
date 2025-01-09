@@ -26,7 +26,7 @@ if (isset($_GET['txt_input'])) {
 
 //find var not empty -> $select_emp LIKE
 if ($search_query != '') {
-    $select_emp = $conn->prepare("SELECT * FROM `customer` WHERE `name_customer` LIKE :search_query OR `phone_no` LIKE :search_query");
+    $select_emp = $conn->prepare("SELECT * FROM `customer` WHERE `name_customer` LIKE :search_query OR `phone_no` LIKE :search_query OR `username` LIKE :search_query");
     $select_emp->bindValue(':search_query', '%' . $search_query . '%');
 } else {
     //else ->load all
