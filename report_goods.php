@@ -73,8 +73,8 @@ if ($role !== 'employee') {
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT g.id_gadget, g.name_gadget, SUM(od.quantity) AS sold, g.quantity AS remain
-                            FROM gadget g JOIN order_details od ON g.id_gadget = od.id_gadget
+                    $sql = "SELECT g.id_gadget, g.name_gadget, IFNULL(SUM(od.quantity), 0) AS sold, g.quantity AS remain
+                            FROM gadget g LEFT JOIN order_details od ON g.id_gadget = od.id_gadget
                             GROUP BY g.id_gadget, g.name_gadget;";
                     $result = $conn->query($sql);
                     if ($result->rowCount() > 0) {
