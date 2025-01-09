@@ -63,7 +63,7 @@ if (isset($_GET['id'])) {
 
 <body>
     <!-- Header -->
-    <?php include 'components/header_sim.php'; ?>
+    <?php include 'components/header.php'; ?>
 
     <div class="gadget-detail-container">
         <?php if ($gadget_data): ?>
@@ -82,7 +82,7 @@ if (isset($_GET['id'])) {
                     <p class="gadget-type"><?php echo ucfirst(htmlspecialchars($gadget_data['category'])); ?></p>
                     <p class="gadget-price">
                         <?php echo number_format($gadget_data['exp_gadget'], 0, '.', ','); ?> VND
-                        <del><?php echo number_format($gadget_data['imp_gadget'], 0, '.', ','); ?> VND</del>
+                        <del><?php echo number_format($gadget_data['exp_gadget'] * 1.1, 0, '.', ','); ?> VND</del>
                     </p>
                     <p class="gadget-description"><?php echo htmlspecialchars($gadget_data['des_gadget']); ?></p>
 
