@@ -60,43 +60,49 @@ if ($role !== 'employee') {
     <!-- section report title end -->
 
     <!-- section report content start -->
-    <section class="report-content">
-        <table class="table">
-            <tr class="table-header">
-                <th>ID</th>
-                <th class="name">Name</th>
-                <th>Total sales</th>
-                <th>Order count</th>
-            </tr>
-            <?php
-            $sql = "SELECT e.id_employee, e.name_employee, COUNT(DISTINCT o.id_employee) AS order_count, SUM(g.exp_gadget * od.quantity) AS total_price
-                    FROM employee e
-                    JOIN orders o ON e.id_employee = o.id_employee
-                    JOIN order_details od ON o.id_order = od.id_order
-                    JOIN gadget g ON od.id_gadget = g.id_gadget
-                    WHERE YEAR(o.created_at) = YEAR(CURDATE())
-                    GROUP BY e.id_employee, e.name_employee;";
-            $result = $conn->query($sql);
-            if ($result->rowCount() > 0) {
-                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+    <section class="products">
+        <div class="container-employee" style="overflow-x: auto; overflow-y: auto;">
+            <table class="tbl-employee">
+                <thead>
                     <tr>
-                        <td><?= $row['id_employee']; ?></td>
-                        <td class="name"><?= $row['name_employee']; ?></td>
-                        <td><?= $row['total_price']; ?></td>
-                        <td><?= $row['order_count']; ?></td>
+                        <th>ID</th>
+                        <th class="name">Name</th>
+                        <th>Total sales</th>
+                        <th>Order count</th>
                     </tr>
-                <?php
-                }
-            } else {
-                ?>
-                <tr>
-                    <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                </tr>
-            <?php
-            }
-            ?>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT e.id_employee, e.name_employee, COUNT(DISTINCT o.id_employee) AS order_count, SUM(g.exp_gadget * od.quantity) AS total_price
+                            FROM employee e
+                            JOIN orders o ON e.id_employee = o.id_employee
+                            JOIN order_details od ON o.id_order = od.id_order
+                            JOIN gadget g ON od.id_gadget = g.id_gadget
+                            WHERE YEAR(o.created_at) = YEAR(CURDATE())
+                            GROUP BY e.id_employee, e.name_employee;";
+                    $result = $conn->query($sql);
+                    if ($result->rowCount() > 0) {
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                            <tr>
+                                <td><?= $row['id_employee']; ?></td>
+                                <td class="name"><?= $row['name_employee']; ?></td>
+                                <td><?= $row['total_price']; ?></td>
+                                <td><?= $row['order_count']; ?></td>
+                            </tr>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </section>
     <!-- section report content end -->
 

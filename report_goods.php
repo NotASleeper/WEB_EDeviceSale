@@ -60,39 +60,45 @@ if ($role !== 'employee') {
     <!-- section report title end -->
 
     <!-- section report content start -->
-    <section class="report-content">
-        <table class="table">
-            <tr class="table-header">
-                <th>ID</th>
-                <th class="name">Name</th>
-                <th>Sold</th>
-                <th>Remain</th>
-            </tr>
-            <?php
-            $sql = "SELECT g.id_gadget, g.name_gadget, SUM(od.quantity) AS sold, g.quantity AS remain
-                    FROM gadget g JOIN order_details od ON g.id_gadget = od.id_gadget
-                    GROUP BY g.id_gadget, g.name_gadget;";
-            $result = $conn->query($sql);
-            if ($result->rowCount() > 0) {
-                while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+    <section class="products">
+        <div class="container-employee" style="overflow-x: auto; overflow-y: auto;">
+            <table class="tbl-employee">
+                <thead>
                     <tr>
-                        <td><?= $row['id_gadget']; ?></td>
-                        <td class="name"><?= $row['name_gadget']; ?></td>
-                        <td><?= $row['sold']; ?></td>
-                        <td><?= $row['remain']; ?></td>
+                        <th>ID</th>
+                        <th class="name">Name</th>
+                        <th>Sold</th>
+                        <th>Remain</th>
                     </tr>
-                <?php
-                }
-            } else {
-                ?>
-                <tr>
-                    <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
-                </tr>
-            <?php
-            }
-            ?>
-        </table>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT g.id_gadget, g.name_gadget, SUM(od.quantity) AS sold, g.quantity AS remain
+                            FROM gadget g JOIN order_details od ON g.id_gadget = od.id_gadget
+                            GROUP BY g.id_gadget, g.name_gadget;";
+                    $result = $conn->query($sql);
+                    if ($result->rowCount() > 0) {
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
+                            <tr>
+                                <td><?= $row['id_gadget']; ?></td>
+                                <td class="name"><?= $row['name_gadget']; ?></td>
+                                <td><?= $row['sold']; ?></td>
+                                <td><?= $row['remain']; ?></td>
+                            </tr>
+                        <?php
+                        }
+                    } else {
+                        ?>
+                        <tr>
+                            <td style="font-weight: bold;" colspan="8">NO DATA FOUND</td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </section>
     <!-- section report content end -->
 

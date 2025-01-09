@@ -1134,6 +1134,10 @@ select {
   color: var(--black);
 }
 
+.products .container-employee .tbl-employee tr .name {
+  text-align: left;
+}
+
 /* Style for even rows */
 .products .container-employee .tbl-employee tbody tr:nth-child(even) {
   background-color: #f2f2f2;
