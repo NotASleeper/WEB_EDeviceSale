@@ -378,136 +378,232 @@ if (isset($_POST['submit'])) {
     <link rel="icon" href="images/logocart.png" type="image/png">
 
     <!-- font awesome cdn link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gadget.css">
     <link rel="stylesheet" href="css/header_footer.css">
 
 </head>
+<!-- starts header -->
+<?php include 'components\header_sim.php' ?>
+<!-- ends header -->
 
-<body>
-    <!-- starts header -->
-    <?php include 'components\header.php' ?>
-    <!-- ends header -->
-
-    <!-- section create_new_gadget starts -->
-    <section class="create-gadget">
-        <h1 style="color: yellow">UPDATE GADGET</h1>
-        <?php
+<!-- section create_new_gadget starts -->
+<section class="gadget-detail-container ">
+    <h1>CREATE A NEW GADGET</h1>
+    <?php
         $select_gadget = $conn->prepare("SELECT * FROM `gadget` WHERE id_gadget = ?");
         $select_gadget->execute([$gadget_id]);
         if ($fetch_gadget = $select_gadget->fetch(PDO::FETCH_ASSOC)) {
         ?>
-            <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data">
-                <input name="name" placeholder="Name" value="<?= $fetch_gadget['name_gadget']; ?>" required>
-                <input name="im_price" placeholder="Import Price" max="9999999999" min="0" value="<?= $fetch_gadget['imp_gadget']; ?>" type="number" onkeydown="return event.keyCode !== 69" required>
-                <input name="ex_price" placeholder="Export Price" max="9999999999" min="0" value="<?= $fetch_gadget['exp_gadget']; ?>" type="number" onkeydown="return event.keyCode !== 69" required>
-                <input name="description" placeholder="Description" maxlength="499" required value="<?= $fetch_gadget['des_gadget']; ?>">
+    <form action="" id="form-c-gadget" method="POST" enctype="multipart/form-data" class="gadget-detail-container">
+        <div class="gadget-main-section">
+            <div class="image-upload" style="display: flex; flex-direction: column">
+                <!-- Hiển thị ảnh placeholder ban đầu -->
+                <img id="image-preview"
+                    src="images/img_gadget/<?php echo htmlspecialchars($fetch_gadget['pic_gadget'] ?? 'default.jpg'); ?>"
+                    alt="Image Preview">
 
-                <input name="image" type="file" accept="image/*" value="<?= $fetch_gadget['pic_gadget']; ?>">
-                <div class="div-container">
-                    <label style="color: white;">Category</label>
-                    <span style="padding-right: 1rem;"><?= $fetch_gadget['category']; ?></span>
+                <!-- Input file để chọn ảnh -->
+                <input name="image" type="file" accept="image/*" onchange="previewImage(event)">
+            </div>
+            <div class="gadget-general">
+                <h1 class="name" style="text-align: end;">General Infomation</h1>
+                <div class="item">
+                    <label>Name</label>
+                    <input name="name" placeholder="Name" value="<?= $fetch_gadget['name_gadget']; ?>" required>
                 </div>
-                <?php
+                <div class="item">
+                    <label>Price import</label>
+                    <input name="im_price" placeholder="Import Price" max="9999999999" min="0"
+                        value="<?= $fetch_gadget['imp_gadget']; ?>" type="number"
+                        onkeydown="return event.keyCode !== 69" required>
+                </div>
+                <div class="item">
+                    <label>Price export</label>
+                    <input name="ex_price" placeholder="Export Price" max="9999999999" min="0"
+                        value="<?= $fetch_gadget['exp_gadget']; ?>" type="number"
+                        onkeydown="return event.keyCode !== 69" required>
+                </div>
+                <div class="item">
+                    <label>Description</label>
+                    <input name="description" placeholder="Description" value="<?= $fetch_gadget['des_gadget'];?>"
+                        maxlength="499" required>
+                </div>
+                <div class="item">
+                    <label>Category</label>
+                    <!-- <select class="gadget-select" name="gadget-select">
+                        <option value="laptop">laptop</option>
+                        <option value="smartphone">smartphone</option>
+                        <option value="smartwatch">smartwatch</option>
+                        <option value="accessory">accessory</option>
+                    </select> -->
+                    <input style="padding-right: 1rem;" value="<?= $fetch_gadget['category']; ?>" readonly />
+                </div>
+            </div>
+        </div>
+        <?php
                 if ($fetch_gadget['category'] === 'laptop') {
                     $select_lap = $conn->prepare("SELECT * FROM `laptop` WHERE id_gadget = ?");
                     $select_lap->execute([$gadget_id]);
                     if ($fetch_lap = $select_lap->fetch(PDO::FETCH_ASSOC)) {
                 ?>
-                        <div class="div-con-type div-laptop">
-                            <label style="color: yellow;">Laptop Information</label>
-                            <input name="lap_cpu" maxlength="99" placeholder="CPU Technology (Optional)" value="<?= $fetch_lap['cpu_tech'] ?>">
-                            <input name="lap_core" placeholder="Number of Cores (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['num_of_core'] ?>">
-                            <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['num_of_thread'] ?>">
-                            <input name="lap_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['ram'] ?>">
-                            <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['hard_drive'] ?>">
-                            <input name="lap_screen" maxlength="99" placeholder="Screen (Optional)" value="<?= $fetch_lap['screen'] ?>">
-                            <input name="lap_resolution" maxlength="99" placeholder="Resolution (Optional)" value="<?= $fetch_lap['resolution'] ?>">
-                            <input name="lap_refresh" maxlength="99" placeholder="Refresh Rate (Optional)" value="<?= $fetch_lap['refresh_rate'] ?>">
-                            <input name="lap_dimension" maxlength="99" placeholder="Dimension (Optional)" value="<?= $fetch_lap['dimension'] ?>">
-                            <input name="lap_weight" placeholder="Weight (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['weight'] ?>">
-                            <input name="lap_material" maxlength="99" placeholder="Material (Optional)" value="<?= $fetch_lap['material'] ?>">
-                            <input name="lap_date" placeholder="Release Date (Optional)" type="date" value="<?= $fetch_lap['release_date'] ?>">
-                        </div>
-                    <?php
+        <div class="gadget-details div-laptop">
+            <label class="details-label">Laptop Information: </label>
+            <div class="details-input">
+                <input name="lap_cpu" maxlength="99" placeholder="CPU Technology (Optional)"
+                    value="<?= $fetch_lap['cpu_tech'] ?>">
+                <input name="lap_core" placeholder="Number of Cores (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['num_of_core'] ?>">
+                <input name="lap_thread" placeholder="Number of Threads (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['num_of_thread'] ?>">
+                <input name="lap_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69"
+                    value="<?= $fetch_lap['ram'] ?>">
+                <input name="lap_harddrive" placeholder="Hard Drive (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['hard_drive'] ?>">
+                <input name="lap_screen" maxlength="99" placeholder="Screen (Optional)"
+                    value="<?= $fetch_lap['screen'] ?>">
+                <input name="lap_resolution" maxlength="99" placeholder="Resolution (Optional)"
+                    value="<?= $fetch_lap['resolution'] ?>">
+                <input name="lap_refresh" maxlength="99" placeholder="Refresh Rate (Optional)"
+                    value="<?= $fetch_lap['refresh_rate'] ?>">
+                <input name="lap_dimension" maxlength="99" placeholder="Dimension (Optional)"
+                    value="<?= $fetch_lap['dimension'] ?>">
+                <input name="lap_weight" placeholder="Weight (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_lap['weight'] ?>">
+                <input name="lap_material" maxlength="99" placeholder="Material (Optional)"
+                    value="<?= $fetch_lap['material'] ?>">
+                <input name="lap_date" placeholder="Release Date (Optional)" type="date"
+                    value="<?= $fetch_lap['release_date'] ?>">
+            </div>
+        </div>
+        <?php
                     }
                 } else if ($fetch_gadget['category'] === 'smartphone') {
                     $select_phone = $conn->prepare("SELECT * FROM `smartphone` WHERE id_gadget = ?");
                     $select_phone->execute([$gadget_id]);
                     if ($fetch_phone = $select_phone->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                        <div class="div-con-type div-smartphone">
-                            <label style="color: yellow;">Smartphone Information</label>
-                            <input name="phone_tech" maxlength="99" placeholder="Display Technology (Optional)" value="<?= $fetch_phone['display_tech'] ?>">
-                            <input name="phone_resolution" maxlength="99" placeholder="Resolution (Optional)" value="<?= $fetch_phone['resolution'] ?>">
-                            <input name="phone_bright" maxlength="99" placeholder="Maximum brightness (Optional)" value="<?= $fetch_phone['maximun_brightness'] ?>">
-                            <input name="phone_rearcam" maxlength="99" placeholder="Rearcam Resolution (Optional)" value="<?= $fetch_phone['rearcam_resolution'] ?>">
-                            <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers" onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['flash'] ?>">
-                            <input name="phone_frontcam" maxlength="99" placeholder="Frontcam Resolution (Optional)" value="<?= $fetch_phone['frontcam_resolution'] ?>">
-                            <input name="phone_os" maxlength="99" placeholder="Operation System (Optional)" value="<?= $fetch_phone['operation_sys'] ?>">
-                            <input name="phone_chip" maxlength="99" placeholder="Chip (Optional)" value="<?= $fetch_phone['chip'] ?>">
-                            <input name="phone_ram" placeholder="RAM (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['ram'] ?>">
-                            <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['storage_capacity'] ?>">
-                            <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['available_capacity'] ?>">
-                            <input name="phone_battery" maxlength="99" placeholder="Battery Capacity (Optional)" value="<?= $fetch_phone['battery_capacity'] ?>">
-                            <input name="phone_battype" maxlength="99" placeholder="Battery Type (Optional)" value="<?= $fetch_phone['battery_type'] ?>">
-                        </div>
-                    <?php
+        <div class="gadget-details div-smartphone">
+            <label class="details-label">Smartphone Information</label>
+            <div class="details-input">
+                <input name="phone_tech" maxlength="99" placeholder="Display Technology (Optional)"
+                    value="<?= $fetch_phone['display_tech'] ?>">
+                <input name="phone_resolution" maxlength="99" placeholder="Resolution (Optional)"
+                    value="<?= $fetch_phone['resolution'] ?>">
+                <input name="phone_bright" maxlength="99" placeholder="Maximum brightness (Optional)"
+                    value="<?= $fetch_phone['maximun_brightness'] ?>">
+                <input name="phone_rearcam" maxlength="99" placeholder="Rearcam Resolution (Optional)"
+                    value="<?= $fetch_phone['rearcam_resolution'] ?>">
+                <input name="phone_flash" placeholder="Number of Flash (Optional)" type="numbers"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['flash'] ?>">
+                <input name="phone_frontcam" maxlength="99" placeholder="Frontcam Resolution (Optional)"
+                    value="<?= $fetch_phone['frontcam_resolution'] ?>">
+                <input name="phone_os" maxlength="99" placeholder="Operation System (Optional)"
+                    value="<?= $fetch_phone['operation_sys'] ?>">
+                <input name="phone_chip" maxlength="99" placeholder="Chip (Optional)"
+                    value="<?= $fetch_phone['chip'] ?>">
+                <input name="phone_ram" placeholder="RAM (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['ram'] ?>">
+                <input name="phone_storage" placeholder="Storage Capacity (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['storage_capacity'] ?>">
+                <input name="phone_capacity" placeholder="Available Capacity (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_phone['available_capacity'] ?>">
+                <input name="phone_battery" maxlength="99" placeholder="Battery Capacity (Optional)"
+                    value="<?= $fetch_phone['battery_capacity'] ?>">
+                <input name="phone_battype" maxlength="99" placeholder="Battery Type (Optional)"
+                    value="<?= $fetch_phone['battery_type'] ?>">
+            </div>
+        </div>
+        <?php
                     }
                 } else if ($fetch_gadget['category'] === 'smartwatch') {
                     $select_watch = $conn->prepare("SELECT * FROM `smartwatch` WHERE id_gadget = ?");
                     $select_watch->execute([$gadget_id]);
                     if ($fetch_watch = $select_watch->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                        <div class="div-con-type div-smartwatch">
-                            <label style="color: yellow;">Smartwatch Information</label>
-                            <input name="watch_tech" maxlength="99" placeholder="Display Technology (Optional)" value="<?= $fetch_watch['display_tech'] ?>">
-                            <input name="watch_screen" maxlength="99" placeholder="Screen Size (Optional)" value="<?= $fetch_watch['screen_size'] ?>">
-                            <input name="watch_resolution" maxlength="99" placeholder="Resolution (Optional)" value="<?= $fetch_watch['resolution'] ?>">
-                            <input name="watch_facemat" maxlength="99" placeholder="Face Material (Optional)" value="<?= $fetch_watch['face_material'] ?>">
-                            <input name="watch_framemat" maxlength="99" placeholder="Frame Material (Optional)" value="<?= $fetch_watch['frame_material'] ?>">
-                            <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['battery_life'] ?>">
-                            <input name="watch_charging" placeholder="Charging Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['charging_time'] ?>">
-                            <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['battery_capacity'] ?>">
-                            <input name="watch_brand" maxlength="99" placeholder="Brand (Optional)" value="<?= $fetch_watch['brand'] ?>">
-                        </div>
-                    <?php
+        <div class="gadget-details div-smartwatch">
+            <label class="details-label">Smartwatch Information</label>
+            <div class="details-input">
+                <input name="watch_tech" maxlength="99" placeholder="Display Technology (Optional)"
+                    value="<?= $fetch_watch['display_tech'] ?>">
+                <input name="watch_screen" maxlength="99" placeholder="Screen Size (Optional)"
+                    value="<?= $fetch_watch['screen_size'] ?>">
+                <input name="watch_resolution" maxlength="99" placeholder="Resolution (Optional)"
+                    value="<?= $fetch_watch['resolution'] ?>">
+                <input name="watch_facemat" maxlength="99" placeholder="Face Material (Optional)"
+                    value="<?= $fetch_watch['face_material'] ?>">
+                <input name="watch_framemat" maxlength="99" placeholder="Frame Material (Optional)"
+                    value="<?= $fetch_watch['frame_material'] ?>">
+                <input name="watch_batlife" placeholder="Battery Life (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['battery_life'] ?>">
+                <input name="watch_charging" placeholder="Charging Time (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['charging_time'] ?>">
+                <input name="watch_batcapa" placeholder="Battery Capacity (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_watch['battery_capacity'] ?>">
+                <input name="watch_brand" maxlength="99" placeholder="Brand (Optional)"
+                    value="<?= $fetch_watch['brand'] ?>">
+            </div>
+        </div>
+        <?php
                     }
                 } else {
                     $select_ac = $conn->prepare("SELECT * FROM `accessory` WHERE id_gadget = ?");
                     $select_ac->execute([$gadget_id]);
                     if ($fetch_ac = $select_ac->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-                        <div class="div-con-type div-accessory">
-                            <label style="color: yellow;">Accessory Information</label>
-                            <input name="ac_model" maxlength="99" placeholder="Model (Optional)" value="<?= $fetch_ac['model'] ?>">
-                            <input name="ac_func" maxlength="99" placeholder="Functionality (Optional)" value="<?= $fetch_ac['functionality'] ?>">
-                            <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number" onkeydown="return event.keyCode !== 69" value="<?= $fetch_ac['usage_time'] ?>">
-                            <input name="ac_dimension" maxlength="99" placeholder="Dimension (Optional)" value="<?= $fetch_ac['dimension'] ?>">
-                            <input name="ac_brand" placeholder="Brand (Optional)" value="<?= $fetch_ac['brand'] ?>">
-                        </div>
-                <?php
+        <div class="gadget-details div-accessory">
+            <label class="details-label">Accessory Information</label>
+            <div class="details-input">
+                <input name="ac_model" maxlength="99" placeholder="Model (Optional)" value="<?= $fetch_ac['model'] ?>">
+                <input name="ac_func" maxlength="99" placeholder="Functionality (Optional)"
+                    value="<?= $fetch_ac['functionality'] ?>">
+                <input name="ac_usagetime" placeholder="Usage Time (Optional)" type="number"
+                    onkeydown="return event.keyCode !== 69" value="<?= $fetch_ac['usage_time'] ?>">
+                <input name="ac_dimension" maxlength="99" placeholder="Dimension (Optional)"
+                    value="<?= $fetch_ac['dimension'] ?>">
+                <input name="ac_brand" placeholder="Brand (Optional)" value="<?= $fetch_ac['brand'] ?>">
+            </div>
+        </div>
+        <?php
                     }
                 }
                 ?>
-                <div class="gadget-buttons">
-                    <button type="submit" name="submit" class="btn-success">Update</button>
-                    <button class="btn-second-green addgg-clear">Clear</button>
-                </div>
-            <?php
+        <div class="gadget-buttons">
+            <button type="submit" name="submit" class="btn-success">Update</button>
+            <button class="btn-second-green addgg-clear">Clear</button>
+        </div>
+        <?php
         }
             ?>
-            </form>
-    </section>
-    <!-- section create_new_gadget ends -->
+    </form>
+</section>
+<!-- section create_new_gadget ends -->
 
-    <!-- starts footer -->
-    <?php include 'components\footer.php' ?>
-    <!-- ends footer -->
+<!-- starts footer -->
+<?php include 'components\footer.php' ?>
+<!-- ends footer -->
 
-    <script src="js/index.js"></script>
+<script>
+// Hàm để cập nhật ảnh preview khi chọn tệp
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const preview = document.getElementById('image-preview');
+        preview.src = reader.result;
+    };
+    // Đọc tệp được chọn
+    reader.readAsDataURL(event.target.files[0]);
+}
+</script>
+<script src="js/index.js"></script>
 </body>
+
+
+
 
 </html>
 
