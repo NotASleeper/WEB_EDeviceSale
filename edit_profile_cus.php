@@ -35,9 +35,19 @@ if (isset($_POST['submit'])) {
     $username_customer = filter_var($_POST['username_customer'], FILTER_SANITIZE_STRING);
     $pass_customer = filter_var($_POST['pass_customer'], FILTER_SANITIZE_STRING);
 
-    // Cập nhật thông tin khách hàng
-    $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
-    $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $pass_customer, $cus_id]);
+    if ($pass_customer === '') {
+        // Cập nhật thông tin khách hàng
+        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
+        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+    } else {
+        $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
+        // Cập nhật thông tin khách hàng
+        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
+        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+    }
+
+
 
     header('location:edit_profile_cus.php');
 }
@@ -54,6 +64,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+
 </head>
 
 <body>
@@ -111,6 +122,7 @@ if (isset($_POST['submit'])) {
 
 
 
+    <script src="js/index.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

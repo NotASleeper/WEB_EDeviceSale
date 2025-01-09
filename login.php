@@ -15,20 +15,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $password = filter_var($password, FILTER_SANITIZE_STRING);
 
-    $select_user = $conn->prepare("SELECT * FROM `employee` WHERE username = ? AND password = ? AND state = 'Available'");
-    $select_user->execute([$username, $password]);
+    $select_user = $conn->prepare("SELECT * FROM `employee` WHERE username = ? AND state = 'Available'");
+    $select_user->execute([$username]);
     $row = $select_user->fetch(PDO::FETCH_ASSOC);
 
-    if ($select_user->rowCount() > 0) {
+    if ($select_user->rowCount() > 0 && password_verify($password, $row['password'])) {
         $_SESSION['user_id'] = $row['id_employee'];
         $_SESSION['role'] = 'employee';
         header('location:home.php');
     } else {
-        $select_user_cus = $conn->prepare("SELECT * FROM `customer` WHERE username = ? AND password = ?");
-        $select_user_cus->execute([$username, $password]);
+        $select_user_cus = $conn->prepare("SELECT * FROM `customer` WHERE username = ?");
+        $select_user_cus->execute([$username]);
         $row = $select_user_cus->fetch(PDO::FETCH_ASSOC);
 
-        if ($select_user_cus->rowCount() > 0) {
+        if ($select_user_cus->rowCount() > 0 && password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['id_customer'];
             $_SESSION['role'] = 'customer';
             header('location:home_cus.php');

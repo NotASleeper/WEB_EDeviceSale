@@ -96,7 +96,6 @@ $select_emp->execute();
                         <th>Phone Number</th>
                         <th>Total Spending</th>
                         <th>Username</th>
-                        <th>Password</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -118,7 +117,6 @@ $select_emp->execute();
                                 <td><?= $fetch_emp['phone_no']; ?></td>
                                 <td><?= $fetch_emp['total_spending']; ?></td>
                                 <td><?= $fetch_emp['username']; ?></td>
-                                <td><?= $fetch_emp['password']; ?></td>
                                 <td>
                                     <a href="update_customer.php?id_customer=<?= $fetch_emp['id_customer']; ?>"><i
                                             class="fa-solid fa-pen-to-square"></i></a>

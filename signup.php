@@ -47,9 +47,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 //if new, not exists
 
+                //hash password
+                $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
                 //insert to db
                 $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
-                $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $pass_customer]);
+                $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $hashed_password]);
 
                 //check
                 $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
