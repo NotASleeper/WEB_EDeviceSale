@@ -72,7 +72,7 @@ $total_price = 0;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/logocart.png" type="image/png">
 
-    <title>Quản Lý Đơn Hàng</title>
+    <title>Order</title>
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/order.css">
@@ -118,11 +118,11 @@ $total_price = 0;
                 }
             ?>
                 <div class="shopping-cart <?php echo $class; ?>">
-                    <h3>Đơn hàng #<?php echo $order['id_order']; ?></a></h3>
-                    <p>Trạng thái: <?php echo htmlspecialchars($order['status']); ?></p>
-                    <p>Ngày tạo: <?php echo date("d/m/Y", strtotime($order['created_at'])); ?></p>
-                    <p>Ngày cập nhật: <?php echo date("d/m/Y", strtotime($order['updated_at'])); ?></p>
-                    <p>Sản phẩm:</p>
+                    <h3>Order #<?php echo $order['id_order']; ?></a></h3>
+                    <p>Status: <?php echo htmlspecialchars($order['status']); ?></p>
+                    <p>Create Date: <?php echo date("d/m/Y", strtotime($order['created_at'])); ?></p>
+                    <p>Update Date: <?php echo date("d/m/Y", strtotime($order['updated_at'])); ?></p>
+                    <p>Products:</p>
                     <ul class="gadget-list-card">
                         <?php
                         // Câu truy vấn lấy chi tiết sản phẩm trong đơn hàng
@@ -150,9 +150,9 @@ $total_price = 0;
                                     <a href="view_gadget_cus.php?id=<?php echo $detail['id_gadget']; ?>">
                                         <h3><?php echo htmlspecialchars($detail['name_gadget']); ?></h3>
                                     </a>
-                                    <p>Số lượng: <?php echo $detail['quantity']; ?></p>
-                                    <p>Giá: <?php echo number_format($detail['imp_gadget'], 0); ?> VND</p>
-                                    <p>Thành tiền: <?php echo $detail['quantity'] * $detail['imp_gadget']; ?> VND</p>
+                                    <p>Amount: <?php echo $detail['quantity']; ?></p>
+                                    <p>Price: <?php echo number_format($detail['imp_gadget'], 0); ?> VND</p>
+                                    <p>Total: <?php echo $detail['quantity'] * $detail['imp_gadget']; ?> VND</p>
                                 </div>
                             </ul>
                         <?php endforeach; ?>
@@ -161,16 +161,12 @@ $total_price = 0;
                     <!-- Các nút hành động -->
                     <div class="action-buttons">
                         <?php if ($role === 'employee' && $order['status'] === 'Pending'): ?>
-                            <button class="btn-confirm" onclick="handleOrder('confirm', <?php echo $order['id_order']; ?>)">Gửi
-                                hàng</button>
+                            <button class="btn-confirm" onclick="handleOrder('confirm', <?php echo $order['id_order']; ?>)">Send Products</button>
                         <?php elseif ($role === 'customer' && $order['status'] === 'Confirmed'): ?>
-                            <button class="btn-confirm" onclick="handleOrder('receive', <?php echo $order['id_order']; ?>)">Nhận
-                                hàng</button>
-                            <button class="btn-delete" onclick="handleOrder('cancel', <?php echo $order['id_order']; ?>)">Hủy
-                                đơn</button>
+                            <button class="btn-confirm" onclick="handleOrder('receive', <?php echo $order['id_order']; ?>)">Receive Products</button>
+                            <button class="btn-delete" onclick="handleOrder('cancel', <?php echo $order['id_order']; ?>)">Cancel Order</button>
                         <?php elseif ($role === 'employee' && $order['status'] === 'Cancelled'): ?>
-                            <button class="btn-delete" onclick="handleOrder('delete', <?php echo $order['id_order']; ?>)">Xóa
-                                đơn</button>
+                            <button class="btn-delete" onclick="handleOrder('delete', <?php echo $order['id_order']; ?>)">Delete Order</button>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -181,17 +177,17 @@ $total_price = 0;
         <div class="user-info-summary">
             <div class="info">
                 <h2><?php echo $role === 'employee' ? 'Thông tin nhân viên' : 'Thông tin người dùng'; ?></h2>
-                <p><strong>Tên:</strong>
+                <p><strong>Name:</strong>
                     <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'name_employee' : 'name_customer']); ?>
                 </p>
-                <p><strong>Số điện thoại:</strong>
+                <p><strong>Phone Number:</strong>
                     <?php echo htmlspecialchars($user_info[$role === 'employee' ? 'phone_to' : 'phone_no']); ?></p>
             </div>
 
             <div class="summary">
-                <h2>Tổng Hợp Đơn Hàng</h2>
-                <p><strong>Tổng số lượng:</strong> <?php echo $total_quantity; ?></p>
-                <p><strong>Tổng giá trị:</strong> <?php echo number_format($total_price, 0); ?> VND</p>
+                <h2>Order Summary</h2>
+                <p><strong>Total Amount:</strong> <?php echo $total_quantity; ?></p>
+                <p><strong>Total Spending:</strong> <?php echo number_format($total_price, 0); ?> VND</p>
             </div>
         </div>
     </div>

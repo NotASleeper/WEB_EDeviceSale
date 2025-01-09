@@ -33,7 +33,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ Hàng</title>
+    <title>Cart</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/header_footer.css">
 
@@ -43,7 +43,7 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php include 'components/cus_header.php'; ?>
 
     <div class="cart-page">
-        <h2>Giỏ Hàng Của Bạn</h2>
+        <h2>Your cart</h2>
         <form method="POST" action="checkout.php">
             <?php if (!empty($cart_items)): ?>
                 <div class="cart-items">
@@ -62,19 +62,19 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <a href="view_gadget_cus.php?id=<?= $item['id_gadget']; ?>">
                                     <h3><?= htmlspecialchars($item['name_gadget']); ?></h3>
                                 </a>
-                                <p>Số lượng: <?= $item['quantity']; ?></p>
-                                <p>Giá: <?= number_format($item['imp_gadget'], 0); ?> VND</p>
-                                <p>Thành tiền: <?= number_format($subtotal, 0); ?> VND</p>
+                                <p>Amount: <?= $item['quantity']; ?></p>
+                                <p>Price: <?= number_format($item['imp_gadget'], 0); ?> VND</p>
+                                <p>Total: <?= number_format($subtotal, 0); ?> VND</p>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
                 <div class="cart-summary">
-                    <button type="submit" name="checkout" class="checkout-button">Đặt Hàng</button>
-                    <button type="submit" name="delete" class="delete-button">Xóa Hàng</button>
+                    <button type="submit" name="checkout" class="checkout-button">Order</button>
+                    <button type="submit" name="delete" class="delete-button">Delete</button>
                     <div>
-                        <h3>Tổng Số Lượng: <?= $total_quantity; ?></h3>
-                        <h3>Tổng Giá Trị: <?= number_format($total_price, 0); ?> VND</h3>
+                        <h3>Amount: <?= $total_quantity; ?></h3>
+                        <h3>Total: <?= number_format($total_price, 0); ?> VND</h3>
                     </div>
                 </div>
             <?php else: ?>
