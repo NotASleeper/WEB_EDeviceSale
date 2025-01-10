@@ -49,66 +49,76 @@ $avatar_url = $fetch_employee['gender'] === 'Male'
 if (isset($_POST['submit'])) {
     $name_employee = filter_var($_POST['name_employee'], FILTER_SANITIZE_STRING);
     $date_of_birth = filter_var($_POST['date_of_birth'], FILTER_SANITIZE_STRING);
-    $citizen_card = filter_var($_POST['citizen_card'], FILTER_SANITIZE_STRING);
-    $phone_to = filter_var($_POST['phone_to'], FILTER_SANITIZE_STRING);
-    $usr_name = filter_var($_POST['usr_name'], FILTER_SANITIZE_STRING);
-    $pass = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
 
-    // Kiểm tra radio button gender và state
-    $gender = isset($_POST['gender']) ? filter_var($_POST['gender'], FILTER_SANITIZE_STRING) : null;
-    $state = isset($_POST['status-select']) ? filter_var($_POST['status-select'], FILTER_SANITIZE_STRING) : null;
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
 
-    if ($pass === '') {
-        // Thực hiện cập nhật thông tin
-        $update_emp = $conn->prepare("UPDATE `employee` SET 
-    name_employee = ?, 
-    date_of_birth = ?, 
-    citizen_card = ?, 
-    gender = ?, 
-    phone_to = ?, 
-    state = ?, 
-    username = ?
-    WHERE id_employee = ?");
-        $update_emp->execute([
-            $name_employee,
-            $date_of_birth,
-            $citizen_card,
-            $gender,
-            $phone_to,
-            $state,
-            $usr_name,
-            $emp_id
-        ]);
+    if ($age < 18) {
+        $message[] = "Employee should be over 18 years old";
     } else {
-        //hash pass
-        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+        $citizen_card = filter_var($_POST['citizen_card'], FILTER_SANITIZE_STRING);
+        $phone_to = filter_var($_POST['phone_to'], FILTER_SANITIZE_STRING);
+        $usr_name = filter_var($_POST['usr_name'], FILTER_SANITIZE_STRING);
+        $pass = filter_var($_POST['pass'], FILTER_SANITIZE_STRING);
 
-        // Thực hiện cập nhật thông tin
-        $update_emp = $conn->prepare("UPDATE `employee` SET 
+        // Kiểm tra radio button gender và state
+        $gender = isset($_POST['gender']) ? filter_var($_POST['gender'], FILTER_SANITIZE_STRING) : null;
+        $state = isset($_POST['status-select']) ? filter_var($_POST['status-select'], FILTER_SANITIZE_STRING) : null;
+
+        if ($pass === '') {
+            // Thực hiện cập nhật thông tin
+            $update_emp = $conn->prepare("UPDATE `employee` SET 
         name_employee = ?, 
         date_of_birth = ?, 
         citizen_card = ?, 
         gender = ?, 
         phone_to = ?, 
         state = ?, 
-        username = ?, 
-        password = ? 
+        username = ?
         WHERE id_employee = ?");
-        $update_emp->execute([
-            $name_employee,
-            $date_of_birth,
-            $citizen_card,
-            $gender,
-            $phone_to,
-            $state,
-            $usr_name,
-            $hashed_password,
-            $emp_id
-        ]);
+            $update_emp->execute([
+                $name_employee,
+                $date_of_birth,
+                $citizen_card,
+                $gender,
+                $phone_to,
+                $state,
+                $usr_name,
+                $emp_id
+            ]);
+        } else {
+            //hash pass
+            $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+
+            // Thực hiện cập nhật thông tin
+            $update_emp = $conn->prepare("UPDATE `employee` SET 
+            name_employee = ?, 
+            date_of_birth = ?, 
+            citizen_card = ?, 
+            gender = ?, 
+            phone_to = ?, 
+            state = ?, 
+            username = ?, 
+            password = ? 
+            WHERE id_employee = ?");
+            $update_emp->execute([
+                $name_employee,
+                $date_of_birth,
+                $citizen_card,
+                $gender,
+                $phone_to,
+                $state,
+                $usr_name,
+                $hashed_password,
+                $emp_id
+            ]);
+        }
+
+
+        header("location: employee.php");
     }
-
-
-    header("location: employee.php");
 }
 ?>
 

@@ -25,48 +25,59 @@ if (isset($_POST['submit'])) {
     $date_of_birth = $_POST['date_of_birth'];     //import price
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    $citizen_card = $_POST['citizen_card'];     //export price
-    $citizen_card = filter_var($citizen_card, FILTER_SANITIZE_STRING);
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
 
-    $gender = isset($_POST['gender']) ? filter_var($_POST['gender'], FILTER_SANITIZE_STRING) : null;
-
-    $phone_to = $_POST['phone_to'];     //export price
-    $phone_to = filter_var($phone_to, FILTER_SANITIZE_STRING);
-
-    // $role = $_POST['role-select'];     //role-select
-    // $role = filter_var($role, FILTER_SANITIZE_STRING);
-
-    $usr_name = $_POST['usr_name'];     //usr_name
-    $usr_name = filter_var($usr_name, FILTER_SANITIZE_STRING);
-
-    $pass = $_POST['pass'];     //pass-select
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-
-
-    //check if already exists
-    $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ? OR username = ?");
-    $select_emp->execute([$phone_to, $user_name]);
-    $row = $select_emp->fetch(PDO::FETCH_ASSOC);
-    //if existed
-    if ($select_emp->rowCount() > 0) {
-        $message[] = "Phone has already existed!";
+    if ($age < 18) {
+        $message[] = "Employee should be over 18 years old";
     } else {
-        //if new, not exists
-        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+        $citizen_card = $_POST['citizen_card'];     //export price
+        $citizen_card = filter_var($citizen_card, FILTER_SANITIZE_STRING);
 
-        //insert to db
-        $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, state, username, password) VALUES (?,?,?,?,?,?,?,?)");
-        $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, "Available", $usr_name, $hashed_password]);
+        $gender = isset($_POST['gender']) ? filter_var($_POST['gender'], FILTER_SANITIZE_STRING) : null;
 
-        //check
-        $confirm_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ?");
-        $confirm_emp->execute([$phone_to]);
-        if ($confirm_emp->rowCount() > 0) {
-            $message[] = "Inserted successfully";
+        $phone_to = $_POST['phone_to'];     //export price
+        $phone_to = filter_var($phone_to, FILTER_SANITIZE_STRING);
+
+        // $role = $_POST['role-select'];     //role-select
+        // $role = filter_var($role, FILTER_SANITIZE_STRING);
+
+        $usr_name = $_POST['usr_name'];     //usr_name
+        $usr_name = filter_var($usr_name, FILTER_SANITIZE_STRING);
+
+        $pass = $_POST['pass'];     //pass-select
+        $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+
+
+        //check if already exists
+        $select_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ? OR username = ?");
+        $select_emp->execute([$phone_to, $user_name]);
+        $row = $select_emp->fetch(PDO::FETCH_ASSOC);
+        //if existed
+        if ($select_emp->rowCount() > 0) {
+            $message[] = "Phone has already existed!";
         } else {
-            $message[] = "Failed to Insert";
+            //if new, not exists
+            $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+
+            //insert to db
+            $insert_emp = $conn->prepare("INSERT INTO `employee` (name_employee, date_of_birth, citizen_card, gender, phone_to, state, username, password) VALUES (?,?,?,?,?,?,?,?)");
+            $insert_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, "Available", $usr_name, $hashed_password]);
+
+            //check
+            $confirm_emp = $conn->prepare("SELECT * FROM `employee` WHERE phone_to = ?");
+            $confirm_emp->execute([$phone_to]);
+            if ($confirm_emp->rowCount() > 0) {
+                $message[] = "Inserted successfully";
+            } else {
+                $message[] = "Failed to Insert";
+            }
         }
     }
+
+
 
     // echo "<script>
     //     alert('Name: $name, Import Price: $im_price, Export Price: $ex_price, Description: $description, Category: $category');
