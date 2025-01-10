@@ -31,25 +31,33 @@ $total_spending = $fetch_customer['total_spending']; // Lấy tổng chi tiêu c
 if (isset($_POST['submit'])) {
     $name_customer = filter_var($_POST['name_customer'], FILTER_SANITIZE_STRING);
     $date_of_birth = filter_var($_POST['date_of_birth'], FILTER_SANITIZE_STRING);
-    $phone_no = filter_var($_POST['phone_no'], FILTER_SANITIZE_STRING);
-    $username_customer = filter_var($_POST['username_customer'], FILTER_SANITIZE_STRING);
-    $pass_customer = filter_var($_POST['pass_customer'], FILTER_SANITIZE_STRING);
 
-    if ($pass_customer === '') {
-        // Cập nhật thông tin khách hàng
-        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
-        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
+
+    if ($age < 18) {
+        $message[] = "Khách hàng phải từ 18 tuổi trở lên!";
     } else {
-        $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+        $phone_no = filter_var($_POST['phone_no'], FILTER_SANITIZE_STRING);
+        $username_customer = filter_var($_POST['username_customer'], FILTER_SANITIZE_STRING);
+        $pass_customer = filter_var($_POST['pass_customer'], FILTER_SANITIZE_STRING);
 
-        // Cập nhật thông tin khách hàng
-        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
-        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+        if ($pass_customer === '') {
+            // Cập nhật thông tin khách hàng
+            $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
+            $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+        } else {
+            $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
+            // Cập nhật thông tin khách hàng
+            $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
+            $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+        }
+
+        header('location:edit_profile_cus.php');
     }
-
-
-
-    header('location:edit_profile_cus.php');
 }
 ?>
 

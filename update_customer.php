@@ -47,26 +47,37 @@ if (isset($_POST['submit'])) {
     $date_of_birth = $_POST['date_of_birth'];     //bday
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    $phone_no = $_POST['phone_no'];     //phone no
-    $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
 
-    $username_customer = $_POST['username_customer'];     //username
-    $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
-
-    $pass_customer = $_POST['pass_customer'];     //password
-    $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
-
-    if ($pass_customer === '') {
-        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
-        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+    if ($age < 18) {
+        $message[] = "Customer should be over 18 years old";
     } else {
-        $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+        $phone_no = $_POST['phone_no'];     //phone no
+        $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
 
-        $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
-        $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+        $username_customer = $_POST['username_customer'];     //username
+        $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
+
+        $pass_customer = $_POST['pass_customer'];     //password
+        $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
+
+        if ($pass_customer === '') {
+            $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
+            $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
+        } else {
+            $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
+            $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ?, password = ? WHERE id_customer = ?");
+            $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $hashed_password, $cus_id]);
+        }
+
+        header("location: customer.php");
     }
 
-    header("location: customer.php");
+
 
     // echo "<script>
     //     alert('Name: $name, Import Price: $im_price, Export Price: $ex_price, Description: $description, Category: $category');

@@ -36,33 +36,43 @@ $avatar_url = $fetch_employee['gender'] === 'Male'
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name_employee = filter_input(INPUT_POST, 'name_employee', FILTER_SANITIZE_STRING);
     $date_of_birth = filter_input(INPUT_POST, 'date_of_birth', FILTER_SANITIZE_STRING);
-    $citizen_card = filter_input(INPUT_POST, 'citizen_card', FILTER_SANITIZE_STRING);
-    $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_STRING);
-    $phone_to = filter_input(INPUT_POST, 'phone_to', FILTER_SANITIZE_STRING);
-    $usr_name = filter_input(INPUT_POST, 'usr_name', FILTER_SANITIZE_STRING);
-    $pass = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
 
-    if ($pass === '') {
-        // Cập nhật cơ sở dữ liệu
-        $update_emp = $conn->prepare("
-    UPDATE `employee` 
-    SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?
-    WHERE id_employee = ?
-");
-        $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $user_id]);
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
+
+    if ($age < 18) {
+        $message[] = "User should be over 18 years old";
     } else {
-        $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
-        // Cập nhật cơ sở dữ liệu
-        $update_emp = $conn->prepare("
+        $citizen_card = filter_input(INPUT_POST, 'citizen_card', FILTER_SANITIZE_STRING);
+        $gender = filter_input(INPUT_POST, 'gender', FILTER_SANITIZE_STRING);
+        $phone_to = filter_input(INPUT_POST, 'phone_to', FILTER_SANITIZE_STRING);
+        $usr_name = filter_input(INPUT_POST, 'usr_name', FILTER_SANITIZE_STRING);
+        $pass = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
+
+        if ($pass === '') {
+            // Cập nhật cơ sở dữ liệu
+            $update_emp = $conn->prepare("
         UPDATE `employee` 
-        SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?, password = ? 
+        SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?
         WHERE id_employee = ?
     ");
-        $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $hashed_password, $user_id]);
+            $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $user_id]);
+        } else {
+            $hashed_password = password_hash($pass, PASSWORD_DEFAULT);
+            // Cập nhật cơ sở dữ liệu
+            $update_emp = $conn->prepare("
+            UPDATE `employee` 
+            SET name_employee = ?, date_of_birth = ?, citizen_card = ?, gender = ?, phone_to = ?, username = ?, password = ? 
+            WHERE id_employee = ?
+        ");
+            $update_emp->execute([$name_employee, $date_of_birth, $citizen_card, $gender, $phone_to, $usr_name, $hashed_password, $user_id]);
+        }
+
+
+        header('location:edit_profile.php');
     }
-
-
-    header('location:edit_profile.php');
 }
 
 ?>

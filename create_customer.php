@@ -3,15 +3,6 @@ include 'components/connect.php';
 
 session_start();
 
-// not sure 
-// if (isset($_SESSION['user_id'])) {
-//     $user_id = $_SESSION['user_id'];
-// } else {
-//     $user_id = '';
-
-//     // //pls un-cmt this when done
-//     // header('location:login.php');
-// }
 
 if (!isset($_SESSION['user_id'])) {
     header('location:login.php');
@@ -33,41 +24,49 @@ if (isset($_POST['submit'])) {
     $date_of_birth = $_POST['date_of_birth'];     //import price
     $date_of_birth = filter_var($date_of_birth, FILTER_SANITIZE_STRING);
 
-    $phone_no = $_POST['phone_no'];     //phone no
-    $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
+    // Kiểm tra tuổi
+    $dob = new DateTime($date_of_birth);
+    $today = new DateTime();
+    $age = $today->diff($dob)->y;
 
-    $username_customer = $_POST['username_customer'];     //username
-    $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
-
-    $pass_customer = $_POST['pass_customer'];     //password
-    $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
-
-    //check if already exists
-    $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ? OR username = ?");
-    $select_cus->execute([$phone_no, $username_customer]);
-    $row = $select_cus->fetch(PDO::FETCH_ASSOC);
-    //if existed
-    if ($select_cus->rowCount() > 0) {
-        $message[] = "Phone or username has already existed!";
+    if ($age < 18) {
+        $message[] = "Customer should be over 18 years old";
     } else {
-        //if new, not exists
+        $phone_no = $_POST['phone_no'];     //phone no
+        $phone_no = filter_var($phone_no, FILTER_SANITIZE_STRING);
 
-        $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+        $username_customer = $_POST['username_customer'];     //username
+        $username_customer = filter_var($username_customer, FILTER_SANITIZE_STRING);
 
-        //insert to db
-        $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
-        $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $hashed_password]);
+        $pass_customer = $_POST['pass_customer'];     //password
+        $pass_customer = filter_var($pass_customer, FILTER_SANITIZE_STRING);
 
-        //check
-        $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
-        $confirm_cus->execute([$phone_no]);
-        if ($confirm_cus->rowCount() > 0) {
-            $message[] = "Inserted successfully";
+        //check if already exists
+        $select_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ? OR username = ?");
+        $select_cus->execute([$phone_no, $username_customer]);
+        $row = $select_cus->fetch(PDO::FETCH_ASSOC);
+        //if existed
+        if ($select_cus->rowCount() > 0) {
+            $message[] = "Phone or username has already existed!";
         } else {
-            $message[] = "Failed to Insert";
+            //if new, not exists
+
+            $hashed_password = password_hash($pass_customer, PASSWORD_DEFAULT);
+
+            //insert to db
+            $insert_cus = $conn->prepare("INSERT INTO `customer` (name_customer, date_of_birth, phone_no, total_spending, username, password) VALUES (?,?,?,?,?,?)");
+            $insert_cus->execute([$name_customer, $date_of_birth, $phone_no, 0, $username_customer, $hashed_password]);
+
+            //check
+            $confirm_cus = $conn->prepare("SELECT * FROM `customer` WHERE phone_no = ?");
+            $confirm_cus->execute([$phone_no]);
+            if ($confirm_cus->rowCount() > 0) {
+                $message[] = "Inserted successfully";
+            } else {
+                $message[] = "Failed to Insert";
+            }
         }
     }
-
     // echo "<script>
     //     alert('Name: $name, Import Price: $im_price, Export Price: $ex_price, Description: $description, Category: $category');
     // </script>";
