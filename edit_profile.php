@@ -50,8 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $phone_to = filter_input(INPUT_POST, 'phone_to', FILTER_SANITIZE_STRING);
         $usr_name = filter_input(INPUT_POST, 'usr_name', FILTER_SANITIZE_STRING);
         $pass = filter_input(INPUT_POST, 'pass', FILTER_SANITIZE_STRING);
+        $pass_cf = filter_input(INPUT_POST, 'pass_cf', FILTER_SANITIZE_STRING);
 
-        if ($pass === '') {
+        if ($pass !== $pass_cf) {
+            echo ('Confirm password must be same with Password');
+            return;
+        } else if ($pass === '') {
             // Cập nhật cơ sở dữ liệu
             $update_emp = $conn->prepare("
         UPDATE `employee` 
@@ -150,6 +154,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="password-wrapper">
                         <input name="pass" placeholder="Password" maxlength="99" value="">
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
+                    </div>
+                </div>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-key"></i>Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input name="pass_cf" placeholder="Password" maxlength="99" value="" type="password">
                     </div>
                 </div>
                 <div class="profile-item">

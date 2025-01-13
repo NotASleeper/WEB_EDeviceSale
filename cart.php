@@ -82,8 +82,6 @@ $cart_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endif; ?>
         </form>
     </div>
-
     <?php include 'components/footer.php'; ?>
 </body>
-
 </html>

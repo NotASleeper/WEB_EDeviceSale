@@ -113,24 +113,6 @@ $select_products->execute();
     <?php include 'components\cus_header.php' ?>
     <!-- ends header -->
 
-    <!-- section title starts -->
-    <!-- <section class="section-title">
-        <a href="home_cus.php">home</a>
-    </section> -->
-    <!-- section title ends -->
-
-    <!-- section search starts -->
-    <!-- <section class="search-section">
-        <form class="search-div" action="home.php" method="GET" enctype="multipart/form-data">
-            <input name="txt_input" placeholder="Enter name..."
-                value="<?= isset($_GET['txt_input']) ? $_GET['txt_input'] : ''; ?>">
-            <button style="background-color: white;" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
-    </section> -->
-    <!-- section search ends -->
-
-    <!-- section preview-categories starts -->
-
     <section class="banner">
         <div class="welcome-message">
             <h1>Welcome to my shop!</h1>
@@ -213,28 +195,3 @@ $select_products->execute();
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <a class="cate-box" style="text-decoration: none;" href="view_gadget_category.php?category=smartwatch">
-                <img src=" images/icon_tablet.png">
-                <h3>tablet</h3>
-            </a> -->

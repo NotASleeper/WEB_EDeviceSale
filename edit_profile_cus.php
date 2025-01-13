@@ -43,8 +43,12 @@ if (isset($_POST['submit'])) {
         $phone_no = filter_var($_POST['phone_no'], FILTER_SANITIZE_STRING);
         $username_customer = filter_var($_POST['username_customer'], FILTER_SANITIZE_STRING);
         $pass_customer = filter_var($_POST['pass_customer'], FILTER_SANITIZE_STRING);
+        $pass_customer_cf = filter_var($_POST['pass_customer_cf'], FILTER_SANITIZE_STRING);
 
-        if ($pass_customer === '') {
+        if($pass_customer !== $pass_customer_cf){
+            echo('Confirm password must be same with Password');
+            return;
+        } else if ($pass_customer === '') {
             // Cập nhật thông tin khách hàng
             $update_customer = $conn->prepare("UPDATE `customer` SET name_customer = ?, date_of_birth = ?, phone_no = ?, username = ? WHERE id_customer = ?");
             $update_customer->execute([$name_customer, $date_of_birth, $phone_no, $username_customer, $cus_id]);
@@ -121,6 +125,12 @@ if (isset($_POST['submit'])) {
                         <i id="toggle-password" class="fa-solid fa-eye"></i>
                     </div>
                 </div>
+                <div class="profile-item">
+                    <label><i class="fa-solid fa-key"></i>Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input id="password_cf" name="pass_customer_cf" type="password" placeholder="Confirm Password" maxlength="99" value="">
+                    </div>
+                </div>
                 <div class="profile-item row">
                     <button type="submit" name="submit" class="profile-btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                     <button type="reset" class="profile-btn clear"><i class="fa-solid fa-eraser"></i> Clear</button>
@@ -129,14 +139,11 @@ if (isset($_POST['submit'])) {
         </form>
     </section>
     <?php include 'components/footer.php'; ?>
-
-
-
     <script src="js/index.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const passwordInput = document.getElementById('password');
+            const cfPasswordInput = document.getElementById('password_cf');
             const togglePassword = document.getElementById('toggle-password');
 
             togglePassword.addEventListener('click', () => {
@@ -153,5 +160,4 @@ if (isset($_POST['submit'])) {
         });
     </script>
 </body>
-
 </html>
