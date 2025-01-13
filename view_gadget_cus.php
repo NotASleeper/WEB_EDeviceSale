@@ -18,10 +18,6 @@ if ($role !== 'customer') {
     exit();
 }
 
-
-
-
-
 // Lấy thông tin gadget và chi tiết theo danh mục
 $gadget_data = null;
 $gadget_details = null;
