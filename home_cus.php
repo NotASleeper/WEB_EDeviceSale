@@ -191,10 +191,17 @@ $select_products->execute();
     <!-- section products ends -->
 
     <!-- chatbot button -->
-    <button id="chatbot-toggler">
-        <span class="material-symbols-rounded">comment</span>
-        <span class="material-symbols-rounded">close</span>
-    </button>
+    <?php
+    if (isset($_SESSION['user_id'])) {
+    ?>
+        <button id="chatbot-toggler">
+            <span class="material-symbols-rounded">comment</span>
+            <span class="material-symbols-rounded">close</span>
+        </button>
+    <?php
+    }
+    ?>
+
 
     <div class="chatbot-popup">
         <!-- chatbot header -->

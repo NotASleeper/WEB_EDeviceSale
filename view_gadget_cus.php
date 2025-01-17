@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_id'];
 $role = $_SESSION['role'];
 
 if ($role !== 'customer') {
-    echo "Bạn không có quyền xem trang này!";
+    echo "Please log in first to view this page";
     exit();
 }
 
