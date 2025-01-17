@@ -30,9 +30,9 @@
         <div>
             <h2>Newsletter</h2>
             <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
-            <form class="form-email" action="" method="POST">
-                <input type="email" name="email" placeholder="Enter your email">
-                <button type="submit">Subscribe</button>
+            <form class="form-email" action="send_email.php" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" value="">
+                <button type="submit" id="send" name="send">Subscribe</button>
             </form>
         </div>
     </section>

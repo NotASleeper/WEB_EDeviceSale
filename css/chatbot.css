@@ -112,7 +112,7 @@ body.show-chatbot .chatbot-popup {
 .chat-body .messaged {
     display: flex;
     gap: 11px;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .chat-body .bot-message .bot-avatar {
@@ -318,7 +318,7 @@ body.show-chatbot .chatbot-popup {
 
     .chatbot-popup {
         right: 5%;
-        bottom: 70px;
+        bottom: 80px;
         font-size: 12px;
     }
 

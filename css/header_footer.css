@@ -153,6 +153,22 @@
   margin-top: 7px;
 }
 
+.footer-container .information .form-email #email {
+  font-size: 14px;
+}
+
+.footer-container .information .form-email #send {
+  padding: 5px 10px;
+  font-size: 14px;
+  color: black;
+}
+
+.footer-container .information .form-email #send:hover {
+  background-color: #007B4A;
+  color: white;
+  cursor: pointer;
+}
+
 .footer-container .information input {
   background-color: white;
   border-radius: 6px;
