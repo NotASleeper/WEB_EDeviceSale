@@ -1,11 +1,13 @@
 .header-container {
   position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
   z-index: 1000;
   background-color: black;
   backdrop-filter: blur(10px);
   border-bottom: var(--border);
-  top: 0;
-  left: 0;
+
 }
 
 .header-container .flex {

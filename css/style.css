@@ -132,7 +132,7 @@ section {
 }
 
 /* Header and footer css */
-.header-container {
+/* .header-container {
   position: sticky;
   z-index: 1000;
   background-color: black;
@@ -140,7 +140,7 @@ section {
   border-bottom: var(--border);
   top: 0;
   left: 0;
-}
+} */
 
 .header-container .flex {
   height: 6rem;
@@ -345,14 +345,14 @@ section {
 
 /*  */
 
-.header-container {
+/* .header-container {
   position: sticky;
   z-index: 1000;
   background-color: var(--black);
   border-bottom: var(--border);
   top: 0;
   left: 0;
-}
+} */
 
 /* đã xử lý trong header.css */
 
