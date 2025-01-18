@@ -35,19 +35,19 @@ include './components/message.php';
                 $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
 
             ?>
-            <!-- not sure  -->
-            <h2 class="name"><?= $fetch_profile['name_customer']; ?></h2>
+                <!-- not sure  -->
+                <h2 class="name"><?= $fetch_profile['name_customer']; ?></h2>
 
-            <div>
-                <a class="btn-success" href="edit_profile_cus.php">Edit profile</a>
-                <a href="components/user_logout.php" onclick="return confirm('logout from this website?');"
-                    class="btn-danger">Log out</a>
-            </div>
+                <div>
+                    <a class="btn-success" href="edit_profile_cus.php">Edit profile</a>
+                    <a href="components/user_logout.php" onclick="return confirm('logout from this website?');"
+                        class="btn-danger">Log out</a>
+                </div>
             <?php
             } else {
             ?>
-            <h2 class="name">Please login first</h2>
-            <a class="btn-success" href="login.php">Log in</a>
+                <h2 class="name">Please login first</h2>
+                <a class="btn-success" href="login.php">Log in</a>
             <?php
             }
             ?>

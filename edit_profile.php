@@ -98,13 +98,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
-    <!-- <link rel="stylesheet" href="css/header_footer.css"> -->
+    <link rel="stylesheet" href="css/header_footer.css">
 
 </head>
 
 <body>
     <!-- Header -->
     <?php include 'components/header.php'; ?>
+
     <!-- Section: Edit Profile -->
     <section class="user-profile">
         <img src="./images/sub_bg.png" alt="sub_bg" class="bg-1">
